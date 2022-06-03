@@ -1,0 +1,15 @@
+{
+    "added": [
+        "checkBuysInCuentaDigitalZE",
+        "checkBuysInCuentaDigitalZPU",
+        "checkBuysInCuentaDigitalZPA",
+        "expireBuys",
+        "expireBuysZE",
+        "expireBuysZPU",
+        "expireBuysZPA"
+    ],
+    "edited": [
+        "checkBuysInCuentaDigital"
+    ],
+    "removed": []
+}

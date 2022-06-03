@@ -1,0 +1,38 @@
+{
+    "normal": {
+        "added": [
+            "__zpa_ph_y",
+            "__zpa_ph_cant",
+            "__zpa_pz_y",
+            "__zpa_pz_cant",
+            "__ze_pl_y",
+            "__ze_pl_cant",
+            "__zpa_pl_y",
+            "__zpa_pl_cant",
+            "__zpa_ps_y",
+            "__zpa_ps_cant",
+            "__zpu_ps_y",
+            "__zpu_ps_cant",
+            "__zpa_pd_y",
+            "__zpa_pd_cant"
+        ],
+        "edited": [],
+        "removed": [
+            "__ph_y",
+            "__ph_cant",
+            "__pz_y",
+            "__pz_cant",
+            "__pl_y",
+            "__pl_cant",
+            "__ps_y",
+            "__ps_cant",
+            "__pd_y",
+            "__pd_cant"
+        ]
+    },
+    "js": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

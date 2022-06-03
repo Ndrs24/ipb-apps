@@ -1,0 +1,44 @@
+{
+    "html": {
+        "added": [],
+        "edited": [
+            "front\/lista\/main",
+            "front\/lista\/rows",
+            "front\/lista\/rowsOld",
+            "front\/lista\/viewBuyList",
+            "front\/lista\/viewBuyListOld",
+            "front\/main\/adminDataHtml",
+            "front\/main\/finallyBuyMessage",
+            "front\/main\/main",
+            "front\/main\/vipDataHtml",
+            "front\/register\/register",
+            "front\/register\/registerZE",
+            "front\/register\/registerZPA",
+            "front\/register\/registerZPU",
+            "front\/shareLinks\/shareLinks",
+            "front\/widgets\/ventasWidget",
+            "front\/ze\/ze",
+            "front\/ze\/zeInformation",
+            "front\/ze\/zePost",
+            "front\/zpa\/zpa",
+            "front\/zpa\/zpaInformation",
+            "front\/zpa\/zpaPost",
+            "front\/zpu\/zpu",
+            "front\/zpu\/zpuInformation",
+            "front\/zpu\/zpuPost"
+        ],
+        "removed": []
+    },
+    "css": {
+        "added": [],
+        "edited": [
+            "front\/main.css"
+        ],
+        "removed": []
+    },
+    "resources": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}
