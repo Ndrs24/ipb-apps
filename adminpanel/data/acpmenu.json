@@ -1,0 +1,11 @@
+{
+    "settings": {
+        "settings": {
+            "tab": "adminpanel",
+            "controller": "settings",
+            "do": "",
+            "restriction": "settings_manage",
+            "subcontrollers": ""
+        }
+    }
+}

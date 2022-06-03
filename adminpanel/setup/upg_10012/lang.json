@@ -1,0 +1,19 @@
+{
+    "normal": {
+        "added": [
+            "ap_viplist_access",
+            "ap_ministafflist_access",
+            "ap_stafflist_access",
+            "ap_editban_access_desc"
+        ],
+        "edited": [
+            "ap_adminlist_access"
+        ],
+        "removed": []
+    },
+    "js": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

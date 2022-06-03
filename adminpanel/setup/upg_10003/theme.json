@@ -1,0 +1,30 @@
+{
+    "html": {
+        "added": [
+            "front\/buys\/viewBuyOld"
+        ],
+        "edited": [
+            "front\/admin\/statusAdmin",
+            "front\/buys\/buyListRow",
+            "front\/buys\/buyListRowOld",
+            "front\/buys\/main",
+            "front\/buys\/viewBuy",
+            "front\/buys\/zeListRow",
+            "front\/buys\/zpaListRow",
+            "front\/buys\/zpuListRow",
+            "front\/main\/main",
+            "front\/vip\/statusVip"
+        ],
+        "removed": []
+    },
+    "css": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    },
+    "resources": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

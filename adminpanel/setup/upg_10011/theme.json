@@ -1,0 +1,33 @@
+{
+    "html": {
+        "added": [
+            "front\/main\/advList",
+            "front\/main\/advListRow",
+            "front\/main\/banListRow",
+            "front\/main\/suspendListRow",
+            "front\/main\/viewBan",
+            "front\/main\/viewSuspend"
+        ],
+        "edited": [
+            "front\/main\/adminListRow",
+            "front\/main\/main",
+            "front\/main\/statusAdmin",
+            "front\/main\/statusVip",
+            "front\/main\/adminListRow",
+            "front\/main\/main",
+            "front\/main\/statusAdmin",
+            "front\/main\/statusVip"
+        ],
+        "removed": []
+    },
+    "css": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    },
+    "resources": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

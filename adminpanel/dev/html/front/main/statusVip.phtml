@@ -1,0 +1,217 @@
+<ips:template parameters="$data" />
+<div class='ipsResponsive_hidePhone ipsResponsive_hideTablet ipsResponsive_block'>
+	<div class='ipsPageHeader ipsClearfix ipsSpacer_bottom'>
+		<h1 class='ipsType_pageTitle'><i class='fa fa-star-o'></i>&nbsp;{lang="menu__adminpanel_statusVip"}</h1>
+	</div>
+</div>
+
+<div class='ipsResponsive_hideDesktop'>
+	<div class="ipsType_center ipsSpacer_bottom ipsSpacer_top">
+		<h1 class="ipsType_veryLarge ipsType_reset">&nbsp;{lang="menu__adminpanel_statusVip"}&nbsp;</h1>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function fadeIn(el, time) {
+		el.style.opacity = 0;
+
+		var last = +new Date();
+		var tick = function() {
+			el.style.opacity = +el.style.opacity + (new Date() - last) / time;
+			last = +new Date();
+
+			if (+el.style.opacity < 1) {
+				(window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+			}
+		};
+
+		tick();
+	}
+
+	function changeVip(key) {
+		var eg;
+		var eg_div;
+		var i;
+
+		for(i = 0; i <= 5; ++i) {
+			eg = document.getElementById("vip" + i);
+			eg_div = document.getElementById("vipDiv" + i);
+
+			if(i == key) {
+				eg.classList.remove("ipsButton_light");
+				eg.classList.add("ipsButton_primary");
+
+				fadeIn(eg_div, 360);
+				eg_div.classList.remove("ipsHide");
+			} else {
+				eg.classList.remove("ipsButton_primary");
+				eg.classList.add("ipsButton_light");
+
+				eg_div.classList.add("ipsHide");
+			}
+		}
+	}
+
+	window.onload = function() {
+		var eg;
+		var eg_div;
+		var i;
+
+		for(i = 0; i <= 5; ++i) {
+			eg = document.getElementById("vip" + i);
+			eg_div = document.getElementById("vipDiv" + i);
+
+			if(i == 0) {
+				eg.classList.add("ipsButton_primary");
+				fadeIn(eg_div, 360);
+			} else {
+				eg.classList.add("ipsButton_light");
+				eg_div.classList.add("ipsHide");
+			}
+		}
+	};
+</script>
+
+{{if \count($data) > 1}}
+	<div class='ipsPad ipsSpacer_bottom'>
+		<ul class='ipsList_inline ipsClearfix ipsType_center'>
+			{{foreach $data as $key => $d}}
+				<li><a 	{{if time() > $d["finish"]}}
+							
+						{{else}}
+							onclick='changeVip({$key});'
+						{{endif}}
+						id='vip{$key}'
+						{{if time() > $d["finish"]}}
+							data-ipsTooltip title='{$d["server_id"]} ~ [VENCIDO]'
+						{{else}}
+							data-ipsTooltip title='{$d["server_id"]}'
+						{{endif}}
+						class='ipsButton ipsButton_small'
+						{{if time() > $d["finish"]}}
+							disabled="disabled"
+						{{endif}}>{$d['name']}
+				</a></li>
+			{{endforeach}}
+		</ul>
+	</div>
+{{endif}}
+
+{{foreach $data as $key => $d}}
+	<div id='vipDiv{$key}'>
+		<div class='ipsColumns ipsColumns_bothSpacing ipsColumns_halfSpacing ipsColumns_collapsePhone'>
+			<div class='ipsColumn ipsColumn_fixed ipsColumn_veryWide'>
+				<ol class='ipsDataList ipsType_center ipsType_sectionHead ipsPad ipsBox ipsPageHeader'>
+					<li class='ipsDataItem ipsPad'>Tag CS: <strong>{$d['name']}</strong></li>
+					<li class='ipsDataItem ipsPad'>Servidor: <strong>{$d['server_id']}</strong></li>
+					<li class='ipsDataItem ipsPad'>Vencimiento: <strong>{{if $d['finish'] == 2000000000}}Permanente{{else}}{datetime="$d['finish']" lowercase="true"}{{endif}}</strong></li>
+					<li class='ipsDataItem ipsPad'>Rango en el foro: <strong>{expression="\IPS\Member\Group::load(\IPS\Member::loggedIn()->member_group_id)->formattedName" raw="true"}</strong></li>
+					<li class='ipsDataItem ipsPad'><a class='ipsButton ipsButton_important ipsButton_small' href='{url="app=adminpanel&module=main&controller=statusVip&do=config&id={$d['id']}" seoTemplate="statusVipConfig"}' data-ipsDialog data-ipsDialog-title='Configuración' data-ipsDialog-size='narrow' data-ipsTooltip title='Configuración'><i class='fa fa-pencil'></i> Cambiar configuración</a></li>
+				</ol>
+			</div>
+			<div class='ipsColumn ipsColumn_fluid ipsPad ipsBox ipsType_center'>
+				{{if $d['suspend_id']}}
+					<div class='ipsMessage ipsMessage_error ipsSpacer_bottom'>
+						Tu VIP ha sido <strong>suspendido</strong>. Para ver los detalles del mismo, visita <a href='#' id='suspendInfoDialog' data-ipsDialog data-ipsDialog-title='Datos de tu suspensión' data-ipsDialog-content='#suspendInfo' data-ipsDialog-size='narrow'>este enlace</a>.
+						<div class='ipsHide' id='suspendInfo'>
+							<h1 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>VIP Suspendido #{number="$d['suspend_id']"}</h1>
+							<hr class='ipsHr'>
+							<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+								<tbody>
+									<tr class='ipsClearfix'>
+										<td align="left">Staff que te suspendió:</td>
+										<td align="right">
+											{{$member = \IPS\Member::load($d['staff_forum_id']);}}
+											{$member->link()|raw}
+										</td>
+									</tr>
+									<tr class='ipsClearfix'>
+										<td align="left">Te suspendieron el día:</td>
+										<td align="right">{datetime="$d['s_start']" lowercase="true"}</td>
+									</tr>
+									<tr class='ipsClearfix'>
+										<td align="left">Tu suspensión expira el día:</td>
+										<td align="right">{datetime="$d['s_finish']" lowercase="true"}</td>
+									</tr>
+									<tr class='ipsClearfix'>
+										<td align="left">Razón de la suspensión:</td>
+										<td align="right">{$d['s_reason']}</td>
+									</tr>
+									<tr class='ipsClearfix'>
+										<td align="left">Servidor:</td>
+										<td align="right">{$d['s_server_id']}</td>
+									</tr>
+								</tbody>
+							</table>
+							<hr class='ipsHr'>
+							<div class='ipsType_center ipsPad_half'>
+								<span class='ipsType_large'>Si piensas que la suspensión es injusta o esperas una explicación de la misma, <span class='ipsType_bold'>contáctate con el miembro del Staff</span> que te haya suspendido. Dirígete a su perfil que está linkeado en los datos de la suspensión y envíale un mensaje privado consultando por la suspensión.</span>
+							</div>
+						</div>
+					</div>
+				{{endif}}
+
+				{{$warning_finish = ($d['finish'] - time());}}
+				{{if $warning_finish <= 864000}}
+					<div class='ipsMessage ipsMessage_info ipsSpacer_bottom'>
+						Tu VIP está a punto de vencerse. Si deseas renovar tu VIP, ve a la <a href='/ventas/'>sección de Ventas</a> y realiza los mismos pasos que hiciste al comprar la misma.
+					</div>
+				{{endif}}
+
+				<h1 class='ipsType_pageTitle'>¡Hola, {{$name = \IPS\Member::loggedIn()->name;}}{$name}!</h1>
+
+				{{$datetime = new \IPS\DateTime(); $today = clone $datetime;}}
+				{{$rest = ($d['finish'] - time());}}
+				{{$time = \IPS\DateTime::formatInterval($datetime->diff($today->modify('+'.round($rest).' seconds')), 0);}}
+
+				<span class='ipsType_light'>Tu <span style="color: #ffbf00; font-weight: bold; text-shadow: 0 0 .9em #ffbf00;">VIP&nbsp;<i class='fa fa-star-o'></i></span> se vence en <strong>{$time}</strong></span>
+
+				<br />
+				<br />
+
+				<div class='ipsGrid ipsGrid_collapsePhone'>
+					<div class='ipsGrid_span6 ipsPad ipsAreaBackground_light'>
+						<h1 class='ipsType_pageTitle'><u>¿Cómo activo mi VIP?</u></h1>
+
+						<br />
+
+						<span>Para hacer funcionar tu VIP en los servidores solicitados, basta con poner dos comandos en tu consola del juego. Para abrir la consola, <span class='ipsType_bold'>ingresa al juego, y presiona la tecla que está a la izquierda de la tecla 1</span>. Luego ingrese los comandos que se nonmbrarán abajo.</span>
+
+						<br />
+						<br />
+
+						<div class='ipsCode'>name "{$d['name']}"</div>
+						<br />
+						<div class='ipsCode'>setinfo "_pw" "Tu contraseña"</div>
+
+						<br />
+
+						<span>Si por alguna extraña razón olvidas tu contraseña, envía un mensaje privado a un miembro del staff de rango <span style='font-weight: bold; font-family: "Arial", serif; color: #FE2E2E;'>Director</span> y consulta sobre tu contraseña de tu VIP.</span>
+					</div>
+					<div class='ipsGrid_span6 ipsPad ipsAreaBackground_light'>
+						<h1 class='ipsType_pageTitle'><u>¿Tienes problemas al ingresar tu contraseña?</u></h1>
+
+						<br />
+
+						<span>Quizás hayas pasado una vez por este error: <span class='ipsType_bold'>Info string length exceeded</span>. Para arreglar este error, copia lo siguiente en consola.</span>
+
+						<br />
+						<br />
+
+						<div class='ipsCode'>
+							setinfo bottomcolor ^"^";setinfo cl_lc ^"^"; setinfo model ^"^"; setinfo topcolor ^"^"; setinfo _9387 ^"^"; setinfo _iv ^"^"; setinfo _ah ^"^"; setinfo _puqz ^"^"; setinfo _ndmh ^"^"; setinfo _ndmf ^"^"; setinfo _ndms ^"^"; setinfo rate ^"^"; setinfo _pw ^"^"
+						</div>
+
+						<br />
+
+						<span>No te preocupes si borras también la setinfo <span class='ipsType_bold'>_pw</span>, ya que necesitarás ingresar una nueva para que tu VIP sea tomado al entrar al servidor.</span>
+					</div>
+				</div>
+				
+				<hr class='ipsHr' />
+
+				<span class='ipsType_large'>Esos son todos los pasos para activar tu VIP. Espero que disfrutes sus beneficios dentro de nuestros servidores. Recuerda <strong>por favor</strong> leer las <a href="/reglamento/">reglas de la comunidad</a> para evitar todo tipo de inconvenientes. Y si tienes alguna consulta en especifica, comunícate con algún <a href="/staff/">miembro del staff</a> situado en la sección correspondiente.</span>
+			</div>
+		</div>
+	</div>
+{{endforeach}}

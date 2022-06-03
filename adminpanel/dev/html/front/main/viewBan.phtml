@@ -1,0 +1,93 @@
+<ips:template parameters="$row, $data" />
+<div class='ipsPadding'>
+	<h2 id='elBanHeader' class='ipsType_sectionTitle ipsType_reset'>
+		{{if \IPS\Application::load('adminpanel')->canEditBan() && $row['active'] == 1}}
+			<ul class="ipsPos_right ipsList_inline ipsList_noSpacing">
+				<li><a class='cAdminPanel_banButtons' href='{url="app=adminpanel&module=main&controller=main&area=removeBan&bid={$row['id']}" seoTemplate="adminpanel_viewBan_remove"}' data-ipsTooltip title='Remover ban'><span style='color: #ffffff; font-weight: bold;'><i class='fa fa-ban'></i></span></a></li>
+			</ul>
+		{{endif}}
+		<div>Ban #{number="$row['id']"}</div>
+		<div class='ipsType_light ipsType_small'><u>Razón del ban</u>: <strong>{$row['reason']}</strong></div>
+	</h2>
+	
+	<div class='ipsPadding sm:ipsPadding ipsBox ipsType_center ipsClearfix ipsResponsive_pull'>
+		<ul class='ipsList_inline ipsFlex ipsFlex-ai:center ipsFlex-jc:center ipsFlex-fw:wrap ipsResponsive_noFloat'>
+			<li>
+				<h4 class='ipsType_minorHeading'>Admin</h4>
+				{{if $row['admin_authid_m'] != NULL}}
+					<a href="https://steamcommunity.com/profiles/{$row['admin_authid_m']}" data-ipsTooltip title='Ir al perfil de Steam'>{$row['admin_name']}</a>
+				{{else}}
+					{$row['admin_name']}
+				{{endif}}
+			</li>
+			<li class='cAdminPanel_separatorList'></li>
+			<li>
+				<h4 class='ipsType_minorHeading'>
+					{{if preg_match('/^STEAM_/', $row['admin_authid'])}}
+						SteamId del Admin
+					{{else}}
+						IP del Admin
+					{{endif}}
+				</h4>
+				{{if \IPS\Application::load('adminpanel')->canEditBan()}}
+					{{if $row['admin_name'] == 'www.DrunkGaming.net'}}
+						-
+					{{else}}
+						{$row['admin_authid']}
+					{{endif}}
+				{{else}}
+					-
+				{{endif}}
+			</li>
+			<li class='cAdminPanel_separatorList'></li>
+			<li>
+				<h4 class='ipsType_minorHeading'>Jugador</h4>
+				{{if $row['user_authid_m'] != NULL}}
+					<a href="https://steamcommunity.com/profiles/{$row['user_authid_m']}" data-ipsTooltip title='Ir al perfil de Steam'>{$row['user_name']}</a>
+				{{else}}
+					{$row['user_name']}
+				{{endif}}
+			</li>
+			<li class='cAdminPanel_separatorList'></li>
+			<li>
+				<h4 class='ipsType_minorHeading'>
+					{{if preg_match('/^STEAM_/', $row['user_authid'])}}
+						SteamId del Jugador
+					{{else}}
+						IP del Jugador
+					{{endif}}
+				</h4>
+				{$row['user_authid']}
+			</li>
+			<li class='cAdminPanel_separatorList'></li>
+			{{if $row['active'] == 1}}
+				{{if $row['minutes'] != 0}}
+					<li>
+						<h4 class='ipsType_minorHeading'>Fecha de Finalización</h4>
+						{datetime="$row['finish']" lowercase="true"}
+					</li>
+					<li class='cAdminPanel_separatorList'></li>
+				{{endif}}
+			{{endif}}
+			<li>
+				<h4 class='ipsType_minorHeading'>Servidor</h4>
+				{expression="\IPS\Application::load('adminpanel')->getServerName($row['server_id'])"}
+			</li>
+		</ul>
+	</div>
+
+	{{if $row['server_id'] == 0 || $data['count_ban_totals'] > 1}}
+		<div class='ipsType_center ipsMargin_top'>
+			{{if $row['server_id'] == 0}}
+				<span class='ipsType_large ipsType_negative'><u>El jugador está <strong>VETADO</strong> de la comunidad</u></span>
+				<br />
+				<br />
+			{{endif}}
+
+			<span class='ipsType_large'>El jugador ha sufrido <strong>{$data['count_ban_totals']} baneos en total</strong></span>
+			<br />
+			<br />
+			<span class='ipsType_large'>El jugador ha sufrido <strong>{$data['count_ban_in_server_totals']} baneos en total</strong> en el servidor especificado</span>
+		</div>
+	{{endif}}
+</div>

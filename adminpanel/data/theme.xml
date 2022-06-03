@@ -1,0 +1,1277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme name="Default" author_name="Invision Power Services, Inc" author_url="https://www.invisioncommunity.com">
+ <template template_group="main" template_name="adminListRow" template_data="$table, $headers, $rows" template_location="front" template_app="adminpanel"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Tag CS</th>
+			<th>Miembro</th>
+			<th>Vencimiento</th>
+			{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>
+					{$row['name']}
+
+					{{if $row['staff_forum_id']}}
+						&nbsp;&nbsp;
+						<a href='#' id='adminAddInfoDialog' data-ipsDialog data-ipsDialog-content='#adminAddInfo' data-ipsDialog-size='narrow' data-ipsTooltip title='Ver quién agregó el Admin' class='ipsType_success ipsType_small'><i class='fa fa-plus'></i></a>
+
+						<div class='ipsHide ipsPad ipsClearfix' id='adminAddInfo'>
+							{{$staff_add = \IPS\Member::load($row['staff_forum_id']);}}
+
+							<div class='ipsGrid ipsGrid_collapsePhone'>
+								<div class='ipsGrid_span2 ipsPos_left ipsType_center cNewestMember'>
+									{template="userPhoto" app="core" group="global" params="$staff_add, 'small'"}
+								</div>
+								<div class='ipsGrid_span10 ipsWidget_latestItem'>
+									<strong class="ipsType_minorHeading">Miembro del Staff</strong><br>
+									<span class="ipsType_normal">{$staff_add->name}</span>
+								</div>
+							</div>
+						</div>
+					{{endif}}
+
+					{{if $row['staff_forum_id_edit']}}
+						&nbsp;&nbsp;
+						<a href='#' id='adminEditInfoDialog' data-ipsDialog data-ipsDialog-content='#adminEditInfo' data-ipsDialog-size='narrow' data-ipsTooltip title='Ver quién editó el Admin' class='ipsType_issue ipsType_small'><i class='fa fa-pencil'></i></a>
+
+						<div class='ipsHide ipsPad ipsClearfix' id='adminEditInfo'>
+							{{$staff_edit = \IPS\Member::load($row['staff_forum_id_edit']);}}
+
+							<div class='ipsGrid ipsGrid_collapsePhone'>
+								<div class='ipsGrid_span2 ipsPos_left ipsType_center cNewestMember'>
+									{template="userPhoto" app="core" group="global" params="$staff_edit, 'small'"}
+								</div>
+								<div class='ipsGrid_span10 ipsWidget_latestItem'>
+									<strong class="ipsType_minorHeading">Miembro del Staff</strong><br>
+									<span class="ipsType_normal">{$staff_edit->name}</span><br>
+									<span class="ipsType_medium ipsType_light">Última edición: {datetime="$row['staff_forum_id_edit_timestamp']" lowercase="true"}</span>
+								</div>
+							</div>
+						</div>
+					{{endif}}
+
+					{{if $row['suspend_id']}}
+						&nbsp;&nbsp;
+						<span data-ipsTooltip title='Suspendido' class='ipsType_negative ipsType_small'><i class='fa fa-times'></i></a>
+					{{endif}}
+
+					&nbsp;&nbsp;
+					<span data-ipsTooltip title='Admin en {$row["server_id"]}' class='ipsType_neutral ipsType_small'><i class='fa fa-gamepad'></i></a>
+				</td>
+				<td>
+					{{$member = \IPS\Member::load($row['forum_id']);}}
+					{template="userPhoto" app="core" group="global" params="$member, 'tiny'"}
+					{$member->link()|raw}
+				</td>
+				<td>
+					{{if $row['finish'] == 2000000000}}
+						Permanente
+					{{else}}
+						{datetime="$row['finish']" lowercase="true"}
+					{{endif}}
+				</td>
+				{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+					<td>
+						<span class="ipsBadge ipsBadge_new ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=editAdmin&aid={$row['id']}" seoTemplate="adminpanel_editAdmin"}' data-ipsDialog data-ipsDialog-title="Editando a {$row['name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Editar Admin CS'><i class="fa fa-pencil"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+					<td>
+						<span class="ipsBadge ipsBadge_warning ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=suspendAdmin&aid={$row['id']}" seoTemplate="adminpanel_suspendAdmin"}' data-ipsDialog data-ipsDialog-title="Suspendiendo a {$row['name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Suspender Admin CS'><i class="fa fa-gavel"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=removeAdmin&aid={$row['id']}" seoTemplate="adminpanel_removeAdmin"}' data-ipsTooltip title='Remover Admin CS'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="main" template_name="advList" template_data="$table" template_location="front" template_app="adminpanel"><![CDATA[<div class='ipsPad ipsBox ipsSpacer_bottom'>
+	<span class='ipsType_bold ipsType_large'>Códigos de colores para los anuncios:</span><br>
+	<span>Estos códigos sirven para cambiar el color en algunas partes del texto en los anuncios que aparecerán dentro de los servidores de juego.</span>
+
+	<ul type='none'>
+		<li><i class='fa fa-check'></i> <span class='ipsType_bold' style='color: green;'>!g</span> = Color verde</li>
+		<li><i class='fa fa-check'></i> <span class='ipsType_bold' style='color: orange;'>!y</span> = Color por defecto del cliente</li>
+		<li><i class='fa fa-check'></i> <span class='ipsType_bold' style='color: gray;'>!t</span> = Color de equipo (<span class='ipsType_bold' style='color: red;'>T</span> / <span class='ipsType_bold' style='color: #00bbaa'>CT</span> / <span class='ipsType_bold' style='color: gray;'>Spect</span>)</li>
+	</ul>
+</div>
+
+<div class='ipsBox'>{$table|raw}</div>]]></template>
+ <template template_group="main" template_name="advListRow" template_data="$table, $headers, $rows" template_location="front" template_app="adminpanel"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Servidor</th>
+			<th>Mensaje</th>
+			<th>Fecha de finalización</th>
+			{{if \IPS\Application::load('adminpanel')->canAddAdv()}}
+				<th></th>
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>{$row['server_id']}</td>
+				<td>{$row['message']}</td>
+				<td>
+					{{if $row['message_timestamp'] == 2000000000}}
+						Permanente
+					{{else}}
+						{datetime="$row['message_timestamp']" lowercase="true"}
+					{{endif}}
+				</td>
+				{{if \IPS\Application::load('adminpanel')->canAddAdv()}}
+					<td>
+						<span class="ipsBadge ipsBadge_new ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=editAdv&advid={$row['id']}" seoTemplate="adminpanel_editAdv"}' data-ipsDialog data-ipsDialog-title="Viendo información del anuncio" data-ipsDialog-size='narrow' data-ipsTooltip title='Editar anuncio'><i class="fa fa-pencil"></i></a>
+						</span>
+					</td>
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=removeAdv&advid={$row['id']}" csrf="true"}' data-ipsTooltip title='Remover anuncio'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="main" template_name="banListRow" template_data="$table, $headers, $rows" template_location="front" template_app="adminpanel"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Fecha y hora</th>
+			<th>Jugador</th>
+			<th>Admin</th>
+			<th>Duración</th>
+			<th>Servidor</th>
+			{{if \IPS\Application::load('adminpanel')->canEditBan()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canBanList()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>{datetime="($row['start'] + 10800)" lowercase="true"}</td>
+				<td>{$row['user_name']}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['forum_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$row['admin_name']}
+				</td>
+				<td>
+					{{if $row['minutes'] == 0}}
+						Permanente
+					{{else}}
+						{number="$row['minutes']"} min
+					{{endif}}
+				</td>
+				<td>{$row['server_id']}</td>
+				{{if \IPS\Application::load('adminpanel')->canEditBan() && $row['active'] == 1}}
+					<td>
+						<span class="ipsBadge ipsBadge_warning ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=blackListBan&bid={$row['id']}" seoTemplate="adminpanel_blackListBan"}' data-ipsTooltip title='Vetar de la Comunidad'><i class="fa fa-lock"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canBanList()}}
+					<td>
+						<span class="ipsBadge {{if $row['active']}}ipsBadge_positive{{else}}ipsBadge_negative{{endif}} ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=viewBan&bid={$row['id']}" seoTemplate="adminpanel_viewBan"}' data-ipsTooltip title='{{if $row['active']}}Ban activo{{else}}Ban removido{{endif}}' data-ipsDialog data-ipsDialog-title="Viendo información del ban"><i class="fa fa-search"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="main" template_name="main" template_data="$tab, $output, $canVipList, $canAdminList, $canMiniStaffList, $canStaffList, $canAddAdmin, $canBanList, $canSuspendList, $canAdvList, $canAddAdv" template_location="front" template_app="adminpanel"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cAdminPanel_header'>
+	<h1 class='ipsType_pageTitle'>{lang="menu__adminpanel_adminpanel"}</h1>
+
+	{{if $canAddAdmin || $canAddAdv}}
+		<hr class='ipsHr ipsResponsive_showDesktop' />
+
+		<div class='ipsFlex ipsFlex-jc:between ipsFlex-ai:center ipsFlex-fw:wrap ipsGap:3 ipsResponsive_showDesktop'>
+			<div class='ipsFlex-flex:11'>
+				
+			</div>
+			<div class='ipsFlex-flex:01'>
+				<div class='ipsFlex ipsFlex-ai:center ipsFlex-jc:center ipsGap:3 ipsGap_row:0'>
+					{{if $canAddAdmin}}
+						<a href='{url="app=adminpanel&module=main&controller=main&area=addAdmin" seoTemplate="adminpanel_addAdmin"}' data-ipsDialog data-ipsDialog-title="Agregando Admin CS" data-ipsDialog-size='narrow' title='Agregar Admin CS' class='ipsButton ipsButton_small ipsButton_primary'>
+							<i class='fa fa-user-plus'></i>&nbsp;Agregar Admin
+						</a>
+					{{endif}}
+					{{if $canAddAdv}}
+						<a href='{url="app=adminpanel&module=main&controller=main&area=addAdv" seoTemplate="adminpanel_addAdv"}' data-ipsDialog data-ipsDialog-title="Agregando Anuncio" data-ipsDialog-size='narrow' title='Agregar Anuncio' class='ipsButton ipsButton_small ipsButton_primary'>
+							<i class='fa fa-bullhorn'></i>&nbsp;Agregar Anuncio
+						</a>
+					{{endif}}
+				</div>
+			</div>
+		</div>
+	{{endif}}
+</div>
+
+<div id='elAdminTabs' data-ipsTabBar data-ipsTabBar-contentArea='#elAdminTabContent' data-ipsTabBar-itemSelector='[data-ipsSideMenu] .ipsSideMenu_item' data-ipsTabBar-activeClass='ipsSideMenu_itemActive'>
+	<div class='ipsColumns ipsColumns_collapsePhone'>
+		<div class='ipsColumn ipsColumn_wide'>
+			<div class='ipsBox ipsPadding sm:ipsPadding:half ipsResponsive_pull sm:ipsMargin_bottom'>
+				<div class='ipsSideMenu' data-ipsSideMenu>
+					<h3 class="ipsSideMenu_mainTitle ipsAreaBackground_light ipsType_medium">
+						<a href="#listMenu" class="ipsPad_double" data-action="openSideMenu">
+							<i class="fa fa-bars"></i> &nbsp;Dezlizar listado&nbsp;<i class="fa fa-caret-down"></i>
+						</a>
+					</h3>
+
+					<h5 class='ipsSideMenu_subTitle'>Información</h5>
+					<ul class="ipsSideMenu_list">
+						<li>
+							<a href='{url="app=adminpanel&module=main&controller=main" seoTemplate="adminpanel"}' id='admin' class='ipsType_normal ipsSideMenu_item {{if $tab === 'statusAdmin'}}ipsSideMenu_itemActive{{endif}}' title='{lang="menu__adminpanel_adminpanel"}' role='tab' aria-selected='{{if $tab === 'statusAdmin'}}true{{else}}false{{endif}}'>
+								<i class='fa fa-user-secret'></i>&nbsp;Estado de tu Admin
+							</a>
+						</li>
+					</ul>
+
+					{{if $canVipList || $canAdminList || $canMiniStaffList || $canStaffList}}
+						<h5 class='ipsSideMenu_subTitle'>Listas de Admines</h5>
+						<ul class='ipsSideMenu_list'>
+							{{if $canVipList}}
+								<li>
+									<a href='{url="app=adminpanel&module=main&controller=main&area=vipList" seoTemplate="adminpanel_vipList"}' id='vipList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'vipList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'vipList'}}true{{else}}false{{endif}}'>
+										<i class='fa fa-list'></i>&nbsp;Ver VIPs
+									</a>
+								</li>
+							{{endif}}
+							{{if $canAdminList}}
+								<li>
+									<a href='{url="app=adminpanel&module=main&controller=main&area=adminList" seoTemplate="adminpanel_adminList"}' id='adminList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'adminList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'adminList'}}true{{else}}false{{endif}}'>
+										<i class='fa fa-list'></i>&nbsp;Ver Admines
+									</a>
+								</li>
+							{{endif}}
+							{{if $canMiniStaffList}}
+								<li>
+									<a href='{url="app=adminpanel&module=main&controller=main&area=miniStaffList" seoTemplate="adminpanel_miniStaffList"}' id='miniStaffList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'miniStaffList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'miniStaffList'}}true{{else}}false{{endif}}'>
+										<i class='fa fa-list'></i>&nbsp;Ver Capitanes
+									</a>
+								</li>
+							{{endif}}
+							{{if $canStaffList}}
+								<li>
+									<a href='{url="app=adminpanel&module=main&controller=main&area=staffList" seoTemplate="adminpanel_staffList"}' id='staffList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'staffList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'staffList'}}true{{else}}false{{endif}}'>
+										<i class='fa fa-list'></i>&nbsp;Ver Staff
+									</a>
+								</li>
+							{{endif}}
+						</ul>
+					{{endif}}
+
+					{{if $canBanList}}
+						<h5 class='ipsSideMenu_subTitle'>Listas de Baneos</h5>
+						<ul class='ipsSideMenu_list'>
+							<li>
+								<a href='{url="app=adminpanel&module=main&controller=main&area=myBans" seoTemplate="adminpanel_myBans"}' id='myBans' class='ipsType_normal ipsSideMenu_item {{if $tab === 'myBans'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'myBans'}}true{{else}}false{{endif}}'>
+									<i class='fa fa-ban'></i>&nbsp;Mis baneos
+								</a>
+							</li>
+							<li>
+								<a href='{url="app=adminpanel&module=main&controller=main&area=banList" seoTemplate="adminpanel_banList"}' id='banList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'banList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'banList'}}true{{else}}false{{endif}}'>
+									<i class='fa fa-ban'></i>&nbsp;Ver lista completa
+								</a>
+							</li>
+						</ul>
+					{{endif}}
+
+					{{if $canSuspendList}}
+						<h5 class='ipsSideMenu_subTitle'>Listas de Suspensiones</h5>
+						<ul class='ipsSideMenu_list'>
+							<li>
+								<a href='{url="app=adminpanel&module=main&controller=main&area=mySuspends" seoTemplate="adminpanel_mySuspends"}' id='mySuspends' class='ipsType_normal ipsSideMenu_item {{if $tab === 'mySuspends'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'mySuspends'}}true{{else}}false{{endif}}'>
+									<i class='fa fa-gavel'></i>&nbsp;Mis suspensiones
+								</a>
+							</li>
+							<li>
+								<a href='{url="app=adminpanel&module=main&controller=main&area=suspendList" seoTemplate="adminpanel_suspendList"}' id='suspendList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'suspendList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'suspendList'}}true{{else}}false{{endif}}'>
+									<i class='fa fa-gavel'></i>&nbsp;Ver lista completa
+								</a>
+							</li>
+						</ul>
+					{{endif}}
+
+					{{if $canAdvList}}
+						<h5 class='ipsSideMenu_subTitle'>Listas de Anuncios</h5>
+						<ul class='ipsSideMenu_list'>
+							<li>
+								<a href='{url="app=adminpanel&module=main&controller=main&area=advList" seoTemplate="adminpanel_advList"}' id='advList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'advList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'advList'}}true{{else}}false{{endif}}'>
+									<i class='fa fa-bullhorn'></i>&nbsp;Ver anuncios
+								</a>
+							</li>
+						</ul>
+					{{endif}}
+				</div>
+			</div>
+		</div>
+		<div class='ipsColumn ipsColumn_fluid'>
+			<section id='elAdminTabContent' class='ipsBox ipsResponsive_pull'>
+				<div id="ipsTabs_elSettingsTabs_setting_{$tab}_panel" class="ipsTabs_panel" aria-labelledby="admin" aria-hidden="false">
+					{$output|raw}
+				</div>
+			</section>
+		</div>
+	</div>
+</div>]]></template>
+ <template template_group="main" template_name="miniStaffListRow" template_data="$table, $headers, $rows" template_location="front" template_app="adminpanel"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Tag CS</th>
+			<th>Miembro</th>
+			<th>Servidor</th>
+			{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>
+					{$row['name']}
+
+					{{if $row['staff_forum_id']}}
+						&nbsp;&nbsp;
+						<a href='#' id='adminAddInfoDialog' data-ipsDialog data-ipsDialog-content='#adminAddInfo' data-ipsDialog-size='narrow' data-ipsTooltip title='Ver quién agregó el Admin' class='ipsType_success ipsType_small'><i class='fa fa-plus'></i></a>
+
+						<div class='ipsHide ipsPad ipsClearfix' id='adminAddInfo'>
+							{{$staff_add = \IPS\Member::load($row['staff_forum_id']);}}
+
+							<div class='ipsGrid ipsGrid_collapsePhone'>
+								<div class='ipsGrid_span2 ipsPos_left ipsType_center cNewestMember'>
+									{template="userPhoto" app="core" group="global" params="$staff_add, 'small'"}
+								</div>
+								<div class='ipsGrid_span10 ipsWidget_latestItem'>
+									<strong class="ipsType_minorHeading">Miembro del Staff</strong><br>
+									<span class="ipsType_normal">{$staff_add->name}</span>
+								</div>
+							</div>
+						</div>
+					{{endif}}
+
+					{{if $row['staff_forum_id_edit']}}
+						&nbsp;&nbsp;
+						<a href='#' id='adminEditInfoDialog' data-ipsDialog data-ipsDialog-content='#adminEditInfo' data-ipsDialog-size='narrow' data-ipsTooltip title='Ver quién editó el Admin' class='ipsType_issue ipsType_small'><i class='fa fa-pencil'></i></a>
+
+						<div class='ipsHide ipsPad ipsClearfix' id='adminEditInfo'>
+							{{$staff_edit = \IPS\Member::load($row['staff_forum_id_edit']);}}
+
+							<div class='ipsGrid ipsGrid_collapsePhone'>
+								<div class='ipsGrid_span2 ipsPos_left ipsType_center cNewestMember'>
+									{template="userPhoto" app="core" group="global" params="$staff_edit, 'small'"}
+								</div>
+								<div class='ipsGrid_span10 ipsWidget_latestItem'>
+									<strong class="ipsType_minorHeading">Miembro del Staff</strong><br>
+									<span class="ipsType_normal">{$staff_edit->name}</span><br>
+									<span class="ipsType_medium ipsType_light">Última edición: {datetime="$row['staff_forum_id_edit_timestamp']" lowercase="true"}</span>
+								</div>
+							</div>
+						</div>
+					{{endif}}
+
+					{{if $row['suspend_id']}}
+						&nbsp;&nbsp;
+						<span data-ipsTooltip title='Suspendido' class='ipsType_negative ipsType_small'><i class='fa fa-times'></i></a>
+					{{endif}}
+				</td>
+				<td>
+					{{$member = \IPS\Member::load($row['forum_id']);}}
+					{template="userPhoto" app="core" group="global" params="$member, 'tiny'"}
+					{$member->link()|raw}
+
+					&nbsp;&nbsp;
+
+					{{if $member->member_group_name != NULL}}
+						<span data-ipsTooltip title='{$member->member_group_name}' class='ipsType_neutral ipsType_small'><i class='fa fa-search'></i></a>
+					{{else}}
+						<span data-ipsTooltip title='Capitán' class='ipsType_neutral ipsType_small'><i class='fa fa-search'></i></a>
+					{{endif}}
+				</td>
+				<td>{$row['server_id']}</td>
+				{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+					<td>
+						<span class="ipsBadge ipsBadge_new ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=editAdmin&aid={$row['id']}" seoTemplate="adminpanel_editAdmin"}' data-ipsDialog data-ipsDialog-title="Editando a {$row['name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Editar Capitán'><i class="fa fa-pencil"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+					<td>
+						<span class="ipsBadge ipsBadge_warning ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=suspendAdmin&aid={$row['id']}" seoTemplate="adminpanel_suspendAdmin"}' data-ipsDialog data-ipsDialog-title="Suspendiendo a {$row['name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Suspender Capitán'><i class="fa fa-gavel"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=removeAdmin&aid={$row['id']}" seoTemplate="adminpanel_removeAdmin"}' data-ipsTooltip title='Remover Capitán'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="main" template_name="staffListRow" template_data="$table, $headers, $rows" template_location="front" template_app="adminpanel"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Tag CS</th>
+			<th>Miembro</th>
+			<th>Servidor</th>
+			{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>
+					{$row['name']}
+
+					{{if $row['staff_forum_id']}}
+						&nbsp;&nbsp;
+						<a href='#' id='adminAddInfoDialog' data-ipsDialog data-ipsDialog-content='#adminAddInfo' data-ipsDialog-size='narrow' data-ipsTooltip title='Ver quién agregó el Admin' class='ipsType_success ipsType_small'><i class='fa fa-plus'></i></a>
+
+						<div class='ipsHide ipsPad ipsClearfix' id='adminAddInfo'>
+							{{$staff_add = \IPS\Member::load($row['staff_forum_id']);}}
+
+							<div class='ipsGrid ipsGrid_collapsePhone'>
+								<div class='ipsGrid_span2 ipsPos_left ipsType_center cNewestMember'>
+									{template="userPhoto" app="core" group="global" params="$staff_add, 'small'"}
+								</div>
+								<div class='ipsGrid_span10 ipsWidget_latestItem'>
+									<strong class="ipsType_minorHeading">Miembro del Staff</strong><br>
+									<span class="ipsType_normal">{$staff_add->name}</span>
+								</div>
+							</div>
+						</div>
+					{{endif}}
+
+					{{if $row['staff_forum_id_edit']}}
+						&nbsp;&nbsp;
+						<a href='#' id='adminEditInfoDialog' data-ipsDialog data-ipsDialog-content='#adminEditInfo' data-ipsDialog-size='narrow' data-ipsTooltip title='Ver quién editó el Admin' class='ipsType_issue ipsType_small'><i class='fa fa-pencil'></i></a>
+
+						<div class='ipsHide ipsPad ipsClearfix' id='adminEditInfo'>
+							{{$staff_edit = \IPS\Member::load($row['staff_forum_id_edit']);}}
+
+							<div class='ipsGrid ipsGrid_collapsePhone'>
+								<div class='ipsGrid_span2 ipsPos_left ipsType_center cNewestMember'>
+									{template="userPhoto" app="core" group="global" params="$staff_edit, 'small'"}
+								</div>
+								<div class='ipsGrid_span10 ipsWidget_latestItem'>
+									<strong class="ipsType_minorHeading">Miembro del Staff</strong><br>
+									<span class="ipsType_normal">{$staff_edit->name}</span><br>
+									<span class="ipsType_medium ipsType_light">Última edición: {datetime="$row['staff_forum_id_edit_timestamp']" lowercase="true"}</span>
+								</div>
+							</div>
+						</div>
+					{{endif}}
+
+					{{if $row['suspend_id']}}
+						&nbsp;&nbsp;
+						<span data-ipsTooltip title='Suspendido' class='ipsType_negative ipsType_small'><i class='fa fa-times'></i></a>
+					{{endif}}
+				</td>
+				<td>
+					{{$member = \IPS\Member::load($row['forum_id']);}}
+					{template="userPhoto" app="core" group="global" params="$member, 'tiny'"}
+					{$member->link()|raw}
+
+					&nbsp;&nbsp;
+
+					{{if $member->member_group_name != NULL}}
+						<span data-ipsTooltip title='{$member->member_group_name}' class='ipsType_neutral ipsType_small'><i class='fa fa-search'></i></a>
+					{{else}}
+						<span data-ipsTooltip title='no-asignado' class='ipsType_neutral ipsType_small'><i class='fa fa-search'></i></a>
+					{{endif}}
+				</td>
+				<td>{$row['server_id']}</td>
+				{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+					<td>
+						<span class="ipsBadge ipsBadge_new ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=editAdmin&aid={$row['id']}" seoTemplate="adminpanel_editAdmin"}' data-ipsDialog data-ipsDialog-title="Editando a {$row['name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Editar Staff'><i class="fa fa-pencil"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+					<td>
+						<span class="ipsBadge ipsBadge_warning ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=suspendAdmin&aid={$row['id']}" seoTemplate="adminpanel_suspendAdmin"}' data-ipsDialog data-ipsDialog-title="Suspendiendo a {$row['name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Suspender Staff'><i class="fa fa-gavel"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=removeAdmin&aid={$row['id']}" seoTemplate="adminpanel_removeAdmin"}' data-ipsTooltip title='Remover Staff'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="main" template_name="statusAdmin" template_data="$data" template_location="front" template_app="adminpanel"><![CDATA[<script type="text/javascript">
+	function changeAdmin(key) {
+		var i;
+		for(i = 0; i <= 5; ++i) {
+			if(i == key) {
+				document.getElementById("admin"+i).classList.remove("ipsButton_light");
+				document.getElementById("admin"+i).classList.add("ipsButton_primary");
+
+				document.getElementById("adminDiv"+i).classList.remove("ipsHide");
+			} else {
+				document.getElementById("admin"+i).classList.remove("ipsButton_primary");
+				document.getElementById("admin"+i).classList.add("ipsButton_light");
+
+				document.getElementById("adminDiv"+i).classList.add("ipsHide");
+			}
+		}
+	}
+</script>
+
+<div class='ipsPadding'>
+	{{if \count($data) > 1}}
+		<ul class='ipsList_inline ipsClearfix ipsType_center'>
+			{{foreach $data as $key => $d}}
+				<li><a 	{{if time() > $d["finish"]}}
+							
+						{{else}}
+							onclick='changeAdmin({$key});'
+						{{endif}}
+						id='admin{$key}'
+						{{if time() > $d["finish"]}}
+							data-ipsTooltip title='{$d["server_id"]} ~ [VENCIDO]'
+						{{else}}
+							data-ipsTooltip title='{$d["server_id"]}'
+						{{endif}}
+						class='ipsButton ipsButton_small {{if $key != 0}}ipsButton_light{{else}}ipsButton_primary{{endif}}'
+						{{if time() > $d["finish"]}}
+							disabled="disabled"
+						{{endif}}>{$d['name']}
+				</a></li>
+			{{endforeach}}
+		</ul>
+
+		<hr class='ipsHr' />
+	{{endif}}
+
+	{{foreach $data as $key => $d}}
+		<div id='adminDiv{$key}' class='{{if $key != 0}}ipsHide{{endif}}'>
+			{{if $d['suspend_id']}}
+				<div class='ipsMessage ipsMessage_error ipsSpacer_bottom'>
+					Tu Admin ha sido <strong>suspendido</strong>. Para ver los detalles del mismo, visita <a href='#' id='suspendInfoDialog' data-ipsDialog data-ipsDialog-title='Datos de tu suspensión' data-ipsDialog-content='#suspendInfo' data-ipsDialog-size='narrow'>este enlace</a>.
+					<div class='ipsHide' id='suspendInfo'>
+						<h1 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Admin Suspendido #{number="$d['suspend_id']"}</h1>
+						<hr class='ipsHr'>
+						<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+							<tbody>
+								<tr class='ipsClearfix'>
+									<td align="left">Staff que te suspendió:</td>
+									<td align="right">
+										{{$member = \IPS\Member::load($d['staff_forum_id']);}}
+										{$member->link()|raw}
+									</td>
+								</tr>
+								<tr class='ipsClearfix'>
+									<td align="left">Te suspendieron el día:</td>
+									<td align="right">{datetime="$d['s_start']" lowercase="true"}</td>
+								</tr>
+								<tr class='ipsClearfix'>
+									<td align="left">Tu suspensión expira el día:</td>
+									<td align="right">{datetime="$d['sfinish']" lowercase="true"}</td>
+								</tr>
+								<tr class='ipsClearfix'>
+									<td align="left">Razón de la suspensión:</td>
+									<td align="right">{$d['s_reason']}</td>
+								</tr>
+								<tr class='ipsClearfix'>
+									<td align="left">Servidor:</td>
+									<td align="right">{$d['s_server_id']}</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr class='ipsHr'>
+						<div class='ipsType_center ipsPad_half'>
+							<span class='ipsType_large'>Si piensas que la suspensión es injusta o esperas una explicación de la misma, <span class='ipsType_bold'>contáctate con el miembro del Staff</span> que te haya suspendido. Dirígete a su perfil que está linkeado en los datos de la suspensión y envíale un mensaje privado consultando por la suspensión.</span>
+						</div>
+					</div>
+				</div>
+			{{endif}}
+
+			{{$warning_finish = ($d['finish'] - time());}}
+			{{if $warning_finish <= 864000}}
+				<div class='ipsMessage ipsMessage_info ipsSpacer_bottom'>
+					Tu Admin CS está a punto de vencerse. Si deseas renovar tu Admin CS, ve a la <a href='/ventas/'>sección de Ventas</a> y realiza los mismos pasos que hiciste al comprar la misma.
+				</div>
+			{{endif}}
+
+			<div class='ipsType_center'>
+				<div class='ipsGrid ipsGrid_collapsePhone'>
+					<div class='ipsGrid_span4 ipsPad'>
+						<h1 class='ipsType_pageTitle'>{$d['name']}&nbsp;<a href='{url="app=adminpanel&module=main&controller=main&do=statusAdminConfig&id={$d['id']}" seoTemplate="adminpanel_statusAdminConfig"}' data-ipsDialog data-ipsDialog-title='Configuración' data-ipsDialog-size='narrow' data-ipsTooltip title='Configuración'><i class='fa fa-pencil'></i></a></h1>
+						<span class='ipsType_light'><i class='fa fa-user'></i>&nbsp;Tag CS</span>
+					</div>
+					<div class='ipsGrid_span4 ipsPad'>
+						<h1 class='ipsType_pageTitle'>{$d['server_id']}</h1>
+						<span class='ipsType_light'><i class='fa fa-gamepad'></i>&nbsp;Servidor</span>
+					</div>
+					<div class='ipsGrid_span4 ipsPad'>
+						<h1 class='ipsType_pageTitle'>{{if $d['finish'] == 2000000000}}Permanente{{else}}{datetime="$d['finish']" lowercase="true"}{{endif}}</h1>
+						<span class='ipsType_light'><i class='fa fa-clock-o'></i>&nbsp;Vencimiento</span><br>
+					</div>
+					<div class='ipsGrid_span6 ipsPad'>
+						<h1 class='ipsType_pageTitle'>{expression="\IPS\Member\Group::load(\IPS\Member::loggedIn()->member_group_id)->formattedName" raw="true"}</h1>
+						<span class='ipsType_light'><i class='fa fa-star-o'></i>&nbsp;Rango en el foro</span>
+					</div>
+					<div class='ipsGrid_span6 ipsPad'>
+						<h1 class='ipsType_pageTitle'>{$d['access']}</h1>
+						<span class='ipsType_light'><i class='fa fa-star-o'></i>&nbsp;Rango en el Servidor</span>
+					</div>
+				</div>
+
+				<div class='ipsGrid ipsGrid_collapsePhone'>
+					<div class='ipsGrid_span6 ipsPad ipsAreaBackground_light'>
+						<h1 class='ipsType_pageTitle'><u>¿Cómo activo mi Admin CS?</u></h1>
+
+						<br />
+
+						<span>Para hacer funcionar tu Admin CS en los servidores solicitados, basta con poner dos comandos en tu consola del juego. Para abrir la consola, <span class='ipsType_bold'>ingresa al juego, y presiona la tecla que está a la izquierda de la tecla 1</span>. Luego ingrese los comandos que se nonmbrarán abajo.</span>
+
+						<br />
+						<br />
+
+						<div class='ipsCode'>name "{$d['name']}"</div>
+						<br />
+						<div class='ipsCode'>setinfo "_pw" "Tu contraseña"</div>
+
+						<br />
+
+						<span>Si por alguna extraña razón olvidas tu contraseña, envía un mensaje privado a un miembro del staff de rango <span style='font-weight: bold; font-family: "Arial", serif; color: #FE2E2E;'>Director</span> y consulta sobre tu contraseña de tu Admin CS.</span>
+					</div>
+					<div class='ipsGrid_span6 ipsPad ipsAreaBackground_light'>
+						<h1 class='ipsType_pageTitle'><u>¿Tienes problemas al ingresar tu contraseña?</u></h1>
+
+						<br />
+
+						<span>Quizás hayas pasado una vez por este error: <span class='ipsType_bold'>Info string length exceeded</span>. Para arreglar este error, copia lo siguiente en consola.</span>
+
+						<br />
+						<br />
+
+						<div class='ipsCode'>
+							setinfo bottomcolor ^"^";setinfo cl_lc ^"^"; setinfo model ^"^"; setinfo topcolor ^"^"; setinfo _9387 ^"^"; setinfo _iv ^"^"; setinfo _ah ^"^"; setinfo _puqz ^"^"; setinfo _ndmh ^"^"; setinfo _ndmf ^"^"; setinfo _ndms ^"^"; setinfo rate ^"^"; setinfo _pw ^"^"
+						</div>
+
+						<br />
+
+						<span>No te preocupes si borras también la setinfo <span class='ipsType_bold'>_pw</span>, ya que necesitarás ingresar una nueva para que tu VIP sea tomado al entrar al servidor.</span>
+					</div>
+				</div>
+
+				<hr class='ipsHr' />
+
+				<span class='ipsType_large'>Esos son todos los pasos para activar tu Admin CS. Espero que disfrutes sus beneficios dentro de nuestros servidores. Recuerda <strong>por favor</strong> leer las <a href="/reglamento/">reglas de la comunidad</a> para evitar todo tipo de inconvenientes. Y si tienes alguna consulta en especifica, comunícate con algún <a href="/staff/">miembro del staff</a> situado en la sección correspondiente.</span>
+
+				<hr class='ipsHr' />
+				
+				<span class='ipsType_large'>Visita la <a href='/foro/7-zona-admin/'>Zona Admin CS</a> para obtener soporte en caso de tener alguna duda sobre cómo usarlo o como tomar acción ante una situación donde se te generen dudas. Por favor, no dudes en publicar temas allí ante cualquier inconveniente o inquietud.</span>
+			</div>
+		</div>
+	{{endforeach}}
+</div>]]></template>
+ <template template_group="main" template_name="statusVip" template_data="$data" template_location="front" template_app="adminpanel"><![CDATA[<div class='ipsResponsive_hidePhone ipsResponsive_hideTablet ipsResponsive_block'>
+	<div class='ipsPageHeader ipsClearfix ipsSpacer_bottom'>
+		<h1 class='ipsType_pageTitle'><i class='fa fa-star-o'></i>&nbsp;{lang="menu__adminpanel_statusVip"}</h1>
+	</div>
+</div>
+
+<div class='ipsResponsive_hideDesktop'>
+	<div class="ipsType_center ipsSpacer_bottom ipsSpacer_top">
+		<h1 class="ipsType_veryLarge ipsType_reset">&nbsp;{lang="menu__adminpanel_statusVip"}&nbsp;</h1>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function fadeIn(el, time) {
+		el.style.opacity = 0;
+
+		var last = +new Date();
+		var tick = function() {
+			el.style.opacity = +el.style.opacity + (new Date() - last) / time;
+			last = +new Date();
+
+			if (+el.style.opacity < 1) {
+				(window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+			}
+		};
+
+		tick();
+	}
+
+	function changeVip(key) {
+		var eg;
+		var eg_div;
+		var i;
+
+		for(i = 0; i <= 5; ++i) {
+			eg = document.getElementById("vip" + i);
+			eg_div = document.getElementById("vipDiv" + i);
+
+			if(i == key) {
+				eg.classList.remove("ipsButton_light");
+				eg.classList.add("ipsButton_primary");
+
+				fadeIn(eg_div, 360);
+				eg_div.classList.remove("ipsHide");
+			} else {
+				eg.classList.remove("ipsButton_primary");
+				eg.classList.add("ipsButton_light");
+
+				eg_div.classList.add("ipsHide");
+			}
+		}
+	}
+
+	window.onload = function() {
+		var eg;
+		var eg_div;
+		var i;
+
+		for(i = 0; i <= 5; ++i) {
+			eg = document.getElementById("vip" + i);
+			eg_div = document.getElementById("vipDiv" + i);
+
+			if(i == 0) {
+				eg.classList.add("ipsButton_primary");
+				fadeIn(eg_div, 360);
+			} else {
+				eg.classList.add("ipsButton_light");
+				eg_div.classList.add("ipsHide");
+			}
+		}
+	};
+</script>
+
+{{if \count($data) > 1}}
+	<div class='ipsPad ipsSpacer_bottom'>
+		<ul class='ipsList_inline ipsClearfix ipsType_center'>
+			{{foreach $data as $key => $d}}
+				<li><a 	{{if time() > $d["finish"]}}
+							
+						{{else}}
+							onclick='changeVip({$key});'
+						{{endif}}
+						id='vip{$key}'
+						{{if time() > $d["finish"]}}
+							data-ipsTooltip title='{$d["server_id"]} ~ [VENCIDO]'
+						{{else}}
+							data-ipsTooltip title='{$d["server_id"]}'
+						{{endif}}
+						class='ipsButton ipsButton_small'
+						{{if time() > $d["finish"]}}
+							disabled="disabled"
+						{{endif}}>{$d['name']}
+				</a></li>
+			{{endforeach}}
+		</ul>
+	</div>
+{{endif}}
+
+{{foreach $data as $key => $d}}
+	<div id='vipDiv{$key}'>
+		<div class='ipsColumns ipsColumns_bothSpacing ipsColumns_halfSpacing ipsColumns_collapsePhone'>
+			<div class='ipsColumn ipsColumn_fixed ipsColumn_veryWide'>
+				<ol class='ipsDataList ipsType_center ipsType_sectionHead ipsPad ipsBox ipsPageHeader'>
+					<li class='ipsDataItem ipsPad'>Tag CS: <strong>{$d['name']}</strong></li>
+					<li class='ipsDataItem ipsPad'>Servidor: <strong>{$d['server_id']}</strong></li>
+					<li class='ipsDataItem ipsPad'>Vencimiento: <strong>{{if $d['finish'] == 2000000000}}Permanente{{else}}{datetime="$d['finish']" lowercase="true"}{{endif}}</strong></li>
+					<li class='ipsDataItem ipsPad'>Rango en el foro: <strong>{expression="\IPS\Member\Group::load(\IPS\Member::loggedIn()->member_group_id)->formattedName" raw="true"}</strong></li>
+					<li class='ipsDataItem ipsPad'><a class='ipsButton ipsButton_important ipsButton_small' href='{url="app=adminpanel&module=main&controller=statusVip&do=config&id={$d['id']}" seoTemplate="statusVipConfig"}' data-ipsDialog data-ipsDialog-title='Configuración' data-ipsDialog-size='narrow' data-ipsTooltip title='Configuración'><i class='fa fa-pencil'></i> Cambiar configuración</a></li>
+				</ol>
+			</div>
+			<div class='ipsColumn ipsColumn_fluid ipsPad ipsBox ipsType_center'>
+				{{if $d['suspend_id']}}
+					<div class='ipsMessage ipsMessage_error ipsSpacer_bottom'>
+						Tu VIP ha sido <strong>suspendido</strong>. Para ver los detalles del mismo, visita <a href='#' id='suspendInfoDialog' data-ipsDialog data-ipsDialog-title='Datos de tu suspensión' data-ipsDialog-content='#suspendInfo' data-ipsDialog-size='narrow'>este enlace</a>.
+						<div class='ipsHide' id='suspendInfo'>
+							<h1 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>VIP Suspendido #{number="$d['suspend_id']"}</h1>
+							<hr class='ipsHr'>
+							<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+								<tbody>
+									<tr class='ipsClearfix'>
+										<td align="left">Staff que te suspendió:</td>
+										<td align="right">
+											{{$member = \IPS\Member::load($d['staff_forum_id']);}}
+											{$member->link()|raw}
+										</td>
+									</tr>
+									<tr class='ipsClearfix'>
+										<td align="left">Te suspendieron el día:</td>
+										<td align="right">{datetime="$d['s_start']" lowercase="true"}</td>
+									</tr>
+									<tr class='ipsClearfix'>
+										<td align="left">Tu suspensión expira el día:</td>
+										<td align="right">{datetime="$d['s_finish']" lowercase="true"}</td>
+									</tr>
+									<tr class='ipsClearfix'>
+										<td align="left">Razón de la suspensión:</td>
+										<td align="right">{$d['s_reason']}</td>
+									</tr>
+									<tr class='ipsClearfix'>
+										<td align="left">Servidor:</td>
+										<td align="right">{$d['s_server_id']}</td>
+									</tr>
+								</tbody>
+							</table>
+							<hr class='ipsHr'>
+							<div class='ipsType_center ipsPad_half'>
+								<span class='ipsType_large'>Si piensas que la suspensión es injusta o esperas una explicación de la misma, <span class='ipsType_bold'>contáctate con el miembro del Staff</span> que te haya suspendido. Dirígete a su perfil que está linkeado en los datos de la suspensión y envíale un mensaje privado consultando por la suspensión.</span>
+							</div>
+						</div>
+					</div>
+				{{endif}}
+
+				{{$warning_finish = ($d['finish'] - time());}}
+				{{if $warning_finish <= 864000}}
+					<div class='ipsMessage ipsMessage_info ipsSpacer_bottom'>
+						Tu VIP está a punto de vencerse. Si deseas renovar tu VIP, ve a la <a href='/ventas/'>sección de Ventas</a> y realiza los mismos pasos que hiciste al comprar la misma.
+					</div>
+				{{endif}}
+
+				<h1 class='ipsType_pageTitle'>¡Hola, {{$name = \IPS\Member::loggedIn()->name;}}{$name}!</h1>
+
+				{{$datetime = new \IPS\DateTime(); $today = clone $datetime;}}
+				{{$rest = ($d['finish'] - time());}}
+				{{$time = \IPS\DateTime::formatInterval($datetime->diff($today->modify('+'.round($rest).' seconds')), 0);}}
+
+				<span class='ipsType_light'>Tu <span style="color: #ffbf00; font-weight: bold; text-shadow: 0 0 .9em #ffbf00;">VIP&nbsp;<i class='fa fa-star-o'></i></span> se vence en <strong>{$time}</strong></span>
+
+				<br />
+				<br />
+
+				<div class='ipsGrid ipsGrid_collapsePhone'>
+					<div class='ipsGrid_span6 ipsPad ipsAreaBackground_light'>
+						<h1 class='ipsType_pageTitle'><u>¿Cómo activo mi VIP?</u></h1>
+
+						<br />
+
+						<span>Para hacer funcionar tu VIP en los servidores solicitados, basta con poner dos comandos en tu consola del juego. Para abrir la consola, <span class='ipsType_bold'>ingresa al juego, y presiona la tecla que está a la izquierda de la tecla 1</span>. Luego ingrese los comandos que se nonmbrarán abajo.</span>
+
+						<br />
+						<br />
+
+						<div class='ipsCode'>name "{$d['name']}"</div>
+						<br />
+						<div class='ipsCode'>setinfo "_pw" "Tu contraseña"</div>
+
+						<br />
+
+						<span>Si por alguna extraña razón olvidas tu contraseña, envía un mensaje privado a un miembro del staff de rango <span style='font-weight: bold; font-family: "Arial", serif; color: #FE2E2E;'>Director</span> y consulta sobre tu contraseña de tu VIP.</span>
+					</div>
+					<div class='ipsGrid_span6 ipsPad ipsAreaBackground_light'>
+						<h1 class='ipsType_pageTitle'><u>¿Tienes problemas al ingresar tu contraseña?</u></h1>
+
+						<br />
+
+						<span>Quizás hayas pasado una vez por este error: <span class='ipsType_bold'>Info string length exceeded</span>. Para arreglar este error, copia lo siguiente en consola.</span>
+
+						<br />
+						<br />
+
+						<div class='ipsCode'>
+							setinfo bottomcolor ^"^";setinfo cl_lc ^"^"; setinfo model ^"^"; setinfo topcolor ^"^"; setinfo _9387 ^"^"; setinfo _iv ^"^"; setinfo _ah ^"^"; setinfo _puqz ^"^"; setinfo _ndmh ^"^"; setinfo _ndmf ^"^"; setinfo _ndms ^"^"; setinfo rate ^"^"; setinfo _pw ^"^"
+						</div>
+
+						<br />
+
+						<span>No te preocupes si borras también la setinfo <span class='ipsType_bold'>_pw</span>, ya que necesitarás ingresar una nueva para que tu VIP sea tomado al entrar al servidor.</span>
+					</div>
+				</div>
+				
+				<hr class='ipsHr' />
+
+				<span class='ipsType_large'>Esos son todos los pasos para activar tu VIP. Espero que disfrutes sus beneficios dentro de nuestros servidores. Recuerda <strong>por favor</strong> leer las <a href="/reglamento/">reglas de la comunidad</a> para evitar todo tipo de inconvenientes. Y si tienes alguna consulta en especifica, comunícate con algún <a href="/staff/">miembro del staff</a> situado en la sección correspondiente.</span>
+			</div>
+		</div>
+	</div>
+{{endforeach}}]]></template>
+ <template template_group="main" template_name="suspendListRow" template_data="$table, $headers, $rows" template_location="front" template_app="adminpanel"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Fecha y hora</th>
+			<th>Admin CS</th>
+			<th>Staff</th>
+			<th>Vencimiento</th>
+			<th>Servidor</th>
+			<th></th>
+			{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>{datetime="$row['start']" lowercase="true"}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['admin_forum_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$row['admin_name']}
+				</td>
+				<td>
+					{{$member = \IPS\Member::load($row['staff_forum_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$row['staff_name']}
+				</td>
+				<td>{datetime="$row['finish']" lowercase="true"}</td>
+				<td>{$row['server_id']}</td>
+				<td>
+					<span class="ipsBadge {{if $row['active']}}ipsBadge_positive{{else}}ipsBadge_negative{{endif}} ipsBadge_icon">
+						<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=viewSuspend&sid={$row['id']}" seoTemplate="adminpanel_viewSuspend"}' data-ipsTooltip title='{{if $row['active']}}Suspensión activa{{else}}Suspensión removida{{endif}}' data-ipsDialog data-ipsDialog-title="Viendo información de la Suspensión" data-ipsDialog-size='narrow'><i class="fa fa-search"></i></a>
+					</span>
+				</td>
+				{{if \IPS\Application::load('adminpanel')->canEditSuspend() && $row['active'] == 1}}
+					<td>
+						<span class="ipsBadge ipsBadge_new ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=editSuspend&sid={$row['id']}" seoTemplate="adminpanel_viewSuspend_edit"}' data-ipsDialog data-ipsDialog-title="Editando a {$row['admin_name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Editar suspensión'><i class="fa fa-pencil"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="main" template_name="viewBan" template_data="$row, $data" template_location="front" template_app="adminpanel"><![CDATA[<div class='ipsPadding'>
+	<h2 id='elBanHeader' class='ipsType_sectionTitle ipsType_reset'>
+		{{if \IPS\Application::load('adminpanel')->canEditBan() && $row['active'] == 1}}
+			<ul class="ipsPos_right ipsList_inline ipsList_noSpacing">
+				<li><a class='cAdminPanel_banButtons' href='{url="app=adminpanel&module=main&controller=main&area=removeBan&bid={$row['id']}" seoTemplate="adminpanel_viewBan_remove"}' data-ipsTooltip title='Remover ban'><i class='fa fa-ban'></i></a></li>
+			</ul>
+		{{endif}}
+		<div>Ban #{number="$row['id']"}</div>
+		<div class='ipsType_light ipsType_small'><u>Razón del ban</u>: <strong>{$row['reason']}</strong></div>
+	</h2>
+	
+	<div class='ipsPadding sm:ipsPadding ipsBox ipsType_center ipsClearfix ipsResponsive_pull'>
+		<ul class='ipsList_inline ipsFlex ipsFlex-ai:center ipsFlex-jc:center ipsFlex-fw:wrap ipsResponsive_noFloat'>
+			<li>
+				<h4 class='ipsType_minorHeading'>Admin</h4>
+				{{if $row['admin_authid_m'] != NULL}}
+					<a href="https://steamcommunity.com/profiles/{$row['admin_authid_m']}" data-ipsTooltip title='Ir al perfil de Steam'>{$row['admin_name']}</a>
+				{{else}}
+					{$row['admin_name']}
+				{{endif}}
+			</li>
+			<li class='cAdminPanel_separatorList'></li>
+			<li>
+				<h4 class='ipsType_minorHeading'>
+					{{if preg_match('/^STEAM_/', $row['admin_authid'])}}
+						SteamId del Admin
+					{{else}}
+						IP del Admin
+					{{endif}}
+				</h4>
+				{{if \IPS\Application::load('adminpanel')->canEditBan()}}
+					{{if $row['admin_name'] == 'www.DrunkGaming.net'}}
+						-
+					{{else}}
+						{$row['admin_authid']}
+					{{endif}}
+				{{else}}
+					-
+				{{endif}}
+			</li>
+			<li class='cAdminPanel_separatorList'></li>
+			<li>
+				<h4 class='ipsType_minorHeading'>Jugador</h4>
+				{{if $row['user_authid_m'] != NULL}}
+					<a href="https://steamcommunity.com/profiles/{$row['user_authid_m']}" data-ipsTooltip title='Ir al perfil de Steam'>{$row['user_name']}</a>
+				{{else}}
+					{$row['user_name']}
+				{{endif}}
+			</li>
+			<li class='cAdminPanel_separatorList'></li>
+			<li>
+				<h4 class='ipsType_minorHeading'>
+					{{if preg_match('/^STEAM_/', $row['user_authid'])}}
+						SteamId del Jugador
+					{{else}}
+						IP del Jugador
+					{{endif}}
+				</h4>
+				{$row['user_authid']}
+			</li>
+			<li class='cAdminPanel_separatorList'></li>
+			<li>
+				<h4 class='ipsType_minorHeading'>Fecha de Inicio</h4>
+				{datetime="$row['start']" lowercase="true"}
+			</li>
+			<li class='cAdminPanel_separatorList'></li>
+			<li>
+				<h4 class='ipsType_minorHeading'>Duración</h4>
+				{{if $row['minutes'] == 0}}
+					Permanente
+				{{else}}
+					{$row['minutes']} min
+				{{endif}}
+			</li>
+			<li class='cAdminPanel_separatorList'></li>
+			{{if $row['minutes'] != 0}}
+				<li>
+					<h4 class='ipsType_minorHeading'>Fecha de Finalización</h4>
+					{datetime="$row['finish']" lowercase="true"}
+				</li>
+				<li class='cAdminPanel_separatorList'></li>
+			{{endif}}
+			<li>
+				<h4 class='ipsType_minorHeading'>Servidor</h4>
+				{expression="\IPS\Application::load('adminpanel')->getServerName($row['server_id'])"}
+			</li>
+		</ul>
+	</div>
+
+	{{if $row['server_id'] == 0 || $data['count_ban_totals'] > 1}}
+		<div class='ipsType_center ipsMargin_top'>
+			{{if $row['server_id'] == 0}}
+				<span class='ipsType_large ipsType_negative'><u>El jugador está <strong>VETADO</strong> de la comunidad</u></span>
+				<br />
+				<br />
+			{{endif}}
+
+			<span class='ipsType_large'>El jugador ha sufrido <strong>{$data['count_ban_totals']} baneos en total</strong></span>
+			<br />
+			<br />
+			<span class='ipsType_large'>El jugador ha sufrido <strong>{$data['count_ban_in_server_totals']} baneos en total</strong> en el servidor especificado</span>
+		</div>
+	{{endif}}
+</div>]]></template>
+ <template template_group="main" template_name="viewSuspend" template_data="$row" template_location="front" template_app="adminpanel"><![CDATA[<h2 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Admin suspendido #{number="$row['id']"}</h2>
+<hr class='ipsHr'>
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<tr>
+		<td align='left'>Fecha y hora de Inicio</td>
+		<td align='right'>{datetime="$row['start']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Admin CS</td>
+		<td align='right'>{$row['admin_name']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Miembro</td>
+		<td align='right'>{{$member = \IPS\Member::load($row['admin_forum_id']);}}{$member->link()|raw}</td>
+	</tr>
+	<tr>
+		<td align='left'>Staff</td>
+		<td align='right'>{$row['staff_name']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Miembro</td>
+		<td align='right'>{{$member = \IPS\Member::load($row['staff_forum_id']);}}{$member->link()|raw}</td>
+	</tr>
+	<tr>
+		<td align='left'>Vencimiento</td>
+		<td align='right'>{datetime="$row['finish']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Razón de la suspensión</td>
+		<td align='right'>{$row['reason']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Servidor</td>
+		<td align='right'>{$row['server_id']}</td>
+	</tr>
+</table>
+{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+	<hr class='ipsHr'>
+	{{if $row['active'] == 1}}
+		<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+			<a href='{url="app=adminpanel&module=main&controller=main&area=removeSuspend&sid={$row['id']}" seoTemplate="adminpanel_viewSuspend_remove"}' class='ipsButton ipsButton_important ipsButton_fullWidth'><i class='fa fa-ban'></i> Remover suspensión</a>
+		</div>
+	{{else}}
+		<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+			<span class='ipsType_large'>Suspensión expirada/removida</span>
+		</div>
+	{{endif}}
+{{endif}}]]></template>
+ <template template_group="main" template_name="vipListRow" template_data="$table, $headers, $rows" template_location="front" template_app="adminpanel"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Tag CS</th>
+			<th>Miembro</th>
+			<th>Vencimiento</th>
+			{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>
+					{$row['name']}
+
+					{{if $row['staff_forum_id']}}
+						&nbsp;&nbsp;
+						<a href='#' id='adminAddInfoDialog' data-ipsDialog data-ipsDialog-content='#adminAddInfo' data-ipsDialog-size='narrow' data-ipsTooltip title='Ver quién agregó el Admin' class='ipsType_success ipsType_small'><i class='fa fa-plus'></i></a>
+
+						<div class='ipsHide ipsPad ipsClearfix' id='adminAddInfo'>
+							{{$staff_add = \IPS\Member::load($row['staff_forum_id']);}}
+
+							<div class='ipsGrid ipsGrid_collapsePhone'>
+								<div class='ipsGrid_span2 ipsPos_left ipsType_center cNewestMember'>
+									{template="userPhoto" app="core" group="global" params="$staff_add, 'small'"}
+								</div>
+								<div class='ipsGrid_span10 ipsWidget_latestItem'>
+									<strong class="ipsType_minorHeading">Miembro del Staff</strong><br>
+									<span class="ipsType_normal">{$staff_add->name}</span>
+								</div>
+							</div>
+						</div>
+					{{endif}}
+
+					{{if $row['staff_forum_id_edit']}}
+						&nbsp;&nbsp;
+						<a href='#' id='adminEditInfoDialog' data-ipsDialog data-ipsDialog-content='#adminEditInfo' data-ipsDialog-size='narrow' data-ipsTooltip title='Ver quién editó el Admin' class='ipsType_issue ipsType_small'><i class='fa fa-pencil'></i></a>
+
+						<div class='ipsHide ipsPad ipsClearfix' id='adminEditInfo'>
+							{{$staff_edit = \IPS\Member::load($row['staff_forum_id_edit']);}}
+
+							<div class='ipsGrid ipsGrid_collapsePhone'>
+								<div class='ipsGrid_span2 ipsPos_left ipsType_center cNewestMember'>
+									{template="userPhoto" app="core" group="global" params="$staff_edit, 'small'"}
+								</div>
+								<div class='ipsGrid_span10 ipsWidget_latestItem'>
+									<strong class="ipsType_minorHeading">Miembro del Staff</strong><br>
+									<span class="ipsType_normal">{$staff_edit->name}</span><br>
+									<span class="ipsType_medium ipsType_light">Última edición: {datetime="$row['staff_forum_id_edit_timestamp']" lowercase="true"}</span>
+								</div>
+							</div>
+						</div>
+					{{endif}}
+
+					&nbsp;&nbsp;
+					<span data-ipsTooltip title='VIP en {$row["server_id"]}' class='ipsType_neutral ipsType_small'><i class='fa fa-gamepad'></i></a>
+				</td>
+				<td>
+					{{$member = \IPS\Member::load($row['forum_id']);}}
+					{template="userPhoto" app="core" group="global" params="$member, 'tiny'"}
+					{$member->link()|raw}
+				</td>
+				<td>
+					{{if $row['finish'] == 2000000000}}
+						Permanente
+					{{else}}
+						{datetime="$row['finish']" lowercase="true"}
+					{{endif}}
+				</td>
+				{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+					<td>
+						<span class="ipsBadge ipsBadge_new ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=editAdmin&aid={$row['id']}" seoTemplate="adminpanel_editAdmin"}' data-ipsDialog data-ipsDialog-title="Editando a {$row['name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Editar VIP'><i class="fa fa-pencil"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=removeAdmin&aid={$row['id']}" seoTemplate="adminpanel_removeAdmin"}' data-ipsTooltip title='Remover VIP'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <css css_location="front" css_app="adminpanel" css_attributes="" css_path="." css_name="main.css">.cAdminPanel_separatorList {&#13;
+	border-right: 2px solid currentColor;&#13;
+	opacity: .2;&#13;
+	height: 36px;&#13;
+	width: 0;&#13;
+	display: block;&#13;
+}&#13;
+&#13;
+#elBanHeader {&#13;
+	margin-bottom: 0px !important;&#13;
+}&#13;
+&#13;
+.cAdminPanel_banButtons {&#13;
+	font-size: 18px;&#13;
+    opacity: 0.5;&#13;
+    -webkit-transition: 0.3s all linear;&#13;
+    -moz-transition: 0.3s all linear;&#13;
+    -ms-transition: 0.3s all linear;&#13;
+    -o-transition: 0.3s all linear;&#13;
+    transition: 0.3s all linear;&#13;
+    width: 20px;&#13;
+    height: 20px;&#13;
+	display: block;&#13;
+	margin-left: 10px;&#13;
+}&#13;
+&#13;
+.cAdminPanel_banButtons:hover {&#13;
+	opacity: 1;&#13;
+}&#13;
+&#13;
+@media screen and (max-width: 979px) {&#13;
+	.cAdminPanel_header {&#13;
+		text-align: center;&#13;
+	}&#13;
+&#13;
+	.cAdminPanel_header h1 {&#13;
+		font-size: 24px;&#13;
+		font-weight: bold;&#13;
+	}&#13;
+}</css>
+</theme>

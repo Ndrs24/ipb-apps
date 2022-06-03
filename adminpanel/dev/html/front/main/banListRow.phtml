@@ -1,0 +1,53 @@
+<ips:template parameters="$table, $headers, $rows" />
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Fecha y hora</th>
+			<th>Jugador</th>
+			<th>Admin</th>
+			<th>Duración</th>
+			<th>Servidor</th>
+			{{if \IPS\Application::load('adminpanel')->canEditBan()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canBanList()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>{datetime="($row['start'] + 10800)" lowercase="true"}</td>
+				<td>{$row['user_name']}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['forum_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$row['admin_name']}
+				</td>
+				<td>
+					{{if $row['minutes'] == 0}}
+						Permanente
+					{{else}}
+						{number="$row['minutes']"} min
+					{{endif}}
+				</td>
+				<td>{$row['server_id']}</td>
+				{{if \IPS\Application::load('adminpanel')->canEditBan() && $row['active'] == 1}}
+					<td>
+						<span class="ipsBadge ipsBadge_warning ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=blackListBan&bid={$row['id']}" seoTemplate="adminpanel_blackListBan"}' data-ipsTooltip title='Vetar de la Comunidad'><i class="fa fa-lock"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canBanList()}}
+					<td>
+						<span class="ipsBadge {{if $row['active']}}ipsBadge_positive{{else}}ipsBadge_negative{{endif}} ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=viewBan&bid={$row['id']}" seoTemplate="adminpanel_viewBan"}' data-ipsTooltip title='{{if $row['active']}}Ban activo{{else}}Ban removido{{endif}}' data-ipsDialog data-ipsDialog-title="Viendo información del ban"><i class="fa fa-search"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>

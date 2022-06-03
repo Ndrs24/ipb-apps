@@ -1,0 +1,107 @@
+<ips:template parameters="$table, $headers, $rows" />
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Tag CS</th>
+			<th>Miembro</th>
+			<th>Servidor</th>
+			{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>
+					{$row['name']}
+
+					{{if $row['staff_forum_id']}}
+						&nbsp;&nbsp;
+						<a href='#' id='adminAddInfoDialog' data-ipsDialog data-ipsDialog-content='#adminAddInfo' data-ipsDialog-size='narrow' data-ipsTooltip title='Ver quién agregó el Admin' class='ipsType_success ipsType_small'><i class='fa fa-plus'></i></a>
+
+						<div class='ipsHide ipsPad ipsClearfix' id='adminAddInfo'>
+							{{$staff_add = \IPS\Member::load($row['staff_forum_id']);}}
+
+							<div class='ipsGrid ipsGrid_collapsePhone'>
+								<div class='ipsGrid_span2 ipsPos_left ipsType_center cNewestMember'>
+									{template="userPhoto" app="core" group="global" params="$staff_add, 'small'"}
+								</div>
+								<div class='ipsGrid_span10 ipsWidget_latestItem'>
+									<strong class="ipsType_minorHeading">Miembro del Staff</strong><br>
+									<span class="ipsType_normal">{$staff_add->name}</span>
+								</div>
+							</div>
+						</div>
+					{{endif}}
+
+					{{if $row['staff_forum_id_edit']}}
+						&nbsp;&nbsp;
+						<a href='#' id='adminEditInfoDialog' data-ipsDialog data-ipsDialog-content='#adminEditInfo' data-ipsDialog-size='narrow' data-ipsTooltip title='Ver quién editó el Admin' class='ipsType_issue ipsType_small'><i class='fa fa-pencil'></i></a>
+
+						<div class='ipsHide ipsPad ipsClearfix' id='adminEditInfo'>
+							{{$staff_edit = \IPS\Member::load($row['staff_forum_id_edit']);}}
+
+							<div class='ipsGrid ipsGrid_collapsePhone'>
+								<div class='ipsGrid_span2 ipsPos_left ipsType_center cNewestMember'>
+									{template="userPhoto" app="core" group="global" params="$staff_edit, 'small'"}
+								</div>
+								<div class='ipsGrid_span10 ipsWidget_latestItem'>
+									<strong class="ipsType_minorHeading">Miembro del Staff</strong><br>
+									<span class="ipsType_normal">{$staff_edit->name}</span><br>
+									<span class="ipsType_medium ipsType_light">Última edición: {datetime="$row['staff_forum_id_edit_timestamp']" lowercase="true"}</span>
+								</div>
+							</div>
+						</div>
+					{{endif}}
+
+					{{if $row['suspend_id']}}
+						&nbsp;&nbsp;
+						<span data-ipsTooltip title='Suspendido' class='ipsType_negative ipsType_small'><i class='fa fa-times'></i></a>
+					{{endif}}
+				</td>
+				<td>
+					{{$member = \IPS\Member::load($row['forum_id']);}}
+					{template="userPhoto" app="core" group="global" params="$member, 'tiny'"}
+					{$member->link()|raw}
+
+					&nbsp;&nbsp;
+
+					{{if $member->member_group_name != NULL}}
+						<span data-ipsTooltip title='{$member->member_group_name}' class='ipsType_neutral ipsType_small'><i class='fa fa-search'></i></a>
+					{{else}}
+						<span data-ipsTooltip title='no-asignado' class='ipsType_neutral ipsType_small'><i class='fa fa-search'></i></a>
+					{{endif}}
+				</td>
+				<td>{$row['server_id']}</td>
+				{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+					<td>
+						<span class="ipsBadge ipsBadge_new ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=editAdmin&aid={$row['id']}" seoTemplate="adminpanel_editAdmin"}' data-ipsDialog data-ipsDialog-title="Editando a {$row['name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Editar Staff'><i class="fa fa-pencil"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+					<td>
+						<span class="ipsBadge ipsBadge_warning ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=suspendAdmin&aid={$row['id']}" seoTemplate="adminpanel_suspendAdmin"}' data-ipsDialog data-ipsDialog-title="Suspendiendo a {$row['name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Suspender Staff'><i class="fa fa-gavel"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('adminpanel')->canAddAdmin()}}
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=removeAdmin&aid={$row['id']}" seoTemplate="adminpanel_removeAdmin"}' data-ipsTooltip title='Remover Staff'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>

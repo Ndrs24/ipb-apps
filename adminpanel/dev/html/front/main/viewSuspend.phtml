@@ -1,0 +1,49 @@
+<ips:template parameters="$row" />
+<h2 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Admin suspendido #{number="$row['id']"}</h2>
+<hr class='ipsHr'>
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<tr>
+		<td align='left'>Fecha y hora de Inicio</td>
+		<td align='right'>{datetime="$row['start']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Admin CS</td>
+		<td align='right'>{$row['admin_name']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Miembro</td>
+		<td align='right'>{{$member = \IPS\Member::load($row['admin_forum_id']);}}{$member->link()|raw}</td>
+	</tr>
+	<tr>
+		<td align='left'>Staff</td>
+		<td align='right'>{$row['staff_name']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Miembro</td>
+		<td align='right'>{{$member = \IPS\Member::load($row['staff_forum_id']);}}{$member->link()|raw}</td>
+	</tr>
+	<tr>
+		<td align='left'>Vencimiento</td>
+		<td align='right'>{datetime="$row['finish']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Razón de la suspensión</td>
+		<td align='right'>{$row['reason']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Servidor</td>
+		<td align='right'>{$row['server_id']}</td>
+	</tr>
+</table>
+{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+	<hr class='ipsHr'>
+	{{if $row['active'] == 1}}
+		<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+			<a href='{url="app=adminpanel&module=main&controller=main&area=removeSuspend&sid={$row['id']}" seoTemplate="adminpanel_viewSuspend_remove"}' class='ipsButton ipsButton_important ipsButton_fullWidth'><i class='fa fa-ban'></i> Remover suspensión</a>
+		</div>
+	{{else}}
+		<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+			<span class='ipsType_large'>Suspensión expirada/removida</span>
+		</div>
+	{{endif}}
+{{endif}}

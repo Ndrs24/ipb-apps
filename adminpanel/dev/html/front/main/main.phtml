@@ -1,0 +1,137 @@
+<ips:template parameters="$tab, $output, $canVipList, $canAdminList, $canMiniStaffList, $canStaffList, $canAddAdmin, $canBanList, $canSuspendList, $canAdvList, $canAddAdv" />
+<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cAdminPanel_header'>
+	<h1 class='ipsType_pageTitle'>{lang="menu__adminpanel_adminpanel"}</h1>
+
+	{{if $canAddAdmin || $canAddAdv}}
+		<hr class='ipsHr ipsResponsive_showDesktop' />
+
+		<div class='ipsFlex ipsFlex-jc:between ipsFlex-ai:center ipsFlex-fw:wrap ipsGap:3 ipsResponsive_showDesktop'>
+			<div class='ipsFlex-flex:11'>
+				
+			</div>
+			<div class='ipsFlex-flex:01'>
+				<div class='ipsFlex ipsFlex-ai:center ipsFlex-jc:center ipsGap:3 ipsGap_row:0'>
+					{{if $canAddAdmin}}
+						<a href='{url="app=adminpanel&module=main&controller=main&area=addAdmin" seoTemplate="adminpanel_addAdmin"}' data-ipsDialog data-ipsDialog-title="Agregando Admin CS" data-ipsDialog-size='narrow' title='Agregar Admin CS' class='ipsButton ipsButton_small ipsButton_primary'>
+							<i class='fa fa-user-plus'></i>&nbsp;Agregar Admin
+						</a>
+					{{endif}}
+					{{if $canAddAdv}}
+						<a href='{url="app=adminpanel&module=main&controller=main&area=addAdv" seoTemplate="adminpanel_addAdv"}' data-ipsDialog data-ipsDialog-title="Agregando Anuncio" data-ipsDialog-size='narrow' title='Agregar Anuncio' class='ipsButton ipsButton_small ipsButton_primary'>
+							<i class='fa fa-bullhorn'></i>&nbsp;Agregar Anuncio
+						</a>
+					{{endif}}
+				</div>
+			</div>
+		</div>
+	{{endif}}
+</div>
+
+<div id='elAdminTabs' data-ipsTabBar data-ipsTabBar-contentArea='#elAdminTabContent' data-ipsTabBar-itemSelector='[data-ipsSideMenu] .ipsSideMenu_item' data-ipsTabBar-activeClass='ipsSideMenu_itemActive'>
+	<div class='ipsColumns ipsColumns_collapsePhone'>
+		<div class='ipsColumn ipsColumn_wide'>
+			<div class='ipsBox ipsPadding sm:ipsPadding:half ipsResponsive_pull sm:ipsMargin_bottom'>
+				<div class='ipsSideMenu' data-ipsSideMenu>
+					<h3 class="ipsSideMenu_mainTitle ipsAreaBackground_light ipsType_medium">
+						<a href="#listMenu" class="ipsPad_double" data-action="openSideMenu">
+							<i class="fa fa-bars"></i> &nbsp;Dezlizar listado&nbsp;<i class="fa fa-caret-down"></i>
+						</a>
+					</h3>
+
+					<h5 class='ipsSideMenu_subTitle'>Información</h5>
+					<ul class="ipsSideMenu_list">
+						<li>
+							<a href='{url="app=adminpanel&module=main&controller=main" seoTemplate="adminpanel"}' id='admin' class='ipsType_normal ipsSideMenu_item {{if $tab === 'statusAdmin'}}ipsSideMenu_itemActive{{endif}}' title='{lang="menu__adminpanel_adminpanel"}' role='tab' aria-selected='{{if $tab === 'statusAdmin'}}true{{else}}false{{endif}}'>
+								<i class='fa fa-user-secret'></i>&nbsp;Estado de tu Admin
+							</a>
+						</li>
+					</ul>
+
+					{{if $canVipList || $canAdminList || $canMiniStaffList || $canStaffList}}
+						<h5 class='ipsSideMenu_subTitle'>Listas de Admines</h5>
+						<ul class='ipsSideMenu_list'>
+							{{if $canVipList}}
+								<li>
+									<a href='{url="app=adminpanel&module=main&controller=main&area=vipList" seoTemplate="adminpanel_vipList"}' id='vipList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'vipList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'vipList'}}true{{else}}false{{endif}}'>
+										<i class='fa fa-list'></i>&nbsp;Ver VIPs
+									</a>
+								</li>
+							{{endif}}
+							{{if $canAdminList}}
+								<li>
+									<a href='{url="app=adminpanel&module=main&controller=main&area=adminList" seoTemplate="adminpanel_adminList"}' id='adminList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'adminList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'adminList'}}true{{else}}false{{endif}}'>
+										<i class='fa fa-list'></i>&nbsp;Ver Admines
+									</a>
+								</li>
+							{{endif}}
+							{{if $canMiniStaffList}}
+								<li>
+									<a href='{url="app=adminpanel&module=main&controller=main&area=miniStaffList" seoTemplate="adminpanel_miniStaffList"}' id='miniStaffList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'miniStaffList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'miniStaffList'}}true{{else}}false{{endif}}'>
+										<i class='fa fa-list'></i>&nbsp;Ver Capitanes
+									</a>
+								</li>
+							{{endif}}
+							{{if $canStaffList}}
+								<li>
+									<a href='{url="app=adminpanel&module=main&controller=main&area=staffList" seoTemplate="adminpanel_staffList"}' id='staffList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'staffList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'staffList'}}true{{else}}false{{endif}}'>
+										<i class='fa fa-list'></i>&nbsp;Ver Staff
+									</a>
+								</li>
+							{{endif}}
+						</ul>
+					{{endif}}
+
+					{{if $canBanList}}
+						<h5 class='ipsSideMenu_subTitle'>Listas de Baneos</h5>
+						<ul class='ipsSideMenu_list'>
+							<li>
+								<a href='{url="app=adminpanel&module=main&controller=main&area=myBans" seoTemplate="adminpanel_myBans"}' id='myBans' class='ipsType_normal ipsSideMenu_item {{if $tab === 'myBans'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'myBans'}}true{{else}}false{{endif}}'>
+									<i class='fa fa-ban'></i>&nbsp;Mis baneos
+								</a>
+							</li>
+							<li>
+								<a href='{url="app=adminpanel&module=main&controller=main&area=banList" seoTemplate="adminpanel_banList"}' id='banList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'banList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'banList'}}true{{else}}false{{endif}}'>
+									<i class='fa fa-ban'></i>&nbsp;Ver lista completa
+								</a>
+							</li>
+						</ul>
+					{{endif}}
+
+					{{if $canSuspendList}}
+						<h5 class='ipsSideMenu_subTitle'>Listas de Suspensiones</h5>
+						<ul class='ipsSideMenu_list'>
+							<li>
+								<a href='{url="app=adminpanel&module=main&controller=main&area=mySuspends" seoTemplate="adminpanel_mySuspends"}' id='mySuspends' class='ipsType_normal ipsSideMenu_item {{if $tab === 'mySuspends'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'mySuspends'}}true{{else}}false{{endif}}'>
+									<i class='fa fa-gavel'></i>&nbsp;Mis suspensiones
+								</a>
+							</li>
+							<li>
+								<a href='{url="app=adminpanel&module=main&controller=main&area=suspendList" seoTemplate="adminpanel_suspendList"}' id='suspendList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'suspendList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'suspendList'}}true{{else}}false{{endif}}'>
+									<i class='fa fa-gavel'></i>&nbsp;Ver lista completa
+								</a>
+							</li>
+						</ul>
+					{{endif}}
+
+					{{if $canAdvList}}
+						<h5 class='ipsSideMenu_subTitle'>Listas de Anuncios</h5>
+						<ul class='ipsSideMenu_list'>
+							<li>
+								<a href='{url="app=adminpanel&module=main&controller=main&area=advList" seoTemplate="adminpanel_advList"}' id='advList' class='ipsType_normal ipsSideMenu_item {{if $tab === 'advList'}}ipsSideMenu_itemActive{{endif}}' role='tab' aria-selected='{{if $tab === 'advList'}}true{{else}}false{{endif}}'>
+									<i class='fa fa-bullhorn'></i>&nbsp;Ver anuncios
+								</a>
+							</li>
+						</ul>
+					{{endif}}
+				</div>
+			</div>
+		</div>
+		<div class='ipsColumn ipsColumn_fluid'>
+			<section id='elAdminTabContent' class='ipsBox ipsResponsive_pull'>
+				<div id="ipsTabs_elSettingsTabs_setting_{$tab}_panel" class="ipsTabs_panel" aria-labelledby="admin" aria-hidden="false">
+					{$output|raw}
+				</div>
+			</section>
+		</div>
+	</div>
+</div>

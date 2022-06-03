@@ -1,0 +1,47 @@
+<ips:template parameters="$table, $headers, $rows" />
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Fecha y hora</th>
+			<th>Admin CS</th>
+			<th>Staff</th>
+			<th>Vencimiento</th>
+			<th>Servidor</th>
+			<th></th>
+			{{if \IPS\Application::load('adminpanel')->canEditSuspend()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>{datetime="$row['start']" lowercase="true"}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['admin_forum_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$row['admin_name']}
+				</td>
+				<td>
+					{{$member = \IPS\Member::load($row['staff_forum_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$row['staff_name']}
+				</td>
+				<td>{datetime="$row['finish']" lowercase="true"}</td>
+				<td>{$row['server_id']}</td>
+				<td>
+					<span class="ipsBadge {{if $row['active']}}ipsBadge_positive{{else}}ipsBadge_negative{{endif}} ipsBadge_icon">
+						<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=viewSuspend&sid={$row['id']}" seoTemplate="adminpanel_viewSuspend"}' data-ipsTooltip title='{{if $row['active']}}Suspensión activa{{else}}Suspensión removida{{endif}}' data-ipsDialog data-ipsDialog-title="Viendo información de la Suspensión" data-ipsDialog-size='narrow'><i class="fa fa-search"></i></a>
+					</span>
+				</td>
+				{{if \IPS\Application::load('adminpanel')->canEditSuspend() && $row['active'] == 1}}
+					<td>
+						<span class="ipsBadge ipsBadge_new ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=editSuspend&sid={$row['id']}" seoTemplate="adminpanel_viewSuspend_edit"}' data-ipsDialog data-ipsDialog-title="Editando a {$row['admin_name']}" data-ipsDialog-size='narrow' data-ipsTooltip title='Editar suspensión'><i class="fa fa-pencil"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>

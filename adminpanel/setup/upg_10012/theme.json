@@ -1,0 +1,44 @@
+{
+    "html": {
+        "added": [
+            "front\/main\/miniStaffListRow",
+            "front\/main\/staffListRow",
+            "front\/main\/vipListRow"
+        ],
+        "edited": [
+            "front\/main\/adminListRow",
+            "front\/main\/advList",
+            "front\/main\/advListRow",
+            "front\/main\/banListRow",
+            "front\/main\/main",
+            "front\/main\/statusAdmin",
+            "front\/main\/statusVip",
+            "front\/main\/suspendListRow",
+            "front\/main\/viewBan",
+            "front\/main\/viewSuspend",
+            "front\/main\/adminListRow",
+            "front\/main\/advList",
+            "front\/main\/advListRow",
+            "front\/main\/banListRow",
+            "front\/main\/main",
+            "front\/main\/statusAdmin",
+            "front\/main\/statusVip",
+            "front\/main\/suspendListRow",
+            "front\/main\/viewBan",
+            "front\/main\/viewSuspend"
+        ],
+        "removed": []
+    },
+    "css": {
+        "added": [],
+        "edited": [
+            "front\/main.css"
+        ],
+        "removed": []
+    },
+    "resources": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

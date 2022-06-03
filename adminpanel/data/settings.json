@@ -1,0 +1,82 @@
+[
+    {
+        "key": "ap_access",
+        "default": ""
+    },
+    {
+        "key": "ap_addadmin_access",
+        "default": ""
+    },
+    {
+        "key": "ap_addadv_access",
+        "default": ""
+    },
+    {
+        "key": "ap_adminlist_access",
+        "default": ""
+    },
+    {
+        "key": "ap_advlist_access",
+        "default": ""
+    },
+    {
+        "key": "ap_banlist_access",
+        "default": ""
+    },
+    {
+        "key": "ap_editban_access",
+        "default": ""
+    },
+    {
+        "key": "ap_editsuspend_access",
+        "default": ""
+    },
+    {
+        "key": "ap_enable",
+        "default": "1"
+    },
+    {
+        "key": "ap_ministafflist_access",
+        "default": ""
+    },
+    {
+        "key": "ap_sql_charset",
+        "default": "utf8"
+    },
+    {
+        "key": "ap_sql_database",
+        "default": ""
+    },
+    {
+        "key": "ap_sql_host",
+        "default": "localhost"
+    },
+    {
+        "key": "ap_sql_password",
+        "default": ""
+    },
+    {
+        "key": "ap_sql_port",
+        "default": "3306"
+    },
+    {
+        "key": "ap_sql_prefix",
+        "default": ""
+    },
+    {
+        "key": "ap_sql_user",
+        "default": "root"
+    },
+    {
+        "key": "ap_stafflist_access",
+        "default": ""
+    },
+    {
+        "key": "ap_suspendlist_access",
+        "default": ""
+    },
+    {
+        "key": "ap_viplist_access",
+        "default": ""
+    }
+]

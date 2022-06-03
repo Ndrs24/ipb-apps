@@ -1,0 +1,15 @@
+{
+    "added": [
+        "ap_access",
+        "ap_enable",
+        "ap_sql_charset",
+        "ap_sql_database",
+        "ap_sql_host",
+        "ap_sql_password",
+        "ap_sql_port",
+        "ap_sql_prefix",
+        "ap_sql_user"
+    ],
+    "edited": [],
+    "removed": []
+}

@@ -1,0 +1,38 @@
+{
+    "normal": {
+        "added": [
+            "__app_adminpanel",
+            "menutab__adminpanel",
+            "menutab__adminpanel_icon",
+            "menu__adminpanel_settings",
+            "menu__adminpanel_settings_settings",
+            "menu__adminpanel_adminpanel",
+            "ap_tab_general",
+            "ap_enable",
+            "ap_access",
+            "ap_access_desc",
+            "ap_tab_sql",
+            "ap_sql_host",
+            "ap_sql_port",
+            "ap_sql_port_desc",
+            "ap_sql_user",
+            "ap_sql_password",
+            "ap_sql_database",
+            "ap_sql_prefix",
+            "ap_sql_prefix_desc",
+            "ap_sql_charset",
+            "ap_sql_charset_error",
+            "ap_sql_error",
+            "__viewing",
+            "__save",
+            "__saved"
+        ],
+        "edited": [],
+        "removed": []
+    },
+    "js": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

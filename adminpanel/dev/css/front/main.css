@@ -1,0 +1,40 @@
+.cAdminPanel_separatorList {
+	border-right: 2px solid currentColor;
+	opacity: .2;
+	height: 36px;
+	width: 0;
+	display: block;
+}
+
+#elBanHeader {
+	margin-bottom: 0px !important;
+}
+
+.cAdminPanel_banButtons {
+	font-size: 18px;
+    opacity: 0.5;
+    -webkit-transition: 0.3s all linear;
+    -moz-transition: 0.3s all linear;
+    -ms-transition: 0.3s all linear;
+    -o-transition: 0.3s all linear;
+    transition: 0.3s all linear;
+    width: 20px;
+    height: 20px;
+	display: block;
+	margin-left: 10px;
+}
+
+.cAdminPanel_banButtons:hover {
+	opacity: 1;
+}
+
+@media screen and (max-width: 979px) {
+	.cAdminPanel_header {
+		text-align: center;
+	}
+
+	.cAdminPanel_header h1 {
+		font-size: 24px;
+		font-weight: bold;
+	}
+}

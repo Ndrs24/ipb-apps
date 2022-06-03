@@ -1,0 +1,109 @@
+{
+	"topLevel": "",
+	"pages": {
+		"statusVip": {
+			"friendly": "estado-vip",
+			"real": "app=adminpanel&module=main&controller=statusVip"
+		},
+		"statusVipConfig": {
+			"friendly": "estado-vip/configuracion",
+			"real": "app=adminpanel&module=main&controller=statusVip&do=config"
+		},
+		"adminpanel": {
+			"friendly": "admin-panel",
+			"real": "app=adminpanel&module=main&controller=main"
+		},
+		"adminpanel_statusAdmin": {
+			"friendly": "admin-panel/estado-admin",
+			"real": "app=adminpanel&module=main&controller=main&area=statusAdmin"
+		},
+		"adminpanel_statusAdminConfig": {
+			"friendly": "admin-panel/estado-admin/configurar",
+			"real": "app=adminpanel&module=main&controller=main&area=statusAdminConfig"
+		},
+		"adminpanel_vipList": {
+			"friendly": "admin-panel/lista-de-vip",
+			"real": "app=adminpanel&module=main&controller=main&area=vipList"
+		},
+		"adminpanel_adminList": {
+			"friendly": "admin-panel/lista-de-admines",
+			"real": "app=adminpanel&module=main&controller=main&area=adminList"
+		},
+		"adminpanel_miniStaffList": {
+			"friendly": "admin-panel/lista-de-mini-staff",
+			"real": "app=adminpanel&module=main&controller=main&area=miniStaffList"
+		},
+		"adminpanel_staffList": {
+			"friendly": "admin-panel/lista-de-staff",
+			"real": "app=adminpanel&module=main&controller=main&area=staffList"
+		},
+		"adminpanel_addAdmin": {
+			"friendly": "admin-panel/agregar-admin",
+			"real": "app=adminpanel&module=main&controller=main&area=addAdmin"
+		},
+		"adminpanel_editAdmin": {
+			"friendly": "admin-panel/admin-{#aid}/editando",
+			"real": "app=adminpanel&module=main&controller=main&area=editAdmin"
+		},
+		"adminpanel_suspendAdmin": {
+			"friendly": "admin-panel/admin-{#aid}/suspendiendo",
+			"real": "app=adminpanel&module=main&controller=main&area=suspendAdmin"
+		},
+		"adminpanel_removeAdmin": {
+			"friendly": "admin-panel/admin-{#aid}/removiendo",
+			"real": "app=adminpanel&module=main&controller=main&area=removeAdmin"
+		},
+		"adminpanel_myBans": {
+			"friendly": "admin-panel/mis-baneos",
+			"real": "app=adminpanel&module=main&controller=main&area=myBans"
+		},
+		"adminpanel_banList": {
+			"friendly": "admin-panel/lista-de-baneos",
+			"real": "app=adminpanel&module=main&controller=main&area=banList"
+		},
+		"adminpanel_viewBan": {
+			"friendly": "admin-panel/ban-{#bid}",
+			"real": "app=adminpanel&module=main&controller=main&area=viewBan"
+		},
+		"adminpanel_viewBan_remove": {
+			"friendly": "admin-panel/ban-{#bid}/removiendo",
+			"real": "app=adminpanel&module=main&controller=main&area=removeBan"
+		},
+		"adminpanel_blackListBan": {
+			"friendly": "admin-panel/ban-{#bid}/vetando",
+			"real": "app=adminpanel&module=main&controller=main&area=blackListBan"
+		},
+		"adminpanel_mySuspends": {
+			"friendly": "admin-panel/mis-suspensiones",
+			"real": "app=adminpanel&module=main&controller=main&area=mySuspends"
+		},
+		"adminpanel_suspendList": {
+			"friendly": "admin-panel/lista-de-suspensiones",
+			"real": "app=adminpanel&module=main&controller=main&area=suspendList"
+		},
+		"adminpanel_viewSuspend": {
+			"friendly": "admin-panel/suspension-{#sid}",
+			"real": "app=adminpanel&module=main&controller=main&area=viewSuspend"
+		},
+		"adminpanel_viewSuspend_edit": {
+			"friendly": "admin-panel/suspension-{#sid}/editando",
+			"real": "app=adminpanel&module=main&controller=main&area=editSuspend"
+		},
+		"adminpanel_viewSuspend_remove": {
+			"friendly": "admin-panel/suspension-{#sid}/removiendo",
+			"real": "app=adminpanel&module=main&controller=main&area=removeSuspend"
+		},
+		"adminpanel_advList": {
+			"friendly": "admin-panel/lista-de-anuncios",
+			"real": "app=adminpanel&module=main&controller=main&area=advList"
+		},
+		"adminpanel_addAdv": {
+			"friendly": "admin-panel/agregar-anuncio",
+			"real": "app=adminpanel&module=main&controller=main&area=addAdv"
+		},
+		"adminpanel_editAdv": {
+			"friendly": "admin-panel/anuncio-{#advid}/editando",
+			"real": "app=adminpanel&module=main&controller=main&area=editAdv"
+		}
+	}
+}

@@ -1,0 +1,41 @@
+<ips:template parameters="$table, $headers, $rows" />
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Servidor</th>
+			<th>Mensaje</th>
+			<th>Fecha de finalización</th>
+			{{if \IPS\Application::load('adminpanel')->canAddAdv()}}
+				<th></th>
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>{$row['server_id']}</td>
+				<td>{$row['message']}</td>
+				<td>
+					{{if $row['message_timestamp'] == 2000000000}}
+						Permanente
+					{{else}}
+						{datetime="$row['message_timestamp']" lowercase="true"}
+					{{endif}}
+				</td>
+				{{if \IPS\Application::load('adminpanel')->canAddAdv()}}
+					<td>
+						<span class="ipsBadge ipsBadge_new ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=editAdv&advid={$row['id']}" seoTemplate="adminpanel_editAdv"}' data-ipsDialog data-ipsDialog-title="Viendo información del anuncio" data-ipsDialog-size='narrow' data-ipsTooltip title='Editar anuncio'><i class="fa fa-pencil"></i></a>
+						</span>
+					</td>
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=adminpanel&module=main&controller=main&area=removeAdv&advid={$row['id']}" csrf="true"}' data-ipsTooltip title='Remover anuncio'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>

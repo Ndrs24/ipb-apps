@@ -1,0 +1,44 @@
+{
+    "html": {
+        "added": {
+            "7": "front\/main\/statusAdmin",
+            "8": "front\/main\/statusVip",
+            "9": "front\/main\/adminListRow"
+        },
+        "edited": {
+            "2": "front\/main\/main",
+            "4": "front\/admin\/statusAdmin",
+            "5": "front\/main\/buys",
+            "6": "front\/main\/main",
+            "7": "front\/vip\/statusVip",
+            "8": "front\/main\/main",
+            "9": "front\/main\/main",
+            "10": "front\/main\/main",
+            "11": "front\/main\/main"
+        },
+        "removed": [
+            "front\/buys\/buyListRow",
+            "front\/buys\/buyListRowOld",
+            "front\/buys\/viewBuy",
+            "front\/buys\/viewBuyOld",
+            "front\/buys\/zeListRow",
+            "front\/buys\/zpaListRow",
+            "front\/buys\/zpuListRow",
+            "front\/admin\/statusAdmin",
+            "front\/main\/buys",
+            "front\/vip\/statusVip"
+        ]
+    },
+    "css": {
+        "added": [],
+        "edited": [],
+        "removed": [
+            "front\/buys.css"
+        ]
+    },
+    "resources": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

@@ -1,0 +1,170 @@
+<ips:template parameters="$data" />
+<script type="text/javascript">
+	function changeAdmin(key) {
+		var i;
+		for(i = 0; i <= 5; ++i) {
+			if(i == key) {
+				document.getElementById("admin"+i).classList.remove("ipsButton_light");
+				document.getElementById("admin"+i).classList.add("ipsButton_primary");
+
+				document.getElementById("adminDiv"+i).classList.remove("ipsHide");
+			} else {
+				document.getElementById("admin"+i).classList.remove("ipsButton_primary");
+				document.getElementById("admin"+i).classList.add("ipsButton_light");
+
+				document.getElementById("adminDiv"+i).classList.add("ipsHide");
+			}
+		}
+	}
+</script>
+
+<div class='ipsPadding'>
+	{{if \count($data) > 1}}
+		<ul class='ipsList_inline ipsClearfix ipsType_center'>
+			{{foreach $data as $key => $d}}
+				<li><a 	{{if time() > $d["finish"]}}
+							
+						{{else}}
+							onclick='changeAdmin({$key});'
+						{{endif}}
+						id='admin{$key}'
+						{{if time() > $d["finish"]}}
+							data-ipsTooltip title='{$d["server_id"]} ~ [VENCIDO]'
+						{{else}}
+							data-ipsTooltip title='{$d["server_id"]}'
+						{{endif}}
+						class='ipsButton ipsButton_small {{if $key != 0}}ipsButton_light{{else}}ipsButton_primary{{endif}}'
+						{{if time() > $d["finish"]}}
+							disabled="disabled"
+						{{endif}}>{$d['name']}
+				</a></li>
+			{{endforeach}}
+		</ul>
+
+		<hr class='ipsHr' />
+	{{endif}}
+
+	{{foreach $data as $key => $d}}
+		<div id='adminDiv{$key}' class='{{if $key != 0}}ipsHide{{endif}}'>
+			{{if $d['suspend_id']}}
+				<div class='ipsMessage ipsMessage_error ipsSpacer_bottom'>
+					Tu Admin ha sido <strong>suspendido</strong>. Para ver los detalles del mismo, visita <a href='#' id='suspendInfoDialog' data-ipsDialog data-ipsDialog-title='Datos de tu suspensión' data-ipsDialog-content='#suspendInfo' data-ipsDialog-size='narrow'>este enlace</a>.
+					<div class='ipsHide' id='suspendInfo'>
+						<h1 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Admin Suspendido #{number="$d['suspend_id']"}</h1>
+						<hr class='ipsHr'>
+						<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+							<tbody>
+								<tr class='ipsClearfix'>
+									<td align="left">Staff que te suspendió:</td>
+									<td align="right">
+										{{$member = \IPS\Member::load($d['staff_forum_id']);}}
+										{$member->link()|raw}
+									</td>
+								</tr>
+								<tr class='ipsClearfix'>
+									<td align="left">Te suspendieron el día:</td>
+									<td align="right">{datetime="$d['s_start']" lowercase="true"}</td>
+								</tr>
+								<tr class='ipsClearfix'>
+									<td align="left">Tu suspensión expira el día:</td>
+									<td align="right">{datetime="$d['sfinish']" lowercase="true"}</td>
+								</tr>
+								<tr class='ipsClearfix'>
+									<td align="left">Razón de la suspensión:</td>
+									<td align="right">{$d['s_reason']}</td>
+								</tr>
+								<tr class='ipsClearfix'>
+									<td align="left">Servidor:</td>
+									<td align="right">{$d['s_server_id']}</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr class='ipsHr'>
+						<div class='ipsType_center ipsPad_half'>
+							<span class='ipsType_large'>Si piensas que la suspensión es injusta o esperas una explicación de la misma, <span class='ipsType_bold'>contáctate con el miembro del Staff</span> que te haya suspendido. Dirígete a su perfil que está linkeado en los datos de la suspensión y envíale un mensaje privado consultando por la suspensión.</span>
+						</div>
+					</div>
+				</div>
+			{{endif}}
+
+			{{$warning_finish = ($d['finish'] - time());}}
+			{{if $warning_finish <= 864000}}
+				<div class='ipsMessage ipsMessage_info ipsSpacer_bottom'>
+					Tu Admin CS está a punto de vencerse. Si deseas renovar tu Admin CS, ve a la <a href='/ventas/'>sección de Ventas</a> y realiza los mismos pasos que hiciste al comprar la misma.
+				</div>
+			{{endif}}
+
+			<div class='ipsType_center'>
+				<div class='ipsGrid ipsGrid_collapsePhone'>
+					<div class='ipsGrid_span4 ipsPad'>
+						<h1 class='ipsType_pageTitle'>{$d['name']}&nbsp;<a href='{url="app=adminpanel&module=main&controller=main&do=statusAdminConfig&id={$d['id']}" seoTemplate="adminpanel_statusAdminConfig"}' data-ipsDialog data-ipsDialog-title='Configuración' data-ipsDialog-size='narrow' data-ipsTooltip title='Configuración'><i class='fa fa-pencil'></i></a></h1>
+						<span class='ipsType_light'><i class='fa fa-user'></i>&nbsp;Tag CS</span>
+					</div>
+					<div class='ipsGrid_span4 ipsPad'>
+						<h1 class='ipsType_pageTitle'>{$d['server_id']}</h1>
+						<span class='ipsType_light'><i class='fa fa-gamepad'></i>&nbsp;Servidor</span>
+					</div>
+					<div class='ipsGrid_span4 ipsPad'>
+						<h1 class='ipsType_pageTitle'>{{if $d['finish'] == 2000000000}}Permanente{{else}}{datetime="$d['finish']" lowercase="true"}{{endif}}</h1>
+						<span class='ipsType_light'><i class='fa fa-clock-o'></i>&nbsp;Vencimiento</span><br>
+					</div>
+					<div class='ipsGrid_span6 ipsPad'>
+						<h1 class='ipsType_pageTitle'>{expression="\IPS\Member\Group::load(\IPS\Member::loggedIn()->member_group_id)->formattedName" raw="true"}</h1>
+						<span class='ipsType_light'><i class='fa fa-star-o'></i>&nbsp;Rango en el foro</span>
+					</div>
+					<div class='ipsGrid_span6 ipsPad'>
+						<h1 class='ipsType_pageTitle'>{$d['access']}</h1>
+						<span class='ipsType_light'><i class='fa fa-star-o'></i>&nbsp;Rango en el Servidor</span>
+					</div>
+				</div>
+
+				<div class='ipsGrid ipsGrid_collapsePhone'>
+					<div class='ipsGrid_span6 ipsPad ipsAreaBackground_light'>
+						<h1 class='ipsType_pageTitle'><u>¿Cómo activo mi Admin CS?</u></h1>
+
+						<br />
+
+						<span>Para hacer funcionar tu Admin CS en los servidores solicitados, basta con poner dos comandos en tu consola del juego. Para abrir la consola, <span class='ipsType_bold'>ingresa al juego, y presiona la tecla que está a la izquierda de la tecla 1</span>. Luego ingrese los comandos que se nonmbrarán abajo.</span>
+
+						<br />
+						<br />
+
+						<div class='ipsCode'>name "{$d['name']}"</div>
+						<br />
+						<div class='ipsCode'>setinfo "_pw" "Tu contraseña"</div>
+
+						<br />
+
+						<span>Si por alguna extraña razón olvidas tu contraseña, envía un mensaje privado a un miembro del staff de rango <span style='font-weight: bold; font-family: "Arial", serif; color: #FE2E2E;'>Director</span> y consulta sobre tu contraseña de tu Admin CS.</span>
+					</div>
+					<div class='ipsGrid_span6 ipsPad ipsAreaBackground_light'>
+						<h1 class='ipsType_pageTitle'><u>¿Tienes problemas al ingresar tu contraseña?</u></h1>
+
+						<br />
+
+						<span>Quizás hayas pasado una vez por este error: <span class='ipsType_bold'>Info string length exceeded</span>. Para arreglar este error, copia lo siguiente en consola.</span>
+
+						<br />
+						<br />
+
+						<div class='ipsCode'>
+							setinfo bottomcolor ^"^";setinfo cl_lc ^"^"; setinfo model ^"^"; setinfo topcolor ^"^"; setinfo _9387 ^"^"; setinfo _iv ^"^"; setinfo _ah ^"^"; setinfo _puqz ^"^"; setinfo _ndmh ^"^"; setinfo _ndmf ^"^"; setinfo _ndms ^"^"; setinfo rate ^"^"; setinfo _pw ^"^"
+						</div>
+
+						<br />
+
+						<span>No te preocupes si borras también la setinfo <span class='ipsType_bold'>_pw</span>, ya que necesitarás ingresar una nueva para que tu VIP sea tomado al entrar al servidor.</span>
+					</div>
+				</div>
+
+				<hr class='ipsHr' />
+
+				<span class='ipsType_large'>Esos son todos los pasos para activar tu Admin CS. Espero que disfrutes sus beneficios dentro de nuestros servidores. Recuerda <strong>por favor</strong> leer las <a href="/reglamento/">reglas de la comunidad</a> para evitar todo tipo de inconvenientes. Y si tienes alguna consulta en especifica, comunícate con algún <a href="/staff/">miembro del staff</a> situado en la sección correspondiente.</span>
+
+				<hr class='ipsHr' />
+				
+				<span class='ipsType_large'>Visita la <a href='/foro/7-zona-admin/'>Zona Admin CS</a> para obtener soporte en caso de tener alguna duda sobre cómo usarlo o como tomar acción ante una situación donde se te generen dudas. Por favor, no dudes en publicar temas allí ante cualquier inconveniente o inquietud.</span>
+			</div>
+		</div>
+	{{endforeach}}
+</div>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build>
+ <module key="front/main"><![CDATA[{"default_controller":"","protected":0,"default":0}]]></module>
+ <module key="admin/settings"><![CDATA[{"default_controller":"","protected":0,"default":0}]]></module>
+ <setting key="ap_access"><![CDATA[{"key":"ap_access","default":""}]]></setting>
+ <setting key="ap_addadmin_access"><![CDATA[{"key":"ap_addadmin_access","default":""}]]></setting>
+ <setting key="ap_addadv_access"><![CDATA[{"key":"ap_addadv_access","default":""}]]></setting>
+ <setting key="ap_adminlist_access"><![CDATA[{"key":"ap_adminlist_access","default":""}]]></setting>
+ <setting key="ap_advlist_access"><![CDATA[{"key":"ap_advlist_access","default":""}]]></setting>
+ <setting key="ap_banlist_access"><![CDATA[{"key":"ap_banlist_access","default":""}]]></setting>
+ <setting key="ap_editban_access"><![CDATA[{"key":"ap_editban_access","default":""}]]></setting>
+ <setting key="ap_editsuspend_access"><![CDATA[{"key":"ap_editsuspend_access","default":""}]]></setting>
+ <setting key="ap_enable"><![CDATA[{"key":"ap_enable","default":"1"}]]></setting>
+ <setting key="ap_ministafflist_access"><![CDATA[{"key":"ap_ministafflist_access","default":""}]]></setting>
+ <setting key="ap_sql_charset"><![CDATA[{"key":"ap_sql_charset","default":"utf8"}]]></setting>
+ <setting key="ap_sql_database"><![CDATA[{"key":"ap_sql_database","default":""}]]></setting>
+ <setting key="ap_sql_host"><![CDATA[{"key":"ap_sql_host","default":"localhost"}]]></setting>
+ <setting key="ap_sql_password"><![CDATA[{"key":"ap_sql_password","default":""}]]></setting>
+ <setting key="ap_sql_port"><![CDATA[{"key":"ap_sql_port","default":"3306"}]]></setting>
+ <setting key="ap_sql_prefix"><![CDATA[{"key":"ap_sql_prefix","default":""}]]></setting>
+ <setting key="ap_sql_user"><![CDATA[{"key":"ap_sql_user","default":"root"}]]></setting>
+ <setting key="ap_stafflist_access"><![CDATA[{"key":"ap_stafflist_access","default":""}]]></setting>
+ <setting key="ap_suspendlist_access"><![CDATA[{"key":"ap_suspendlist_access","default":""}]]></setting>
+ <setting key="ap_viplist_access"><![CDATA[{"key":"ap_viplist_access","default":""}]]></setting>
+</build>

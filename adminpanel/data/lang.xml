@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+ <app key="adminpanel" version="10012">
+  <word key="__app_adminpanel" js="0">Admin Panel v2</word>
+  <word key="menutab__adminpanel" js="0">Admin panel</word>
+  <word key="menutab__adminpanel_icon" js="0">user-secret</word>
+  <word key="menu__adminpanel_settings" js="0">Admin panel</word>
+  <word key="menu__adminpanel_settings_settings" js="0">Ajustes generales</word>
+  <word key="menu__adminpanel_adminpanel" js="0">Admin panel</word>
+  <word key="module__adminpanel_main" js="0">Admin panel</word>
+  <word key="ap_tab_general" js="0">General</word>
+  <word key="ap_enable" js="0">Habilitar esta sección</word>
+  <word key="ap_access" js="0">Accesos</word>
+  <word key="ap_access_desc" js="0">Elija los grupos de miembros a los que tendrán acceso a esta sección.</word>
+  <word key="ap_tab_access" js="0">Accesos importantes</word>
+  <word key="ap_tab_admin_access" js="0">Administradores</word>
+  <word key="ap_viplist_access" js="0">Lista de VIPs</word>
+  <word key="ap_adminlist_access" js="0">Lista de Admines</word>
+  <word key="ap_ministafflist_access" js="0">Lista de Capitanes</word>
+  <word key="ap_stafflist_access" js="0">Lista de Staff</word>
+  <word key="ap_addadmin_access" js="0">Agregar Admin</word>
+  <word key="ap_banlist_access" js="0">Lista de Baneos</word>
+  <word key="ap_suspendlist_access" js="0">Lista de Suspensiones</word>
+  <word key="ap_tab_ban_access" js="0">Baneos</word>
+  <word key="ap_editban_access" js="0">Editar/remover baneos</word>
+  <word key="ap_editban_access_desc" js="0">Este acceso también hará que cualquiera pueda ver la IP o SteamId del Administrador que baneó.</word>
+  <word key="ap_tab_suspend_access" js="0">Suspensiones</word>
+  <word key="ap_editsuspend_access" js="0">Editar/remover suspensiones</word>
+  <word key="ap_tab_adv_access" js="0">Anuncios</word>
+  <word key="ap_advlist_access" js="0">Lista de Anuncios</word>
+  <word key="ap_addadv_access" js="0">Agregar Anuncio</word>
+  <word key="ap_tab_sql" js="0">SQL</word>
+  <word key="ap_sql_host" js="0">Host o IP de conexión</word>
+  <word key="ap_sql_port" js="0">Puerto</word>
+  <word key="ap_sql_port_desc" js="0"><![CDATA[Por defecto, el puerto para coenxiones a base de datos es <b>3306</b>.]]></word>
+  <word key="ap_sql_user" js="0">Usuario</word>
+  <word key="ap_sql_password" js="0">Contraseña</word>
+  <word key="ap_sql_database" js="0">Base de datos</word>
+  <word key="ap_sql_prefix" js="0">Prefijo de las tablas</word>
+  <word key="ap_sql_prefix_desc" js="0"><![CDATA[El prefijo de las tabla es o son caracteres con los que empiezan todas las tablas de la base de datos.<br>Un ejemplo muy claro es: <b>table_</b><br>Por lo que, todas las tablas, empezarán con <b>table_</b>.]]></word>
+  <word key="ap_sql_charset" js="0">Conjunto de caracteres de base de datos</word>
+  <word key="ap_sql_charset_error" js="0">El conjunto de caracteres de la base de datos que proporcionó no es un conjunto de caracteres válido de la base de datos.</word>
+  <word key="ap_sql_error" js="0">La información proporcionada es incorrecta o la base de datos no está disponible.</word>
+  <word key="ap_addadmin_tag" js="0">Tag CS</word>
+  <word key="ap_addadmin_tag_desc" js="0">Ingresar el Tag CS del jugador.</word>
+  <word key="ap_addadmin_password" js="0">Contraseña</word>
+  <word key="ap_addadmin_password_desc" js="0">La contraseña debe ser fácil pero a la vez difícil.</word>
+  <word key="ap_addadmin_range" js="0">Rango</word>
+  <word key="ap_addadmin_days" js="0">Días de duración</word>
+  <word key="ap_addadmin_days_desc" js="0">Ingrese la cantidad de días de duración o ingrese 0 para que sea permanente.</word>
+  <word key="ap_addadmin_member" js="0">Miembro</word>
+  <word key="ap_addadmin_member_group" js="0">¿Editar rango en el perfil de foro?</word>
+  <word key="ap_addadmin_member_group_name" js="0">Nombre personalizado de grupo</word>
+  <word key="ap_addadmin_server" js="0">Servidor</word>
+  <word key="ap_addadmin_existing" js="0">El Admin CS que desea ingresar ya existe en el servidor ingresado.</word>
+  <word key="ap_sv_config_name" js="0">Tag CS</word>
+  <word key="ap_sv_config_name_desc" js="0">Ingresa el tag que utilizarás en los servidores.</word>
+  <word key="ap_sv_config_password" js="0">Contraseña</word>
+  <word key="ap_sv_config_password_desc" js="0">Ingresa la contraseña que utilizarás para proteger tu VIP. Recuerda que si no quieres cambiar tu contraseña puedes dejar el campo vacío.</word>
+  <word key="ap_sa_config_name" js="0">Tag CS</word>
+  <word key="ap_sa_config_name_desc" js="0">Ingresa el tag que utilizarás en los servidores.</word>
+  <word key="ap_sa_config_password" js="0">Contraseña</word>
+  <word key="ap_sa_config_password_desc" js="0">Ingresa la contraseña que utilizarás para proteger tu Admin CS. Recuerda que si no quieres cambiar tu contraseña puedes dejar el campo vacío.</word>
+  <word key="ap_sa_config_demo" js="0">Grabación de demos automáticas</word>
+  <word key="ap_sa_config_demo_desc" js="0"><![CDATA[Elije el tipo de grabación de demo. Al seleccionar uno, grabarás demos automáticamente al ingresar al servidor, dependiendo el tipo de demo, se guardará en tu carpeta <strong>cstrike o cstrike_spanish [No-steam]</strong> respectivamente]]></word>
+  <word key="name" js="0">Nombre del Jugador</word>
+  <word key="user_name" js="0">Nombre del Jugador</word>
+  <word key="user_authid" js="0">IP/SteamId del Jugador</word>
+  <word key="admin_forum_id" js="0">Miembro</word>
+  <word key="ap_editsuspend_finish" js="0">Vencimiento</word>
+  <word key="ap_editsuspend_finish_desc" js="0">Ingrese la fecha de vencimiento.</word>
+  <word key="ap_editsuspend_reason" js="0">Razón</word>
+  <word key="ap_editsuspend_reason_desc" js="0">Ingrese la razón de la suspensión.</word>
+  <word key="__viewing" js="0">Viendo el panel de administración</word>
+  <word key="__save" js="0">Guardar ahora</word>
+  <word key="__saved" js="0">Guardado</word>
+  <word key="__disabled_section" js="0">La sección que intentas ingresar está deshabilitada temporalmente</word>
+  <word key="__no_results" js="0">No se han encontrado resultados</word>
+  <word key="__permanently" js="0">Permanentemente</word>
+  <word key="__save_now" js="0">Guardar ahora</word>
+  <word key="__add_now" js="0">Agregar ahora</word>
+  <word key="__remove_now" js="0">Remover ahora</word>
+  <word key="__edit_now" js="0">Editar ahora</word>
+  <word key="__suspend_now" js="0">Suspender ahora</word>
+  <word key="__name" js="0">Nombre</word>
+  <word key="__tag" js="0">Tag CS</word>
+  <word key="__tag_existing" js="0">El Tag CS que intentas ingresar ya existe.</word>
+  <word key="__password" js="0">Contraseña</word>
+  <word key="__access" js="0">Acceso</word>
+  <word key="__range" js="0">Rango</word>
+  <word key="__days" js="0">Días de duración</word>
+  <word key="__days_desc" js="0">Ingrese la cantidad de días de duración o ingrese 0 para que sea permanente.</word>
+  <word key="__finish" js="0">Vencimiento</word>
+  <word key="__member" js="0">Miembro</word>
+  <word key="__member_group" js="0">¿Editar rango en el perfil de foro?</word>
+  <word key="__member_group_name" js="0">Nombre personalizado de grupo</word>
+  <word key="__server" js="0">Servidor</word>
+  <word key="__reason" js="0">Razón</word>
+  <word key="__added" js="0">Agregado</word>
+  <word key="__removed" js="0">Removido</word>
+  <word key="__edited" js="0">Editado</word>
+  <word key="__suspended" js="0">Suspendido</word>
+  <word key="__vip" js="0">VIP</word>
+  <word key="__admincs" js="0">Admin CS</word>
+  <word key="__ministaff" js="0">Mini Staff</word>
+  <word key="__staff" js="0">Staff</word>
+  <word key="__active" js="0">Activos</word>
+  <word key="__inactive" js="0">Inactivos</word>
+  <word key="__sended" js="0">Enviado</word>
+  <word key="__canceled" js="0">Cancelado</word>
+  <word key="__message" js="0">Mensaje</word>
+  <word key="__activated" js="0">Activado</word>
+  <word key="__blackListAdd" js="0">Vetado de la comunidad</word>
+  <word key="__register_now" js="0">Registrar ahora</word>
+ </app>
+</language>

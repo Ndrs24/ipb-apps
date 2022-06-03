@@ -1,0 +1,19 @@
+{
+    "normal": {
+        "added": [
+            "ap_tab_buys",
+            "ap_buys_enable",
+            "ap_buys_access",
+            "ap_buys_access_desc",
+            "module__adminpanel_adminpanel",
+            "module__adminpanel_buys"
+        ],
+        "edited": [],
+        "removed": []
+    },
+    "js": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}
