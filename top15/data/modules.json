@@ -1,0 +1,9 @@
+{
+    "front": {
+        "main": {
+            "default_controller": "",
+            "protected": false,
+            "default": null
+        }
+    }
+}

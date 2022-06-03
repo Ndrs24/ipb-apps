@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme name="Default" author_name="Invision Power Services, Inc" author_url="https://www.invisioncommunity.com">
+ <template template_group="main" template_name="ze" template_data="" template_location="front" template_app="top15"><![CDATA[<div class="ipsPadding ipsFlex ipsFlex-jc:center ipsFlex-fw:wrap ipsGap:3 ipsMargin_bottom selectTop">
+	<a href='javascript:;' class='ipsButton ipsButton_medium ipsButton_primary nextTop'>General</a>
+	<a href='javascript:;' class='ipsButton ipsButton_medium ipsButton_light nextTop'>Tiempo Jugado</a>
+</div>
+
+{{$data = \IPS\top15\Top15\ZombieEscape::getTop15();}}
+
+<table id='divTop0' class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>#</th>
+			<th>Nombre</th>
+			<th>Miembro</th>
+			<th>Nivel</th>
+			<th>Experiencia</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{$position = 0;}}
+		{{foreach $data[1] as $d}}
+			{{++$position;}}
+			<tr class='ipsClearfix'>
+				<td><span class='ipsBadge {{if $position == 1}}ipsBadge_intermediary{{elseif $position == 2}}ipsBadge_neutral{{elseif $position == 3}}ipsBadge_negative{{else}}ipsBadge_positive{{endif}} ipsBadge_icon'>{$position}</span></td>
+				<td>{$d['name']}</td>
+				<td>
+					{{if $d['vinc']}}
+						{{$member = \IPS\Member::load($d['vinc']);}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'>
+							<img src='{$member->photo}' alt='{$member->name}'>
+						</span>
+						{$member->link()|raw}
+					{{else}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'>
+							<img src='{resource="default_photo.png" app="core" location="global"}'>
+						</span>
+						Usuario
+					{{endif}}
+				</td>
+				<td>{number="$d['level']"}</td>
+				<td>{number="$d['exp']"}</td>
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>
+
+<table id='divTop1' class='ipsHide ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>#</th>
+			<th>Nombre</th>
+			<th>Miembro</th>
+			<th>Tiempo jugado</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{$position = 0;}}
+		{{foreach $data[2] as $d}}
+			{{++$position;}}
+			<tr class='ipsClearfix'>
+				<td width='10%'><span class='ipsBadge {{if $position == 1}}ipsBadge_intermediary{{elseif $position == 2}}ipsBadge_neutral{{elseif $position == 3}}ipsBadge_negative{{else}}ipsBadge_positive{{endif}} ipsBadge_icon'>{$position}</span></td>
+				<td width='30%'>{$d['name']}</td>
+				<td width='30%'>
+					{{if $d['vinc']}}
+						{{$member = \IPS\Member::load($d['vinc']);}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'>
+							<img src='{$member->photo}' alt='{$member->name}'>
+						</span>
+						{$member->link()|raw}
+					{{else}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'>
+							<img src='{resource="default_photo.png" app="core" location="global"}'>
+						</span>
+						Usuario
+					{{endif}}
+				</td>
+				<td width='30%'>
+					{{$datetime = new \IPS\DateTime(); $today = clone $datetime;}}
+					{{$time_played = \IPS\DateTime::formatInterval($datetime->diff($today->modify('+'.round($d['time_played']).' seconds')), 3);}}
+					{$time_played}
+				</td>
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="main" template_name="zpa" template_data="" template_location="front" template_app="top15"><![CDATA[<div class="ipsPadding ipsFlex ipsFlex-jc:center ipsFlex-fw:wrap ipsGap:3 ipsMargin_bottom selectTop">
+	<a href='javascript:;' class='ipsButton ipsButton_medium ipsButton_primary nextTop'>General</a>
+	<a href='javascript:;' class='ipsButton ipsButton_medium ipsButton_light nextTop'>Tiempo Jugado</a>
+	<a href='javascript:;' class='ipsButton ipsButton_medium ipsButton_light nextTop'>Combo máximo</a>
+</div>
+
+{{$data = \IPS\top15\Top15\ZombiePlagueAnnihilation::getTop15();}}
+
+<table id='divTop0' class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>#</th>
+			<th>Nombre</th>
+			<th>Miembro</th>
+			<th>Reset</th>
+			<th>Nivel</th>
+			<th>Experiencia</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{$position = 0;}}
+		{{foreach $data[1] as $d}}
+			{{++$position;}}
+			<tr class='ipsClearfix'>
+				<td><span class='ipsBadge {{if $position == 1}}ipsBadge_intermediary{{elseif $position == 2}}ipsBadge_neutral{{elseif $position == 3}}ipsBadge_negative{{else}}ipsBadge_positive{{endif}} ipsBadge_icon'>{$position}</span></td>
+				<td>{$d['name']}</td>
+				<td>
+					{{if $d['vinc']}}
+						{{$member = \IPS\Member::load($d['vinc']);}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'>
+							<img src='{$member->photo}' alt='{$member->name}'>
+						</span>
+						{$member->link()|raw}
+					{{else}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'>
+							<img src='{resource="default_photo.png" app="core" location="global"}'>
+						</span>
+						Usuario
+					{{endif}}
+				</td>
+				<td>{number="$d['reset']"}</td>
+				<td>{number="$d['level']"}</td>
+				<td>{number="$d['xp']"}</td>
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>
+
+<table id='divTop1' class='ipsHide ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>#</th>
+			<th>Nombre</th>
+			<th>Miembro</th>
+			<th>Tiempo jugado</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{$position = 0;}}
+		{{foreach $data[2] as $d}}
+			{{++$position;}}
+			<tr class='ipsClearfix'>
+				<td width='10%'><span class='ipsBadge {{if $position == 1}}ipsBadge_intermediary{{elseif $position == 2}}ipsBadge_neutral{{elseif $position == 3}}ipsBadge_negative{{else}}ipsBadge_positive{{endif}} ipsBadge_icon'>{$position}</span></td>
+				<td width='30%'>{$d['name']}</td>
+				<td width='30%'>
+					{{if $d['vinc']}}
+						{{$member = \IPS\Member::load($d['vinc']);}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'>
+							<img src='{$member->photo}' alt='{$member->name}'>
+						</span>
+						{$member->link()|raw}
+					{{else}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'>
+							<img src='{resource="default_photo.png" app="core" location="global"}'>
+						</span>
+						Usuario
+					{{endif}}
+				</td>
+				<td width='30%'>
+					{{$datetime = new \IPS\DateTime(); $today = clone $datetime;}}
+					{{$time_played = \IPS\DateTime::formatInterval($datetime->diff($today->modify('+'.round($d['tp_d']).' seconds')), 3);}}
+					{$time_played}
+				</td>
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>
+
+<table id='divTop2' class='ipsHide ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>#</th>
+			<th>Nombre</th>
+			<th>Miembro</th>
+			<th>Combo máximo</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{$position = 0;}}
+		{{foreach $data[3] as $d}}
+			{{++$position;}}
+			<tr class='ipsClearfix'>
+				<td><span class='ipsBadge {{if $position == 1}}ipsBadge_intermediary{{elseif $position == 2}}ipsBadge_neutral{{elseif $position == 3}}ipsBadge_negative{{else}}ipsBadge_positive{{endif}} ipsBadge_icon'>{$position}</span></td>
+				<td>{$d['name']}</td>
+				<td>
+					{{if $d['vinc']}}
+						{{$member = \IPS\Member::load($d['vinc']);}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'>
+							<img src='{$member->photo}' alt='{$member->name}'>
+						</span>
+						{$member->link()|raw}
+					{{else}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'>
+							<img src='{resource="default_photo.png" app="core" location="global"}'>
+						</span>
+						Usuario
+					{{endif}}
+				</td>
+				<td>{number="$d['combo_max']"}</td>
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+</theme>

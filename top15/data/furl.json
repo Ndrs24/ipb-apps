@@ -1,0 +1,9 @@
+{
+	"topLevel": "",
+	"pages": {
+	    "top15": {
+	        "friendly": "top15",
+	        "real": "app=top15&module=main&controller=main"
+	    }
+	}
+}
