@@ -1,0 +1,70 @@
+<ips:template parameters="" />
+{{$per_zpa = \IPS\Settings::i()->v_region_per_zpa;}}
+{{$arg_zpa = \IPS\Settings::i()->v_region_arg_zpa;}}
+{{$pp_zpa = \IPS\Settings::i()->v_region_pp_zpa;}}
+{{$cl_zpa = \IPS\Settings::i()->v_region_cl_zpa;}}
+
+<div id='zpaSelectRegion' class='ipsType_center'>
+	<span class='ipsType_large ipsType_bold'>Métodos de pago, precios y demás información</span>
+
+	<ul class='ipsGrid ipsGrid_collapsePhone ipsMargin_top zpaMoneyRegionClass'>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$per_zpa}}ipsButton_disabled ipsButton_light zpaRegionDisabled0{{else}}ipsButton_primary{{endif}} ipsButton_fullWidth'>Perú</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$arg_zpa}}ipsButton_disabled ipsButton_light zpaRegionDisabled1{{else}}{{if !$per_zpa}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Argentina</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$pp_zpa}}ipsButton_disabled ipsButton_light zpaRegionDisabled2{{else}}{{if !$per_zpa && !$arg_zpa}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Paypal</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$cl_zpa}}ipsButton_disabled ipsButton_light zpaRegionDisabled3{{else}}{{if !$per_zpa && !$arg_zpa && !$pp_zpa}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Chile</a></li>
+	</ul>
+
+	<ul class='ipsList_inline ipsSpacer_bottom'>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #000099; color: #fff;'>Puntos Humanos</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="1"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 25)</span>
+		</li>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #990000; color: #fff;'>Puntos Zombies</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="2"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 25)</span>
+		</li>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #999900; color: #fff;'>Puntos de Legado</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="3"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 50)</span>
+		</li>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #009900; color: #fff;'>Saldo</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="4"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 100)</span>
+		</li>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #009999; color: #fff;'>Diamantes</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="5"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 5)</span>
+		</li>
+	</ul>
+
+	<hr class='ipsHr' />
+
+	<div id='zpaMethorPayments' class="ipsPadding ipsSpacer_both ipsType_center"></div>
+
+	<hr class='ipsHr' />
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si tienes alguna duda sobre los métodos de pago, habla con cualquiera de nuestros directores enla <a href="/staff/">sección de Staff</a>. Ellos te ayudarán y resolverán las dudas que tengas sobre las ventas y sus deribados.</span></li>
+		<li class='ipsType_light'><i style='color: red' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;El <strong>Staff de Drunk-Gaming</strong> se reserva el derecho de suspender o remover las cuentas de los usuarios que no cumplas el reglamento impuesto por la comunidad. Para eso, visite <a href="/reglamento/" class='ipsType_bold'>este enlace</a> donde figuran todas las reglas ilícitas.</li>
+	</ul>
+</div>

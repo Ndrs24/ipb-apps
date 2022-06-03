@@ -1,0 +1,19 @@
+{
+    "settings": {
+        "settings": {
+            "settings_manage": "settings_manage"
+        },
+        "zpa": {
+            "zpa_manage": "zpa_manage"
+        },
+        "benefit": {
+            "benefit_manage": "benefit_manage"
+        },
+        "ze": {
+            "ze_manage": "ze_manage"
+        },
+        "zpu": {
+            "zpu_manage": "zpu_manage"
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "normal": {
+        "added": [
+            "v_access_list",
+            "__statusr4",
+            "__statusr3",
+            "__statusr2",
+            "__statusr1",
+            "__status0",
+            "__status1",
+            "__status2",
+            "__boughtokr5",
+            "__boughtokr4",
+            "__boughtokr3",
+            "__boughtokr2",
+            "__boughtokr1",
+            "__boughtok0",
+            "__boughtok1"
+        ],
+        "edited": [],
+        "removed": []
+    },
+    "js": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

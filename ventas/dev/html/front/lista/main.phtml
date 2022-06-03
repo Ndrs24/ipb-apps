@@ -1,0 +1,49 @@
+<ips:template parameters="$tab, $output" />
+<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cAdminPanel_header'>
+	<h1 class='ipsType_pageTitle'>Lista de Ventas</h1>
+</div>
+
+<div id='elListTabs' data-ipsTabBar data-ipsTabBar-contentArea='#elListTabContent' data-ipsTabBar-itemSelector='[data-ipsSideMenu] .ipsSideMenu_item' data-ipsTabBar-activeClass='ipsSideMenu_itemActive'>
+	<div class='ipsColumns ipsColumns_collapsePhone'>
+		<div class='ipsColumn ipsColumn_wide'>
+			<div class='ipsBox ipsPadding sm:ipsPadding:half ipsResponsive_pull sm:ipsMargin_bottom'>
+				<div class='ipsSideMenu' data-ipsSideMenu>
+					<h3 class="ipsSideMenu_mainTitle ipsAreaBackground_light ipsType_medium">
+						<a href="#listMenu" class="ipsPad_double" data-action="openSideMenu">
+							<i class="fa fa-bars"></i> &nbsp;Dezlizar listado&nbsp;<i class="fa fa-caret-down"></i>
+						</a>
+					</h3>
+					<ul class="ipsSideMenu_list">
+						<li>
+							<a href='{url="app=ventas&module=lista&controller=main" seoTemplate="lista"}' id='list' class='ipsType_normal ipsSideMenu_item {{if $tab === 'buyList'}}ipsSideMenu_itemActive{{endif}}' title="Ventas" role="tab" aria-selected="{{if $tab === 'buyList'}}true{{else}}false{{endif}}">
+								<i class='fa fa-star-o'></i>&nbsp;Ventas
+							</a>
+						</li>
+						<li>
+							<a href='{url="app=ventas&module=lista&controller=main&area=buyListZE" seoTemplate="lista_ze"}' id='list_ze' class='ipsType_normal ipsSideMenu_item {{if $tab === 'buyListZE'}}ipsSideMenu_itemActive{{endif}}' title="Ventas del ZE" role="tab" aria-selected="{{if $tab === 'buyListZE'}}true{{else}}false{{endif}}">
+								<i class='fa fa-diamond'></i>&nbsp;Ventas del ZE
+							</a>
+						</li>
+						<li>
+							<a href='{url="app=ventas&module=lista&controller=main&area=buyListZPU" seoTemplate="lista_zpu"}' id='list_zpu' class='ipsType_normal ipsSideMenu_item {{if $tab === 'buyListZPU'}}ipsSideMenu_itemActive{{endif}}' title="Ventas del ZPU" role="tab" aria-selected="{{if $tab === 'buyListZPU'}}true{{else}}false{{endif}}">
+								<i class='fa fa-diamond'></i>&nbsp;Ventas del ZPU
+							</a>
+						</li>
+						<li>
+							<a href='{url="app=ventas&module=lista&controller=main&area=buyListZPA" seoTemplate="lista_zpa"}' id='list_zpa' class='ipsType_normal ipsSideMenu_item {{if $tab === 'buyListZPA'}}ipsSideMenu_itemActive{{endif}}' title="Ventas del ZPA" role="tab" aria-selected="{{if $tab === 'buyListZPA'}}true{{else}}false{{endif}}">
+								<i class='fa fa-diamond'></i>&nbsp;Ventas del ZPA
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class='ipsColumn ipsColumn_fluid'>
+			<section id='elListTabContent' class='ipsBox ipsResponsive_pull'>
+				<div id="ipsTabs_elSettingsTabs_setting_{$tab}_panel" class="ipsTabs_panel" aria-labelledby="list" aria-hidden="false">
+					{$output|raw}
+				</div>
+			</section>
+		</div>
+	</div>
+</div>

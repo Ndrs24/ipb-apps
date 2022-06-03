@@ -1,0 +1,305 @@
+<ips:template parameters="$url, $data" />
+<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>Ventas Drunk-Gaming</h1>
+
+	<hr class='ipsHr' />
+
+	<div class='ipsFlex ipsFlex-jc:between ipsFlex-ai:center ipsFlex-fw:wrap ipsGap:3'>
+		<div class='ipsFlex-flex:11'>
+			<a hreF='javascript:;' id='priceInfoDialog' data-ipsDialog data-ipsDialog-title='Precios de beneficios' data-ipsDialog-content='#priceInfo' class='ipsButton ipsButton_light'><i class="fa fa-dollar"></i>&nbsp;Precios de beneficios</a>
+
+			<div class='ipsHide ipsPadding' id='priceInfo'>
+				<div class='ipsGrid ipsGrid_collapsePhone'>
+					<div class='ipsGrid_span3 ipsPadding ipsAreaBackground ipsType_center ipsMargin_bottom'>
+						<span class='selectBenefits_text'>Perú</span>
+
+						<hr class='ipsHr' />
+
+						{{if !\IPS\Settings::i()->v_region_per}}
+							<div class='ipsType_center'>
+								<span class='ipsType_bold ipsType_warning'>Este método está deshabilitado temporalmente</span>
+							</div>
+						{{else}}
+							<span class='ipsPos_left'>VIP</span><span data-per-price="1" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>VIP Full</span><span data-per-price="2" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS</span><span data-per-price="3" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS FUll</span><span data-per-price="4" class='ipsPos_right ipsType_bold'></span>
+						{{endif}}
+					</div>
+					<div class='ipsGrid_span3 ipsPadding ipsAreaBackground ipsType_center ipsMargin_bottom'>
+						<span class='selectBenefits_text'>Argentina</span>
+
+						<hr class='ipsHr' />
+
+						{{if !\IPS\Settings::i()->v_region_arg}}
+							<div class='ipsType_center'>
+								<span class='ipsType_bold ipsType_warning'>Este método está deshabilitado temporalmente</span>
+							</div>
+						{{else}}
+							<span class='ipsPos_left'>VIP</span><span data-arg-price="1" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>VIP Full</span><span data-arg-price="2" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS</span><span data-arg-price="3" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS FUll</span><span data-arg-price="4" class='ipsPos_right ipsType_bold'></span>
+						{{endif}}
+					</div>
+					<div class='ipsGrid_span3 ipsPadding ipsAreaBackground ipsType_center ipsMargin_bottom'>
+						<span class='selectBenefits_text'>Paypal</span>
+
+						<hr class='ipsHr' />
+
+						{{if !\IPS\Settings::i()->v_region_pp}}
+							<div class='ipsType_center'>
+								<span class='ipsType_bold ipsType_warning'>Este método está deshabilitado temporalmente</span>
+							</div>
+						{{else}}
+							<span class='ipsPos_left'>VIP</span><span data-pp-price="1" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>VIP Full</span><span data-pp-price="2" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS</span><span data-pp-price="3" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS FUll</span><span data-pp-price="4" class='ipsPos_right ipsType_bold'></span>
+						{{endif}}
+					</div>
+					<div class='ipsGrid_span3 ipsPadding ipsAreaBackground ipsType_center ipsMargin_bottom'>
+						<span class='selectBenefits_text'>Chile</span>
+
+						<hr class='ipsHr' />
+
+						{{if !\IPS\Settings::i()->v_region_cl}}
+							<div class='ipsType_center'>
+								<span class='ipsType_bold ipsType_warning'>Este método está deshabilitado temporalmente</span>
+							</div>
+						{{else}}
+							<span class='ipsPos_left'>VIP</span><span data-cl-price="1" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>VIP Full</span><span data-cl-price="2" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS</span><span data-cl-price="3" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS FUll</span><span data-cl-price="4" class='ipsPos_right ipsType_bold'></span>
+						{{endif}}
+					</div>
+				</div>
+
+				<div class='ipsPadding ipsAreaBackground'>
+					<span class='ipsType_large'><strong class='ipsType_negative'>NOTA</strong>: Para ver el precio de los recursos de los servidores, ubicate debajo de la página y verás los botones de cada servidor correspondiente. Presionando sobre ellos, verás un formulario y los distintos métodos de pagos en cada región correspondiente y el precio a adquirir por cada recurso.</span>
+				</div>
+			</div>
+		</div>
+		<div class='ipsFlex-flex:01 ipsResponsive_hideTablet ipsResponsive_hidePhone'>
+			<div class='ipsFlex ipsFlex-ai:center ipsFlex-jc:center ipsGap:3 ipsGap_row:0'>
+				{{if \IPS\Application::load('ventas')->canAccessLista()}}
+					<a href="{url='app=ventas&module=lista&controller=main' seoTemplate='lista'}" class='ipsButton ipsButton_important'>Lista de Ventas</a>
+				{{endif}}
+			</div>
+		</div>
+	</div>
+</div>
+
+{{if $data['promo_enable']}}
+	<div class='ipsMessage ipsMessage_success'>
+		{{if $data['promo_extra_double']}}
+			<strong>PROMOCIÓN ACTIVA</strong>: Cualquier compra de un beneficio sea <strong>VIP</strong> o <strong>Admin CS</strong>, se te duplicarán la cantidad de meses adquirido del mismo. Es decir, si compras 2 meses de VIP en Todos los Servidores, ¡se te acreditarán 4!.
+		{{else}}
+			<strong>PROMOCIÓN ACTIVA</strong>: Cualquier compra de un beneficio sea <strong>VIP</strong> o <strong>Admin CS</strong>, se te sumarán <strong>{$data['promo_extra']} mes(es)</strong> extras a la duración del mismo. Es decir, si compras 1 mes de Admin CS en 1 Servidor, ¡se te sumará 1 mes extra a tu duración!.
+		{{endif}}
+	</div>
+{{endif}}
+
+<div class='cVentas_stepsHeader ipsPadding ipsType_center ipsMargin_bottom'>
+	<ul class="ipsList_reset cVentas_steps">
+		<li data-step="1" class="cVentas_stepsActive"><span>Elegir beneficio</span></li>
+		<li data-step="2"><span>Verificar datos</span></li>
+		<li data-step="3"><span>Región o moneda</span></li>
+		<li data-step="4"><span>Detalles</span></li>
+		<li data-step="5"><span>Confirmar datos</span></li>
+		<li data-step="6"><span>Finalizar</span></li>
+	</ul>
+</div>
+
+<form id='dataVentas' action='/?app=ventas&module=main&controller=main&do=finishBuy' method='post' onkeypress='return event.keyCode != 13;'>
+	<div id='dataSelectBenefits'>
+		<div class="ipsGrid ipsGrid_collapseTablet ipsGrid_collapsePhone ipsType_center" data-ipsgrid="" data-ipsgrid-equalheights="row">
+			<div class="ipsBox ipsMargin_bottom ipsGrid_span4" style="height: 236.406px;">
+				<div class='ipsAreaBackground_light ipsPadding ipsBorder_bottom'>
+					<h2 class="ipsType_pageTitle" style="color: #ffbf00; font-weight: bold; text-shadow: 0 0 .9em #ffbf00;"><i class="fa fa-star-o"></i> VIP</h2>
+				</div>
+
+				<div class='ipsPadding'>
+					<p class="ipsType_normal ipsSpacer_bottom ipsSpacer_double">Rango especial para los jugadores que solo desean disfrutar de los beneficios que ofrece los servidores de juego.</p>
+
+					<div class="ipsMargin:half">
+						<div class='ipsType_left'>
+							<ul class="fa-ul">
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Slot reservado</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Tag CS reservado</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Ganancias extras en servidores con niveles</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Items extras en servidores con estética</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Inmune al Anti-retry, Anti-ping, y Afk-kicker</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Rango destacado</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Canales personalizados en nuestro discord</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class='ipsAreaBackground ipsPadding ipsBorder_top'>
+					<a class="ipsButton ipsButton_primary ipsButton_normal continue">Seleccionar</a>
+				</div>
+			</div>
+			<div class="ipsBox ipsMargin_bottom ipsGrid_span4" style="height: 236.406px;">
+				<div class='ipsAreaBackground_light ipsPadding ipsBorder_bottom'>
+					<h2 class="ipsType_pageTitle" style="color: #ff7c00; font-weight: bold; text-shadow: 0 0 .9em #ff7c00;"><i class="fa fa-user-secret"></i> Admin CS</h2>
+				</div>
+
+				<div class='ipsPadding'>
+					<p class="ipsType_normal ipsSpacer_bottom ipsSpacer_double">Rango donde tendrás el deber de controlar los servidores para que sea un lugar para disfrutar entre los jugadores que lo habitan.</p>
+
+					<div class="ipsMargin:half">
+						<div class='ipsType_left'>
+							<ul class="fa-ul">
+								<li><i class='fa fa-li fa-check'></i>&nbsp;<span class='ipsType_bold' style="color: #ffbf00; font-weight: bold; text-shadow: 0 0 .9em #ffbf00;">¡LO QUE INCLUYE EL VIP!</span></li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Escribir en verde en el Chat</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Comandos administrativos</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Inmunidad sobre comandos</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Grabación automática de demos</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Rango destacado</li>
+								<li><i class='fa fa-li fa-check'></i>&nbsp;Acceso a foro de ayuda para tu Admin</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class='ipsAreaBackground ipsPadding ipsBorder_top'>
+					<a class="ipsButton ipsButton_primary ipsButton_normal continue">Seleccionar</a>
+				</div>
+			</div>
+			<div class="ipsBox ipsMargin_bottom ipsGrid_span4" style="height: 236.406px;">
+				<div class='ipsAreaBackground_light ipsPadding ipsBorder_bottom'>
+					<h2 class="ipsType_pageTitle" style="color: #7cff00; font-weight: bold; text-shadow: 0 0 .9em #7cff00;"><i class="fa fa-diamond"></i> Puntos en Servidores</h2>
+				</div>
+
+				<div class='ipsPadding'>
+					<p class="ipsType_normal ipsSpacer_bottom ipsSpacer_double">Adquiere puntos de los distintos servidores con niveles para poder mejorar tu personaje al máximo. <strong>Se requiere que vincules tu cuenta del servidor con la del foro</strong>.</p>
+
+					<hr class='ipsHr' />
+
+					<a data-ipsdialog data-ipsDialog-title="Sistema de ventas: Servidor #01 Zombie Escape" data-ipsdialog-url='{url="app=ventas&module=main&controller=main&do=ze" seoTemplate="ventas_ze"}' class='ipsButton ipsButton_medium ipsButton_primary ipsButton_fullWidth'>#01 Zombie Escape</a>
+					<br />
+					<a data-ipsdialog data-ipsDialog-title="Sistema de ventas: Servidor #02 ZP Umbrella" data-ipsdialog-url='{url="app=ventas&module=main&controller=main&do=zpu" seoTemplate="ventas_zpu"}' class='ipsButton ipsButton_medium ipsButton_primary ipsButton_fullWidth'>#02 ZP Umbrella</a>
+					<br />
+					<a data-ipsdialog data-ipsDialog-title="Sistema de ventas: Servidor #08 ZP Annihilation" data-ipsdialog-url='{url="app=ventas&module=main&controller=main&do=zpa" seoTemplate="ventas_zpa"}' class='ipsButton ipsButton_medium ipsButton_primary ipsButton_fullWidth'>#08 ZP Annihilation</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id='verifyData' class='ipsBox ipsPadding ipsHide ipsSpacer_both ipsSpacer_half ipsClearfix'></div>
+
+	<div id='dataConfirm' class='ipsBox ipsPadding ipsHide ipsSpacer_both ipsSpacer_half'>
+		<h2 class='ipsType_center'>¡Confirma que los datos sean correctos!</h2>
+		
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;{$data['name']}, por favor, verifica que todo esté ingresado correctamente. Todos los datos juntados se guardarán en nuestro sistema para cuando, se procedan los siguientes pasos, se pueda llevar a cabo la activación del beneficio adquirido.</li>
+		</ul>
+
+		<div class="ipsGrid ipsGrid_collapsePhone ipsPadding ipsType_center ipsSpacer_bottom">
+			<div class='ipsGrid_span4 ipsPadding'><h1>{$data['name']} (#{$data['member_id']})</h1><span>Nombre en el Foro</span></div>
+			<div class='ipsGrid_span4 ipsPadding'><h1>{$data['email']}</h1><span>Email</span></div>
+			<div class='ipsGrid_span4 ipsPadding'><h1><span data-confirm="region"></span></h1><span>Región</span></div>
+			<div class='ipsGrid_span3 ipsPadding'><h1><span data-confirm="tagcs"></span></h1><span>Tag CS</span></div>
+			<div class='ipsGrid_span3 ipsPadding'><h1><span data-confirm="benefit"></span></h1><span>Tipo de beneficio</span></div>
+			<div class='ipsGrid_span3 ipsPadding'><h1><span data-confirm="server"></span></h1><span>Servidor</span></div>
+			<div class='ipsGrid_span3 ipsPadding'>
+				{{if \IPS\Settings::i()->v_b_promo_enable}}
+					{{if \IPS\Settings::i()->v_b_promo_extra_double}}
+						<h1><span data-confirm="days"></span>&nbsp;(duplicado)</h1>
+					{{else}}
+						{{if \IPS\Settings::i()->v_b_promo_extra}}
+							<h1><span data-confirm="days"></span>&nbsp;(+{expression="(\IPS\Settings::i()->v_b_promo_extra * 30)" raw="true"} días)</h1>
+						{{else}}
+							<h1><span data-confirm="days"></span></h1>
+						{{endif}}
+					{{endif}}
+				{{else}}
+					<h1><span data-confirm="days"></span></h1>
+				{{endif}}
+				<span>Duración del beneficio</span>
+			</div>
+			<div class='ipsGrid_span12 ipsPadding'><h1><span data-confirm="price"></span></h1><span>Total a abonar</span></div>
+		</div>
+
+		<input type="hidden" name="money_real" value="0" />
+
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Una vez adquirido el beneficio, no podrás renovarlo hasta que falten 7 días para su finalización. Para corroborarlo, debes ir al panel que se te otorga una vez que se te de dicho beneficio y podrás ver todos los datos.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si quieres hacer una renovación, debes haber ingresado correctamente los mismos datos de tu primer pedido para que el sistema detecte que se trate del mismo. El resto se encargará el procesamiento de venta y pago.</span></li>
+		</ul>
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPadding ipsSpacer_top">
+			<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+			<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+		</ul>
+	</div>
+
+	<div id='finishBuy' class='ipsBox ipsPadding ipsHide ipsSpacer_both ipsSpacer_half ipsClearfix'>
+		<h2 class='ipsType_center'>Finalizando compra . . .</h2>
+
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Podrás optar por los siguientes métodos de pago para proceder el mismo en la compra de tu beneficio. Recuerda que, si falta algún método en el cual tu puedas pagarlo, habla con algún <a href="/staff/">miembro del Staff</a> y lo analizaremos para poder agregarlo en la compra..</li>
+		</ul>
+
+		<div id='methorPayments' class="ipsPadding ipsSpacer_both ipsType_center"></div>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<h2 class="ipsType_center">Términos y Condiciones</h2>
+			<div id="terms" class="ipsPos_center ipsBox ipsSpacer_both"></div>
+		{{endif}}
+
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Presiona en el botón <strong>Finalizar</strong>, una vez presionado, se te enviará un mensaje privado con los datos de tu pedido y para realizar el pago del mismo.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si estás pagando en la región Argentina, tu beneficio se activará <strong>AUTOMÁTICAMENTE</strong>. En las otras regiones será de forma manual por algún <strong>Director de la comunidad</strong>. Dentro de todo, en el mensaje privado con la información de tu beneficio, tendrás las instrucciones necesarias para que sepas todo al pie de la letra.</li>
+			<li class='ipsType_light'><i style='color: orange' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si quieres comprarle a un amigo, debes decirle que complete los pasos de compra desde su cuenta de foro; una vez finalizado y obtenido el enlace de pago, debe pasarte dicho enlace y pagarselo. El resto lo hará automáticamente el sistema y le llegará a tu amigo como regalo tuyo.</li>
+			<li class='ipsType_light'><i style='color: red' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;El <strong>Staff de Drunk-Gaming</strong> se reserva el <strong><u>derecho de suspender o remover las cuentas de los usuarios que no cumplas el reglamento impuesto por la comunidad</u></strong>. Para eso, visite <a href="/reglamento/" class='ipsType_bold'>este enlace</a> donde figuran todas las reglas ilícitas.</li>
+		</ul>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<p class="ipsType_center"><span class="ipsToggle ipsToggle_off" id="acceptTerms" tabindex="0"><span data-role="status">Off</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{else}}
+			<p class="ipsType_center ipsHide"><span class="ipsToggle ipsToggle_on" id="acceptTerms" tabindex="0"><span data-role="status">On</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{endif}}
+
+		<p class="ipsType_center ipsHide"><span class="ipsToggle ipsToggle_off" id="acceptToAdmin" tabindex="0"><span data-role="status">Off</span></span>&nbsp;He leido todas las reglas impuestas por la comunidad y me comprometo a, en base a ello, cuidar los servidores para mantener la comunidad como un lugar disfrutable para los jugadores y/o superiores.</p>
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPadding ipsSpacer_top">
+			{{if \IPS\Settings::i()->v_show_terms}}
+				<li><span id='finishButton' class="ipsButton ipsButton_alternate ipsButton_disabled">Finalizar</span></li>
+			{{else}}
+				<li><span id='finishButton' class="ipsButton ipsButton_primary">Finalizar</span></li>
+			{{endif}}
+			<li><span class="ipsLoading ipsLoading_dark ipsLoading_small ipsPadding ipsHide"></span></li>
+		</ul>
+	</div>
+
+	<div id="linkPayments" class="ipsType_center ipsHide">
+		<div class='ipsPadding'>
+			<h2 class='ipsType_pageTitle'>¡Presta atención!</h2>
+
+			<p style='font-size: 15px;'>Ya casi has finalizado de hacer los pasos para realizar tu pedido. Ahora solo debes hacer un último paso que es <strong>realizar el pago y registrar que lo hayas hecho</strong>. Para realizar el pago, revisa tu mensajería privada que se te enviará un mensaje con los datos para realizar el mismo. Una vez realizado el pago, dirígete a la sección de <a class='ipsType_bold' href="{url='app=ventas&module=register&controller=main' seoTemplate='register'}">Registros de Venta</a> para mandarnos un formulario con el comprobante/ticket de que has realizado el pago. Una vez enviado, los Directores de la comunidad se encargarán de activar manualmente tu pedido adquirido.</p>
+
+			<p style='font-size: 15px; color: #ff0000;'>Si eres de <strong>Argentina</strong>, recuerda que los pedidos que realices en la comunidad se acreditan <strong>AUTOMÁTICAMENTE</strong>. No hace falta que realices el registro de tu venta ya que sólo necesitas realizar el pago y dentro de las próximas horas tu pedido se te activará por nuestro sistema de procesamiento de pagos.</p>
+		</div>
+
+		<div class='ipsPadding ipsAreaBackground_light'>
+			<a href="{url='app=ventas&module=register&controller=main' seoTemplate='register'}" class="ipsButton ipsButton_important"><i class="fa fa-sign-in"></i>&nbsp;Registrar Venta</a>
+			<a href="/" class="ipsButton ipsButton_alternate"><i class="fa fa-home"></i>&nbsp;Ir al inicio del foro</a>
+		</div>
+	</div>
+</form>

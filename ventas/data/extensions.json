@@ -1,0 +1,11 @@
+{
+    "core": {
+        "FrontNavigation": {
+            "itemBarRegistro": "IPS\\ventas\\extensions\\core\\FrontNavigation\\itemBarRegistro",
+            "itemBarRegistroZE": "IPS\\ventas\\extensions\\core\\FrontNavigation\\itemBarRegistroZE",
+            "itemBarRegistroZPA": "IPS\\ventas\\extensions\\core\\FrontNavigation\\itemBarRegistroZPA",
+            "itemBarRegistroZPU": "IPS\\ventas\\extensions\\core\\FrontNavigation\\itemBarRegistroZPU",
+            "itemBarVentas": "IPS\\ventas\\extensions\\core\\FrontNavigation\\itemBarVentas"
+        }
+    }
+}

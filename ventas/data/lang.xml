@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+ <app key="ventas" version="10023">
+  <word key="__app_ventas" js="0">Ventas</word>
+  <word key="google_text" js="0">Compartir en Google</word>
+  <word key="menutab__ventas" js="0">Ventas</word>
+  <word key="menutab__ventas_icon" js="0">shopping-cart</word>
+  <word key="menu__ventas_settings" js="0">Ventas</word>
+  <word key="menu__ventas_settings_settings" js="0">Ajustes generales</word>
+  <word key="menu__ventas_settings_benefit" js="0">Venta de Beneficios</word>
+  <word key="menu__ventas_settings_ze" js="0">Venta de Recursos ZE</word>
+  <word key="menu__ventas_settings_zpu" js="0">Venta de Recursos ZPU</word>
+  <word key="menu__ventas_settings_zpa" js="0">Venta de Recursos ZPA</word>
+  <word key="v_general" js="0">General</word>
+  <word key="v_enable" js="0">Habilitar sección</word>
+  <word key="v_show_terms" js="0">Mostrar los Términos y Condiciones</word>
+  <word key="v_access" js="0">¿Quiénes tendrán acceso a ver esta sección?</word>
+  <word key="v_access_list" js="0">¿Quiénes tendrán acceso a ver esta sección?</word>
+  <word key="v_region" js="0">Regiones (métodos de pago)</word>
+  <word key="v_region_per" js="0">Perú (Sol peruano)</word>
+  <word key="v_region_per_ze" js="0">Perú (Sol peruano) - Zombie Escape</word>
+  <word key="v_region_per_zpu" js="0">Perú (Sol peruano) - ZP Umbrella</word>
+  <word key="v_region_per_zpa" js="0">Perú (Sol peruano) - ZP Annihilation</word>
+  <word key="v_region_arg" js="0">Argentina (Pesos argentinos)</word>
+  <word key="v_region_arg_ze" js="0">Argentina (Pesos argentinos) - Zombie Escape</word>
+  <word key="v_region_arg_zpu" js="0">Argentina (Pesos argentinos) - ZP Umbrella</word>
+  <word key="v_region_arg_zpa" js="0">Argentina (Pesos argentinos) - ZP Annihilation</word>
+  <word key="v_region_pp" js="0">Paypal (Dólares)</word>
+  <word key="v_region_pp_ze" js="0">Paypal (Dólares) - Zombie Escape</word>
+  <word key="v_region_pp_zpu" js="0">Paypal (Dólares) - ZP Umbrella</word>
+  <word key="v_region_pp_zpa" js="0">Paypal (Dólares) - ZP Annihilation</word>
+  <word key="v_region_cl" js="0">Chile (Peso chileno)</word>
+  <word key="v_region_cl_ze" js="0">Chile (Peso chileno) - Zombie Escape</word>
+  <word key="v_region_cl_zpu" js="0">Chile (Peso chileno) - ZP Umbrella</word>
+  <word key="v_region_cl_zpa" js="0">Chile (Peso chileno) - ZP Annihilation</word>
+  <word key="v_settings_sql" js="0">Base de datos (SQL)</word>
+  <word key="v_sql_host" js="0">Host o IP de conexión</word>
+  <word key="v_sql_port" js="0">Puerto</word>
+  <word key="v_sql_port_desc" js="0"><![CDATA[Por defecto, el puerto para coenxiones a base de datos es <b>3306</b>.]]></word>
+  <word key="v_sql_user" js="0">Usuario</word>
+  <word key="v_sql_password" js="0">Contraseña</word>
+  <word key="v_sql_database" js="0">Base de datos</word>
+  <word key="v_sql_prefix" js="0">Prefijo de las tablas</word>
+  <word key="v_sql_prefix_desc" js="0"><![CDATA[El prefijo de las tabla es o son caracteres con los que empiezan todas las tablas de la base de datos.<br>Un ejemplo muy claro es: <b>table_</b><br>Por lo que, todas las tablas, empezarán con <b>table_</b>.]]></word>
+  <word key="v_sql_charset" js="0">Conjunto de caracteres de base de datos</word>
+  <word key="v_sql_charset_error" js="0">El conjunto de caracteres de la base de datos que proporcionó no es un conjunto de caracteres válido de la base de datos.</word>
+  <word key="v_sql_error" js="0">La información proporcionada es incorrecta o la base de datos no está disponible.</word>
+  <word key="v_b_general" js="0">General</word>
+  <word key="v_b_promo_enable" js="0">Habilitar las promociones</word>
+  <word key="v_b_promo_desc" js="0">Aquí podrás modificar si quieres que haya promociones en la comunidad. Si quieres activarlas, hazlo y modificalo como te parezca. Recuerda que una vez guardado la configuración, se activará y funcionará por si sola; así que ten cuidado con activar esto en el medio de una compra de un miembro.</word>
+  <word key="v_b_promo_extra_double" js="0">Duplicar duración del beneficio</word>
+  <word key="v_b_promo_extra_double_desc" js="0">Al activar esto, cualquier miembro que compre cualquier beneficio (VIP o Admin CS), se le duplicarán los meses adquiridos.</word>
+  <word key="v_b_promo_extra" js="0">Meses extras</word>
+  <word key="v_b_promo_extra_desc" js="0">Cuando un miembro compra un beneficio (VIP o Admin CS), se le otorgará la cantidad de meses extras ingresados en este campo.</word>
+  <word key="v_ze_general" js="0">General</word>
+  <word key="v_ze_extra" js="0">Cuando un usuario compre cierta cantidad de recursos, le da el porcentaje extra de la configuración dada. Esto se usa más que nada para las ofertas/promociones otorgadas por la comunidad.</word>
+  <word key="v_ze_percent_extra" js="0">Porcentaje de recursos extras (ZE)</word>
+  <word key="v_ze_reward" js="0">Cada cierta cantidad de recursos comprados, otorgará un extra de regalo. Ten cuidado con tocar esta configuración, por favor.</word>
+  <word key="v_ze_pl_reward_base" js="0">Cada 'x' cantidad de pL</word>
+  <word key="v_ze_pl_reward" js="0">Otorgará 'y' cantidad extra</word>
+  <word key="v_zpu_general" js="0">General</word>
+  <word key="v_zpu_extra" js="0">Cuando un usuario compre cierta cantidad de recursos, le da el porcentaje extra de la configuración dada. Esto se usa más que nada para las ofertas/promociones otorgadas por la comunidad.</word>
+  <word key="v_zpu_percent_extra" js="0">Porcentaje de recursos extras (ZPU)</word>
+  <word key="v_zpu_reward" js="0">Cada cierta cantidad de recursos comprados, otorgará un extra de regalo. Ten cuidado con tocar esta configuración, por favor.</word>
+  <word key="v_zpu_ps_reward_base" js="0">Cada 'x' cantidad de Saldo</word>
+  <word key="v_zpu_ps_reward" js="0">Otorgará 'y' cantidad extra</word>
+  <word key="v_zpa_general" js="0">General</word>
+  <word key="v_zpa_extra" js="0">Cuando un usuario compre cierta cantidad de recursos, le da el porcentaje extra de la configuración dada. Esto se usa más que nada para las ofertas/promociones otorgadas por la comunidad.</word>
+  <word key="v_zpa_percent_extra" js="0">Porcentaje de recursos extras (ZPA)</word>
+  <word key="v_zpa_reward" js="0">Cada cierta cantidad de recursos comprados, otorgará un extra de regalo. Ten cuidado con tocar esta configuración, por favor.</word>
+  <word key="v_zpa_ph_reward_base" js="0">Cada 'x' cantidad de pH</word>
+  <word key="v_zpa_ph_reward" js="0">Otorgará 'y' cantidad extra</word>
+  <word key="v_zpa_pz_reward_base" js="0">Cada 'x' cantidad de pZ</word>
+  <word key="v_zpa_pz_reward" js="0">Otorgará 'y' cantidad extra</word>
+  <word key="v_zpa_pl_reward_base" js="0">Cada 'x' cantidad de pL</word>
+  <word key="v_zpa_pl_reward" js="0">Otorgará 'y' cantidad extra</word>
+  <word key="v_zpa_ps_reward_base" js="0">Cada 'x' cantidad de Saldo</word>
+  <word key="v_zpa_ps_reward" js="0">Otorgará 'y' cantidad extra</word>
+  <word key="v_zpa_pd_reward_base" js="0">Cada 'x' cantidad de Diamantes</word>
+  <word key="v_zpa_pd_reward" js="0">Otorgará 'y' cantidad extra</word>
+  <word key="module__ventas_main" js="0">Ventas</word>
+  <word key="module__ventas_register" js="0">Registrar venta</word>
+  <word key="module__ventas_register_ze" js="0">Registrar venta (ZE)</word>
+  <word key="module__ventas_register_zpu" js="0">Registrar venta (ZPU)</word>
+  <word key="module__ventas_register_zpa" js="0">Registrar venta (ZPA)</word>
+  <word key="block_ventasWidget" js="0">Bloque de Ventas</word>
+  <word key="block_ventasWidget_desc" js="0">Muestra una imagen con datos de las ventas, y un contador de usuarios que adquirieron beneficios en las mismas.</word>
+  <word key="vr_data" js="0">Compra realizada</word>
+  <word key="vr_data_desc" js="0">Seleccione la compra que hayas realizado según puntos, región corresponda y asegurese de que sea el correcto. Si seleccionaste bien, debe coincidir con el comprobante a subir. Si no coincide, se rechazará el registro y tendrá que volver a hacerlo.</word>
+  <word key="vr_payment_image" js="0">Comprobante</word>
+  <word key="vr_payment_image_desc" js="0">Aquí sube una imagen del comprobante de compra, debe mostrarse la operación, la fecha y hora. Si nada de lo mencionado corresponde a un comprobante, se tomará una medida de sanción hacia el miembro.</word>
+  <word key="vr_success" js="0">Tu venta ha sido registrada. Será analizada por un Director y si todo sale correctamente según los datos coincididos, se acreditará la misma.</word>
+  <word key="vr_already_registered" js="0">Ya has registrado tu comprobante con esta compra.</word>
+  <word key="v_viewing" js="0">Viendo la sección de ventas</word>
+  <word key="v_register_viewing" js="0">Viendo o registrando una venta</word>
+  <word key="__register" js="0">Registrar ahora</word>
+  <word key="__save" js="0">Guardar ahora</word>
+  <word key="__saved" js="0">Guardado</word>
+  <word key="__account" js="0">Cuenta</word>
+  <word key="__zpa_ph_y" js="0">Puntos Humanos (pH)</word>
+  <word key="__zpa_ph_cant" js="0">Cantidad (pH)</word>
+  <word key="__zpa_pz_y" js="0">Puntos Zombies (pZ)</word>
+  <word key="__zpa_pz_cant" js="0">Cantidad (pZ)</word>
+  <word key="__ze_pl_y" js="0">Puntos de Legado (pL)</word>
+  <word key="__ze_pl_cant" js="0">Cantidad (pL)</word>
+  <word key="__zpa_pl_y" js="0">Puntos de Legado (pL)</word>
+  <word key="__zpa_pl_cant" js="0">Cantidad (pL)</word>
+  <word key="__zpa_ps_y" js="0">Saldo</word>
+  <word key="__zpa_ps_cant" js="0">Cantidad (Saldo)</word>
+  <word key="__zpu_ps_y" js="0">Saldo</word>
+  <word key="__zpu_ps_cant" js="0">Cantidad (Saldo)</word>
+  <word key="__zpa_pd_y" js="0">Diamantes</word>
+  <word key="__zpa_pd_cant" js="0">Cantidad (Diamantes)</word>
+  <word key="__not_cant" js="0">La cantidad ingresada es inválida</word>
+  <word key="__countrys" js="0">País de tu moneda</word>
+  <word key="__countrys_desc" js="0">Selecciona el país en el que te ubicas para identificar tu moneda con la que pagarás los recursos.</word>
+  <word key="__continue" js="0">Continuar</word>
+  <word key="__statusr5" js="0">Compra expirada</word>
+  <word key="__statusr4" js="0">Compra devuelta</word>
+  <word key="__statusr3" js="0">Compra cancelada</word>
+  <word key="__statusr2" js="0">Compra rechazada</word>
+  <word key="__statusr1" js="0">Compra pendiente</word>
+  <word key="__status0" js="0">Recién registrado</word>
+  <word key="__status1" js="0">Compra aprobada</word>
+  <word key="__status2" js="0">Compra acreditada</word>
+  <word key="__boughtokr6" js="0">Compra expirada</word>
+  <word key="__boughtokr5" js="0">Compra devuelta</word>
+  <word key="__boughtokr4" js="0">Compra cancelada</word>
+  <word key="__boughtokr3" js="0">Compra rechazada</word>
+  <word key="__boughtokr2" js="0">Compra pendiente</word>
+  <word key="__boughtokr1" js="0">Recién registrado</word>
+  <word key="__boughtok0" js="0">Compra aprobada</word>
+  <word key="__boughtok1" js="0">Compra acreditada</word>
+ </app>
+</language>

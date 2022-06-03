@@ -1,0 +1,39 @@
+{
+    "settings": {
+        "settings": {
+            "tab": "ventas",
+            "controller": "settings",
+            "do": "",
+            "restriction": "settings_manage",
+            "subcontrollers": ""
+        },
+        "zpa": {
+            "tab": "ventas",
+            "controller": "zpa",
+            "do": "",
+            "restriction": "zpa_manage",
+            "subcontrollers": ""
+        },
+        "benefit": {
+            "tab": "ventas",
+            "controller": "benefit",
+            "do": "",
+            "restriction": "benefit_manage",
+            "subcontrollers": ""
+        },
+        "ze": {
+            "tab": "ventas",
+            "controller": "ze",
+            "do": "",
+            "restriction": "ze_manage",
+            "subcontrollers": ""
+        },
+        "zpu": {
+            "tab": "ventas",
+            "controller": "zpu",
+            "do": "",
+            "restriction": "zpu_manage",
+            "subcontrollers": ""
+        }
+    }
+}

@@ -1,0 +1,190 @@
+[
+    {
+        "key": "v_access",
+        "default": ""
+    },
+    {
+        "key": "v_access_list",
+        "default": ""
+    },
+    {
+        "key": "v_b_promo_enable",
+        "default": "0"
+    },
+    {
+        "key": "v_b_promo_extra",
+        "default": ""
+    },
+    {
+        "key": "v_b_promo_extra_double",
+        "default": "0"
+    },
+    {
+        "key": "v_enable",
+        "default": "1"
+    },
+    {
+        "key": "v_region_arg",
+        "default": "1"
+    },
+    {
+        "key": "v_region_arg_ze",
+        "default": "1"
+    },
+    {
+        "key": "v_region_arg_zpa",
+        "default": "1"
+    },
+    {
+        "key": "v_region_arg_zpu",
+        "default": "1"
+    },
+    {
+        "key": "v_region_cl",
+        "default": "1"
+    },
+    {
+        "key": "v_region_cl_ze",
+        "default": "1"
+    },
+    {
+        "key": "v_region_cl_zpa",
+        "default": "1"
+    },
+    {
+        "key": "v_region_cl_zpu",
+        "default": "1"
+    },
+    {
+        "key": "v_region_per",
+        "default": "1"
+    },
+    {
+        "key": "v_region_per_ze",
+        "default": "1"
+    },
+    {
+        "key": "v_region_per_zpa",
+        "default": "1"
+    },
+    {
+        "key": "v_region_per_zpu",
+        "default": "1"
+    },
+    {
+        "key": "v_region_pp",
+        "default": "1"
+    },
+    {
+        "key": "v_region_pp_ze",
+        "default": "1"
+    },
+    {
+        "key": "v_region_pp_zpa",
+        "default": "1"
+    },
+    {
+        "key": "v_region_pp_zpu",
+        "default": "1"
+    },
+    {
+        "key": "v_show_terms",
+        "default": "1"
+    },
+    {
+        "key": "v_sql_charset",
+        "default": ""
+    },
+    {
+        "key": "v_sql_database",
+        "default": ""
+    },
+    {
+        "key": "v_sql_host",
+        "default": ""
+    },
+    {
+        "key": "v_sql_password",
+        "default": ""
+    },
+    {
+        "key": "v_sql_port",
+        "default": "3306"
+    },
+    {
+        "key": "v_sql_prefix",
+        "default": ""
+    },
+    {
+        "key": "v_sql_user",
+        "default": ""
+    },
+    {
+        "key": "v_ze_percent_extra",
+        "default": "0"
+    },
+    {
+        "key": "v_ze_pl_reward",
+        "default": "0"
+    },
+    {
+        "key": "v_ze_pl_reward_base",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_pd_reward",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_pd_reward_base",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_percent_extra",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_ph_reward",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_ph_reward_base",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_pl_reward",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_pl_reward_base",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_ps_reward",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_ps_reward_base",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_pz_reward",
+        "default": "0"
+    },
+    {
+        "key": "v_zpa_pz_reward_base",
+        "default": "0"
+    },
+    {
+        "key": "v_zpu_percent_extra",
+        "default": "0"
+    },
+    {
+        "key": "v_zpu_ps_reward",
+        "default": "0"
+    },
+    {
+        "key": "v_zpu_ps_reward_base",
+        "default": "0"
+    }
+]

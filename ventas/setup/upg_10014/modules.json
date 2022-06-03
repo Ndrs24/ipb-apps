@@ -1,0 +1,11 @@
+{
+    "added": [
+        "front\/lista"
+    ],
+    "edited": [
+        "front\/main",
+        "front\/register",
+        "admin\/settings"
+    ],
+    "removed": []
+}

@@ -1,0 +1,23 @@
+<ips:template parameters="" />
+<div class='ipsPadding ipsType_center ipsWidget_inner'>
+	<a href='{url="app=ventas&module=main&controller=main" seoTemplate="ventas"}'><img src="https://www.DrunkGaming.net/esthetic/ventas_widget.png" /></a><br>
+
+	<hr class='ipsHr' />
+
+	<span class='ipsType_bold ipsType_large'>Ventas Drunk-Gaming</span>
+
+	<hr class='ipsHr' />
+
+	<div class='ipsFlex ipsFlex-jc:between ipsFlex-ai:center ipsFlex-fw:wrap ipsGap:3'>
+		<div class='ipsFlex-flex:06'>
+			{{$v = \IPS\Application::load('ventas')->getVIPs();}}
+			<h1 class='ipsType_pageTitle' style='color: #ffbf00; font-weight: bold; text-shadow: 0 0 .9em #ffbf00;'>{$v}</h1>
+			<span class='ipsType_light'><i class='fa fa-star-o'></i>&nbsp;VIP</span>
+		</div>
+		<div class='ipsFlex-flex:06'>
+			{{$a = \IPS\Application::load('ventas')->getAdminCSs();}}
+			<h1 class='ipsType_pageTitle' style='color: #ff7c00; font-weight: bold; text-shadow: 0 0 .9em #ff7c00;'>{$a}</h1>
+			<span class='ipsType_light'><i class='fa fa-user-secret'></i>&nbsp;Admin CS</span>
+		</div>
+	</div>
+</div>

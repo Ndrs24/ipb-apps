@@ -1,0 +1,20 @@
+<ips:template parameters="$type, $message" />
+<section class='ipsType_center'>
+	<div class='ipsBox ipsPad'>
+		{{if $type == 0}}
+			<i class='fa fa-times-circle ipsType_huge'></i>
+		{{elseif $type == 1}}
+			<i class='fa fa-history ipsType_huge'></i>
+		{{else}}
+			<i class='fa fa-check-circle ipsType_huge'></i>
+		{{endif}}
+
+		<div id='elErrorMessage' class='ipsPos_center'>{$message|raw}</div>
+
+		<hr class='ipsHr' />
+
+		<ul class='ipsList_inline'>
+			<li><a href='{url="app=forums&module=forums&controller=index" seoTemplate="forums"}' class='ipsButton ipsButton_primary ipsButton_medium'><i class="fa fa-home"></i>&nbsp;Ir al inicio</a></li>
+		</ul>
+	</div>
+</section>

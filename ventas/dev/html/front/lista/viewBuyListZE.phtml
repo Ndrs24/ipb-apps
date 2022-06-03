@@ -1,0 +1,48 @@
+<ips:template parameters="$row" />
+<h2 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Venta ZE #{number="$row['id']"}</h2>
+<hr class='ipsHr'>
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<tr>
+		<td align='left'>Fecha y hora</td>
+		<td align='right'>{datetime="$row['bought_timestamp']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Puntos de Legado</td>
+		<td align='right'>{$row['p_legacy']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Región o moneda</td>
+		<td align='right'>
+			{{if $row['bought_money'] == 1}}
+				Peru
+			{{elseif $row['bought_money'] == 2}}
+				Argentina
+			{{elseif $row['bought_money'] == 3}}
+				Paypal
+			{{elseif $row['bought_money'] == 4}}
+				Chile
+			{{endif}}
+		</td>
+	</tr>
+	<tr>
+		<td align='left'>Precio original</td>
+		<td align='right'>{$row['bought_money_real']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Foto del comprobante</td>
+		<td align='right'>
+			{{if $row['bought_image'] != NULL}}
+				<a href="{$row['bought_image']}" target="_blank">Ver imagen</a>
+			{{else}}
+				-
+			{{endif}}
+		</td>
+	</tr>
+</table>
+{{if \IPS\Application::load('ventas')->canAccessLista() && $row['bought_ok'] == -1}}
+	<hr class='ipsHr' />
+
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<a href='{url="app=ventas&module=lista&controller=main&area=processBuyListZE&id={$row['id']}" seoTemplate="lista_ze_view_process"}' class='ipsButton ipsButton_important ipsButton_fullWidth'><i class='fa fa-shopping-cart'></i> Activar compra</a>
+	</div>
+{{endif}}

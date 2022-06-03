@@ -1,0 +1,408 @@
+{
+    "ventas_buys": {
+        "name": "ventas_buys",
+        "columns": {
+            "buy_id": {
+                "name": "buy_id",
+                "type": "BIGINT",
+                "length": 20,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": null,
+                "comment": "",
+                "unsigned": true,
+                "zerofill": false,
+                "auto_increment": true,
+                "binary": false
+            },
+            "buy_member_id": {
+                "name": "buy_member_id",
+                "type": "BIGINT",
+                "length": 20,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "0",
+                "comment": "",
+                "unsigned": true,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_name": {
+                "name": "buy_name",
+                "type": "VARCHAR",
+                "length": 64,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_email": {
+                "name": "buy_email",
+                "type": "VARCHAR",
+                "length": 256,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_tagcs": {
+                "name": "buy_tagcs",
+                "type": "VARCHAR",
+                "length": 32,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_setinfo": {
+                "name": "buy_setinfo",
+                "type": "VARCHAR",
+                "length": 32,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_benefit": {
+                "name": "buy_benefit",
+                "type": "VARCHAR",
+                "length": 24,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_region": {
+                "name": "buy_region",
+                "type": "TINYINT",
+                "length": 1,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "1",
+                "comment": "",
+                "unsigned": true,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_days": {
+                "name": "buy_days",
+                "type": "INT",
+                "length": 10,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "30",
+                "comment": "",
+                "unsigned": true,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_server": {
+                "name": "buy_server",
+                "type": "TINYINT",
+                "length": 3,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "0",
+                "comment": "",
+                "unsigned": true,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_timestamp": {
+                "name": "buy_timestamp",
+                "type": "INT",
+                "length": 10,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "0",
+                "comment": "",
+                "unsigned": true,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_status": {
+                "name": "buy_status",
+                "type": "TINYINT",
+                "length": 2,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "0",
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_money_real": {
+                "name": "buy_money_real",
+                "type": "INT",
+                "length": 10,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "0",
+                "comment": "",
+                "unsigned": true,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_days_extras": {
+                "name": "buy_days_extras",
+                "type": "INT",
+                "length": 10,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "0",
+                "comment": "",
+                "unsigned": true,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "buy_image": {
+                "name": "buy_image",
+                "type": "VARCHAR",
+                "length": 128,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "auto_increment": false
+            }
+        },
+        "indexes": {
+            "PRIMARY": {
+                "type": "primary",
+                "name": "PRIMARY",
+                "columns": [
+                    "buy_id"
+                ],
+                "length": [
+                    null
+                ]
+            }
+        }
+    },
+    "ventas_notifications": {
+        "name": "ventas_notifications",
+        "columns": {
+            "notification_id": {
+                "name": "notification_id",
+                "type": "BIGINT",
+                "length": 20,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": null,
+                "comment": "",
+                "unsigned": true,
+                "zerofill": false,
+                "auto_increment": true,
+                "binary": false
+            },
+            "notification_buy_id": {
+                "name": "notification_buy_id",
+                "type": "BIGINT",
+                "length": 20,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "0",
+                "comment": "",
+                "unsigned": true,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "notification_collection_id": {
+                "name": "notification_collection_id",
+                "type": "BIGINT",
+                "length": 20,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "0",
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "notification_payment_type": {
+                "name": "notification_payment_type",
+                "type": "VARCHAR",
+                "length": 32,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "notification_merchant_order_id": {
+                "name": "notification_merchant_order_id",
+                "type": "BIGINT",
+                "length": 20,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": "0",
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "notification_collection_status": {
+                "name": "notification_collection_status",
+                "type": "VARCHAR",
+                "length": 32,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "notification_preference_id": {
+                "name": "notification_preference_id",
+                "type": "VARCHAR",
+                "length": 128,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "notification_site_id": {
+                "name": "notification_site_id",
+                "type": "VARCHAR",
+                "length": 32,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "notification_external_reference": {
+                "name": "notification_external_reference",
+                "type": "VARCHAR",
+                "length": 64,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "notification_processing_mode": {
+                "name": "notification_processing_mode",
+                "type": "VARCHAR",
+                "length": 32,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            },
+            "notification_merchant_account_id": {
+                "name": "notification_merchant_account_id",
+                "type": "VARCHAR",
+                "length": 32,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            }
+        },
+        "indexes": {
+            "PRIMARY": {
+                "type": "primary",
+                "name": "PRIMARY",
+                "columns": [
+                    "notification_id"
+                ],
+                "length": [
+                    null
+                ]
+            },
+            "notification_buy_id": {
+                "type": "key",
+                "name": "notification_buy_id",
+                "columns": [
+                    "notification_buy_id"
+                ],
+                "length": [
+                    null
+                ]
+            }
+        }
+    }
+}

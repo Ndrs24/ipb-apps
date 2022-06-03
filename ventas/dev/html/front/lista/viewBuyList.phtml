@@ -1,0 +1,70 @@
+<ips:template parameters="$row" />
+<h2 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Venta #{number="$row['buy_id']"}</h2>
+
+<hr class='ipsHr' />
+
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<tr>
+		<td align='left'>Fecha y hora</td>
+		<td align='right'>{datetime="$row['buy_timestamp']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Miembro</td>
+		<td align='right'>{$row['buy_name']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Tag CS</td>
+		<td align='right'>{$row['buy_tagcs']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Beneficio adquirido</td>
+		<td align='right'>{$row['buy_benefit']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Servidor</td>
+		<td align='right'>{$row['buy_server']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Días de duración</td>
+		<td align='right'>{$row['buy_days']} (+ {$row['buy_days_extras']} extras)</td>
+	</tr>
+	<tr>
+		<td align='left'>Región o moneda</td>
+		<td align='right'>
+			{{if $row['buy_region'] == 1}}
+				Peru
+			{{elseif $row['buy_region'] == 2}}
+				Argentina
+			{{elseif $row['buy_region'] == 3}}
+				Paypal
+			{{elseif $row['buy_region'] == 4}}
+				Chile
+			{{endif}}
+		</td>
+	</tr>
+	<tr>
+		<td align='left'>Precio original</td>
+		<td align='right'>{$row['buy_money_real']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Foto del comprobante</td>
+		<td align='right'>
+			{{if $row['buy_image'] != NULL}}
+				<a href="{$row['buy_image']}" target="_blank">Ver imagen</a>
+			{{else}}
+				-
+			{{endif}}
+		</td>
+	</tr>
+	<tr>
+		<td align='left'>Código único de la venta</td>
+		<td align='right'>{$row['notification_external_reference']}</td>
+	</tr>
+</table>
+{{if \IPS\Application::load('ventas')->canAccessLista() && $row['buy_status'] == 0}}
+	<hr class='ipsHr' />
+
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<a href='{url="app=ventas&module=lista&controller=main&area=processBuyList&id={$row['buy_id']}" seoTemplate="lista_view_process"}' class='ipsButton ipsButton_important ipsButton_fullWidth'><i class='fa fa-shopping-cart'></i> Activar compra</a>
+	</div>
+{{endif}}

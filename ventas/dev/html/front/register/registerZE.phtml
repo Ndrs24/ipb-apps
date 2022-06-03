@@ -1,0 +1,20 @@
+<ips:template parameters="$c, $form" />
+<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__ventas_register_ze"}</h1>
+</div>
+
+<div class='ipsPadding ipsBox ipsSpacer_bottom'>
+	<span class='ipsType_large'>Esta sección es para <strong>registrar ventas pagadas</strong>, es decir, si has realizado una compra en la <a href='/ventas/'>sección de ventas</a> y has pagado como corresponde, debes visitar este sitio para poder registrar que lo hayas realizado y nosotros poder acreditar la misma según los datos. Si has comprado mediante Argentina, no recomendamos usar este sitio ya que las compras en Argentina, <strong>son automáticas</strong>.</span>
+	<br />
+	<br />
+	<span class='ipsType_large'>Abajo se te mostrará un formulario en caso de que hayas realizado una compra, de lo contrario, no mostrará nada. Si has realizado una compra, se te mostrarán todos los datos y debes completar el formulario mencionado para poder llevar a cabo el registro.</span>
+	<br />
+	<br />
+	<span class='ipsType_large'>¡Gracias por ayudar a <strong><u>Drunk-Gaming</u></strong>!</span>
+</div>
+
+{{if $c}}
+	<div class='ipsBox'>{$form|raw}</div>
+{{else}}
+	<div class='ipsPadding ipsBox ipsType_center'><span class='ipsType_light ipsType_large'>No se han encontrado compras que hayas realizado</span></div>
+{{endif}}

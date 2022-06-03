@@ -1,0 +1,2268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme name="Default" author_name="Invision Power Services, Inc" author_url="https://www.invisioncommunity.com">
+ <template template_group="lista" template_name="main" template_data="$tab, $output" template_location="front" template_app="ventas"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cAdminPanel_header'>
+	<h1 class='ipsType_pageTitle'>Lista de Ventas</h1>
+</div>
+
+<div id='elListTabs' data-ipsTabBar data-ipsTabBar-contentArea='#elListTabContent' data-ipsTabBar-itemSelector='[data-ipsSideMenu] .ipsSideMenu_item' data-ipsTabBar-activeClass='ipsSideMenu_itemActive'>
+	<div class='ipsColumns ipsColumns_collapsePhone'>
+		<div class='ipsColumn ipsColumn_wide'>
+			<div class='ipsBox ipsPadding sm:ipsPadding:half ipsResponsive_pull sm:ipsMargin_bottom'>
+				<div class='ipsSideMenu' data-ipsSideMenu>
+					<h3 class="ipsSideMenu_mainTitle ipsAreaBackground_light ipsType_medium">
+						<a href="#listMenu" class="ipsPad_double" data-action="openSideMenu">
+							<i class="fa fa-bars"></i> &nbsp;Dezlizar listado&nbsp;<i class="fa fa-caret-down"></i>
+						</a>
+					</h3>
+					<ul class="ipsSideMenu_list">
+						<li>
+							<a href='{url="app=ventas&module=lista&controller=main" seoTemplate="lista"}' id='list' class='ipsType_normal ipsSideMenu_item {{if $tab === 'buyList'}}ipsSideMenu_itemActive{{endif}}' title="Ventas" role="tab" aria-selected="{{if $tab === 'buyList'}}true{{else}}false{{endif}}">
+								<i class='fa fa-star-o'></i>&nbsp;Ventas
+							</a>
+						</li>
+						<li>
+							<a href='{url="app=ventas&module=lista&controller=main&area=buyListZE" seoTemplate="lista_ze"}' id='list_ze' class='ipsType_normal ipsSideMenu_item {{if $tab === 'buyListZE'}}ipsSideMenu_itemActive{{endif}}' title="Ventas del ZE" role="tab" aria-selected="{{if $tab === 'buyListZE'}}true{{else}}false{{endif}}">
+								<i class='fa fa-diamond'></i>&nbsp;Ventas del ZE
+							</a>
+						</li>
+						<li>
+							<a href='{url="app=ventas&module=lista&controller=main&area=buyListZPU" seoTemplate="lista_zpu"}' id='list_zpu' class='ipsType_normal ipsSideMenu_item {{if $tab === 'buyListZPU'}}ipsSideMenu_itemActive{{endif}}' title="Ventas del ZPU" role="tab" aria-selected="{{if $tab === 'buyListZPU'}}true{{else}}false{{endif}}">
+								<i class='fa fa-diamond'></i>&nbsp;Ventas del ZPU
+							</a>
+						</li>
+						<li>
+							<a href='{url="app=ventas&module=lista&controller=main&area=buyListZPA" seoTemplate="lista_zpa"}' id='list_zpa' class='ipsType_normal ipsSideMenu_item {{if $tab === 'buyListZPA'}}ipsSideMenu_itemActive{{endif}}' title="Ventas del ZPA" role="tab" aria-selected="{{if $tab === 'buyListZPA'}}true{{else}}false{{endif}}">
+								<i class='fa fa-diamond'></i>&nbsp;Ventas del ZPA
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class='ipsColumn ipsColumn_fluid'>
+			<section id='elListTabContent' class='ipsBox ipsResponsive_pull'>
+				<div id="ipsTabs_elSettingsTabs_setting_{$tab}_panel" class="ipsTabs_panel" aria-labelledby="list" aria-hidden="false">
+					{$output|raw}
+				</div>
+			</section>
+		</div>
+	</div>
+</div>]]></template>
+ <template template_group="lista" template_name="rows" template_data="$table, $headers, $rows" template_location="front" template_app="ventas"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Fecha y hora</th>
+			<th>Miembro</th>
+			<th>Beneficio</th>
+			<th>Servidor</th>
+			<th></th>
+			{{if \IPS\Application::load('ventas')->canAccessLista()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('ventas')->canAccessLista()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix' {{if $row['buy_status'] == 0 && $row["buy_image"] == NULL}}style='background: #6747EE;'{{endif}}>
+				<td>{datetime="$row['buy_timestamp']" lowercase="true"}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['buy_member_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$row['buy_name']}
+				</td>
+				<td>{$row['buy_benefit']}</td>
+				<td>{$row['buy_server']}</td>
+				<td>
+					{{if $row['buy_status'] == -5}}
+						<span data-ipsTooltip title='{lang="__statusr5"}' style='background: #690069; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-clock-o"></i></span>
+					{{elseif $row['buy_status'] == -4}}
+						<span data-ipsTooltip title='{lang="__statusr4"}' style='background: #ff0000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['buy_status'] == -3}}
+						<span data-ipsTooltip title='{lang="__statusr3"}' style='background: #ff0000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['buy_status'] == -2}}
+						<span data-ipsTooltip title='{lang="__statusr2"}' style='background: #550000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['buy_status'] == -1}}
+						<span data-ipsTooltip title='{lang="__statusr1"}' style='background: #bb5500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-clock-o"></i></span>
+					{{elseif $row['buy_status'] == 0}}
+						<span data-ipsTooltip title='{lang="__status0"}' style='background: #555500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-info"></i></span>
+					{{elseif $row['buy_status'] == 1}}
+						<span data-ipsTooltip title='{lang="__status1"}' style='background: #005500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-check"></i></span>
+					{{elseif $row['buy_status'] == 2}}
+						<span data-ipsTooltip title='{lang="__status2"}' style='background: #00ff00; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-check"></i></span>
+					{{endif}}
+				</td>
+				{{if \IPS\Application::load('ventas')->canAccessLista()}}
+					<td>
+						<span class="ipsBadge ipsBadge_neutral ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=ventas&module=lista&controller=main&area=viewBuyList&id={$row['buy_id']}" seoTemplate="lista_view"}' data-ipsTooltip title='Ver información' data-ipsDialog data-ipsDialog-title="Viendo información de la venta" data-ipsDialog-size='narrow'><i class="fa fa-search"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('ventas')->canAccessLista() && $row['buy_status'] == 0}}
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=ventas&module=lista&controller=main&area=cancelBuyList&id={$row['buy_id']}" seoTemplate="lista_view_cancel"}' data-ipsTooltip title='Cancelar compra'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="lista" template_name="viewBuyList" template_data="$row" template_location="front" template_app="ventas"><![CDATA[<h2 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Venta #{number="$row['buy_id']"}</h2>
+
+<hr class='ipsHr' />
+
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<tr>
+		<td align='left'>Fecha y hora</td>
+		<td align='right'>{datetime="$row['buy_timestamp']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Miembro</td>
+		<td align='right'>{$row['buy_name']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Tag CS</td>
+		<td align='right'>{$row['buy_tagcs']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Beneficio adquirido</td>
+		<td align='right'>{$row['buy_benefit']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Servidor</td>
+		<td align='right'>{$row['buy_server']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Días de duración</td>
+		<td align='right'>{$row['buy_days']} (+ {$row['buy_days_extras']} extras)</td>
+	</tr>
+	<tr>
+		<td align='left'>Región o moneda</td>
+		<td align='right'>
+			{{if $row['buy_region'] == 1}}
+				Peru
+			{{elseif $row['buy_region'] == 2}}
+				Argentina
+			{{elseif $row['buy_region'] == 3}}
+				Paypal
+			{{elseif $row['buy_region'] == 4}}
+				Chile
+			{{endif}}
+		</td>
+	</tr>
+	<tr>
+		<td align='left'>Precio original</td>
+		<td align='right'>{$row['buy_money_real']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Foto del comprobante</td>
+		<td align='right'>
+			{{if $row['buy_image'] != NULL}}
+				<a href="{$row['buy_image']}" target="_blank">Ver imagen</a>
+			{{else}}
+				-
+			{{endif}}
+		</td>
+	</tr>
+	<tr>
+		<td align='left'>Código único de la venta</td>
+		<td align='right'>{$row['notification_external_reference']}</td>
+	</tr>
+</table>
+{{if \IPS\Application::load('ventas')->canAccessLista() && $row['buy_status'] == 0}}
+	<hr class='ipsHr' />
+
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<a href='{url="app=ventas&module=lista&controller=main&area=processBuyList&id={$row['buy_id']}" seoTemplate="lista_view_process"}' class='ipsButton ipsButton_important ipsButton_fullWidth'><i class='fa fa-shopping-cart'></i> Activar compra</a>
+	</div>
+{{endif}}]]></template>
+ <template template_group="lista" template_name="viewBuyListZE" template_data="$row" template_location="front" template_app="ventas"><![CDATA[<h2 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Venta ZE #{number="$row['id']"}</h2>
+<hr class='ipsHr'>
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<tr>
+		<td align='left'>Fecha y hora</td>
+		<td align='right'>{datetime="$row['bought_timestamp']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Puntos de Legado</td>
+		<td align='right'>{$row['p_legacy']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Región o moneda</td>
+		<td align='right'>
+			{{if $row['bought_money'] == 1}}
+				Peru
+			{{elseif $row['bought_money'] == 2}}
+				Argentina
+			{{elseif $row['bought_money'] == 3}}
+				Paypal
+			{{elseif $row['bought_money'] == 4}}
+				Chile
+			{{endif}}
+		</td>
+	</tr>
+	<tr>
+		<td align='left'>Precio original</td>
+		<td align='right'>{$row['bought_money_real']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Foto del comprobante</td>
+		<td align='right'>
+			{{if $row['bought_image'] != NULL}}
+				<a href="{$row['bought_image']}" target="_blank">Ver imagen</a>
+			{{else}}
+				-
+			{{endif}}
+		</td>
+	</tr>
+</table>
+{{if \IPS\Application::load('ventas')->canAccessLista() && $row['bought_ok'] == -1}}
+	<hr class='ipsHr' />
+
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<a href='{url="app=ventas&module=lista&controller=main&area=processBuyListZE&id={$row['id']}" seoTemplate="lista_ze_view_process"}' class='ipsButton ipsButton_important ipsButton_fullWidth'><i class='fa fa-shopping-cart'></i> Activar compra</a>
+	</div>
+{{endif}}]]></template>
+ <template template_group="lista" template_name="viewBuyListZPA" template_data="$row" template_location="front" template_app="ventas"><![CDATA[<h2 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Venta ZP #{number="$row['id']"}</h2>
+
+<hr class='ipsHr' />
+
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<tr>
+		<td align='left'>Fecha y hora</td>
+		<td align='right'>{datetime="$row['bought_timestamp']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Puntos Humanos</td>
+		<td align='right'>{$row['p_humans']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Puntos Zombies</td>
+		<td align='right'>{$row['p_zombies']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Puntos de Legado</td>
+		<td align='right'>{$row['p_legacy']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Dinero</td>
+		<td align='right'>{$row['money']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Diamantes</td>
+		<td align='right'>{$row['diamonds']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Región o moneda</td>
+		<td align='right'>
+			{{if $row['bought_money'] == 1}}
+				Peru
+			{{elseif $row['bought_money'] == 2}}
+				Argentina
+			{{elseif $row['bought_money'] == 3}}
+				Paypal
+			{{elseif $row['bought_money'] == 4}}
+				Chile
+			{{endif}}
+		</td>
+	</tr>
+	<tr>
+		<td align='left'>Precio original</td>
+		<td align='right'>{$row['bought_money_real']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Foto del comprobante</td>
+		<td align='right'>
+			{{if $row['bought_image'] != NULL}}
+				<a href="{$row['bought_image']}" target="_blank">Ver imagen</a>
+			{{else}}
+				-
+			{{endif}}
+		</td>
+	</tr>
+</table>
+{{if \IPS\Application::load('ventas')->canAccessLista() && $row['bought_ok'] == -1}}
+	<hr class='ipsHr' />
+
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<a href='{url="app=ventas&module=lista&controller=main&area=processBuyListZPA&id={$row['id']}" seoTemplate="lista_zpa_view_process"}' class='ipsButton ipsButton_important ipsButton_fullWidth'><i class='fa fa-shopping-cart'></i> Activar compra</a>
+	</div>
+{{endif}}]]></template>
+ <template template_group="lista" template_name="viewBuyListZPU" template_data="$row" template_location="front" template_app="ventas"><![CDATA[<h2 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Venta ZE #{number="$row['ID']"}</h2>
+
+<hr class='ipsHr' />
+
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<tr>
+		<td align='left'>Fecha y hora</td>
+		<td align='right'>{datetime="$row['Date']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Saldo</td>
+		<td align='right'>{$row['Saldo']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Región o moneda</td>
+		<td align='right'>
+			{{if $row['Money'] == 1}}
+				Peru
+			{{elseif $row['Money'] == 2}}
+				Argentina
+			{{elseif $row['Money'] == 3}}
+				Paypal
+			{{elseif $row['Money'] == 4}}
+				Chile
+			{{endif}}
+		</td>
+	</tr>
+	<tr>
+		<td align='left'>Precio original</td>
+		<td align='right'>{$row['MoneyReal']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Foto del comprobante</td>
+		<td align='right'>
+			{{if $row['URL Image'] != NULL}}
+				<a href="{$row['URL Image']}" target="_blank">Ver imagen</a>
+			{{else}}
+				-
+			{{endif}}
+		</td>
+	</tr>
+</table>
+{{if \IPS\Application::load('ventas')->canAccessLista() && $row['Deprecated'] == -1}}
+	<hr class='ipsHr' />
+
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<a href='{url="app=ventas&module=lista&controller=main&area=processBuyListZPU&id={$row['ID']}" seoTemplate="lista_zpu_view_process"}' class='ipsButton ipsButton_important ipsButton_fullWidth'><i class='fa fa-shopping-cart'></i> Activar compra</a>
+	</div>
+{{endif}}]]></template>
+ <template template_group="lista" template_name="zeRows" template_data="$table, $headers, $rows" template_location="front" template_app="ventas"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Fecha y hora</th>
+			<th>Miembro</th>
+			<th></th>
+			{{if \IPS\Application::load('ventas')->canAccessLista()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('ventas')->canAccessLista()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>{datetime="$row['timestamp']" lowercase="true"}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['member_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$member->name}
+				</td>
+				<td>
+					{{if $row['ok'] == -6}}
+						<span data-ipsTooltip title='{lang="__boughtokr6"}' style='background: #690069; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-clock-o"></i></span>
+					{{elseif $row['ok'] == -5}}
+						<span data-ipsTooltip title='{lang="__boughtokr5"}' style='background: #ff0000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -4}}
+						<span data-ipsTooltip title='{lang="__boughtokr4"}' style='background: #ff0000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -3}}
+						<span data-ipsTooltip title='{lang="__boughtokr3"}' style='background: #550000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -2}}
+						<span data-ipsTooltip title='{lang="__boughtokr2"}' style='background: #bb5500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-clock-o"></i></span>
+					{{elseif $row['ok'] == -1}}
+						<span data-ipsTooltip title='{lang="__boughtokr1"}' style='background: #555500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-info"></i></span>
+					{{elseif $row['ok'] == 0}}
+						<span data-ipsTooltip title='{lang="__boughtok0"}' style='background: #005500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-check"></i></span>
+					{{elseif $row['ok'] == 1}}
+						<span data-ipsTooltip title='{lang="__boughtok1"}' style='background: #00ff00; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-check"></i></span>
+					{{endif}}
+				</td>
+				{{if \IPS\Application::load('ventas')->canAccessLista()}}
+					<td>
+						<span class="ipsBadge ipsBadge_neutral ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=ventas&module=lista&controller=main&area=viewBuyListZE&id={$row['buy_id']}" seoTemplate="lista_ze_view"}' data-ipsTooltip title='Ver información' data-ipsDialog data-ipsDialog-title="Viendo información de la venta" data-ipsDialog-size='narrow'><i class="fa fa-search"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('ventas')->canAccessLista() && $row['ok'] == -1}}
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=ventas&module=lista&controller=main&area=cancelBuyListZE&id={$row['buy_id']}" seoTemplate="lista_ze_view_cancel"}' data-ipsTooltip title='Cancelar compra'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="lista" template_name="zpaRows" template_data="$table, $headers, $rows" template_location="front" template_app="ventas"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Fecha y hora</th>
+			<th>Miembro</th>
+			<th></th>
+			{{if \IPS\Application::load('ventas')->canAccessLista()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('ventas')->canAccessLista()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>{datetime="$row['timestamp']" lowercase="true"}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['member_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$member->name}
+				</td>
+				<td>
+					{{if $row['ok'] == -6}}
+						<span data-ipsTooltip title='{lang="__boughtokr6"}' style='background: #690069; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-clock-o"></i></span>
+					{{elseif $row['ok'] == -5}}
+						<span data-ipsTooltip title='{lang="__boughtokr5"}' style='background: #ff0000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -4}}
+						<span data-ipsTooltip title='{lang="__boughtokr4"}' style='background: #ff0000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -3}}
+						<span data-ipsTooltip title='{lang="__boughtokr3"}' style='background: #550000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -2}}
+						<span data-ipsTooltip title='{lang="__boughtokr2"}' style='background: #bb5500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-clock-o"></i></span>
+					{{elseif $row['ok'] == -1}}
+						<span data-ipsTooltip title='{lang="__boughtokr1"}' style='background: #555500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-info"></i></span>
+					{{elseif $row['ok'] == 0}}
+						<span data-ipsTooltip title='{lang="__boughtok0"}' style='background: #005500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-check"></i></span>
+					{{elseif $row['ok'] == 1}}
+						<span data-ipsTooltip title='{lang="__boughtok1"}' style='background: #00ff00; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-check"></i></span>
+					{{endif}}
+				</td>
+				{{if \IPS\Application::load('ventas')->canAccessLista()}}
+					<td>
+						<span class="ipsBadge ipsBadge_neutral ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=ventas&module=lista&controller=main&area=viewBuyListZPA&id={$row['id']}" seoTemplate="lista_zpa_view"}' data-ipsTooltip title='Ver información' data-ipsDialog data-ipsDialog-title="Viendo información de la venta" data-ipsDialog-size='narrow'><i class="fa fa-search"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('ventas')->canAccessLista() && $row['ok'] == -1}}
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=ventas&module=lista&controller=main&area=cancelBuyListZPA&id={$row['id']}" seoTemplate="lista_zpa_view_cancel"}' data-ipsTooltip title='Cancelar compra'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="lista" template_name="zpuRows" template_data="$table, $headers, $rows" template_location="front" template_app="ventas"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Fecha y hora</th>
+			<th>Miembro</th>
+			<th></th>
+			{{if \IPS\Application::load('ventas')->canAccessLista()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('ventas')->canAccessLista()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>{datetime="$row['timestamp']" lowercase="true"}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['member_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$member->name}
+				</td>
+				<td>
+					{{if $row['ok'] == -6}}
+						<span data-ipsTooltip title='{lang="__boughtokr6"}' style='background: #690069; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-clock-o"></i></span>
+					{{elseif $row['ok'] == -5}}
+						<span data-ipsTooltip title='{lang="__boughtokr5"}' style='background: #ff0000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -4}}
+						<span data-ipsTooltip title='{lang="__boughtokr4"}' style='background: #ff0000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -3}}
+						<span data-ipsTooltip title='{lang="__boughtokr3"}' style='background: #550000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -2}}
+						<span data-ipsTooltip title='{lang="__boughtokr2"}' style='background: #bb5500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-clock-o"></i></span>
+					{{elseif $row['ok'] == -1}}
+						<span data-ipsTooltip title='{lang="__boughtokr1"}' style='background: #555500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-info"></i></span>
+					{{elseif $row['ok'] == 0}}
+						<span data-ipsTooltip title='{lang="__boughtok0"}' style='background: #005500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-check"></i></span>
+					{{elseif $row['ok'] == 1}}
+						<span data-ipsTooltip title='{lang="__boughtok1"}' style='background: #00ff00; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-check"></i></span>
+					{{endif}}
+				</td>
+				{{if \IPS\Application::load('ventas')->canAccessLista()}}
+					<td>
+						<span class="ipsBadge ipsBadge_neutral ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=ventas&module=lista&controller=main&area=viewBuyListZPU&id={$row['id']}" seoTemplate="lista_zpu_view"}' data-ipsTooltip title='Ver información' data-ipsDialog data-ipsDialog-title="Viendo información de la venta" data-ipsDialog-size='narrow'><i class="fa fa-search"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('ventas')->canAccessLista() && $row['ok'] == -1}}
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=ventas&module=lista&controller=main&area=cancelBuyListZPU&id={$row['id']}" seoTemplate="lista_zpu_view_cancel"}' data-ipsTooltip title='Cancelar compra'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="main" template_name="adminDataHtml" template_data="$data" template_location="front" template_app="ventas"><![CDATA[<div id='stepTwo'>
+	<h2 class='ipsType_center'>Completa los campos necesarios para reservar tu Admin CS</h2>
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;En el primer campo, ingresa tu Tag CS que utilices en los servidores para reservarlo en tu pedido. Debe ser un Tag que no esté utilizado por nadie.</span></li>
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;En el segundo campo, ingresa una contraseña para poder proteger el Tag. La contraseña no debe ser ni fácil (para que los demas no lo descubran) ni difícil (para poder acordártela en caso de olvidarla).</span></li>
+	</ul>
+
+	<div class='ipsGrid ipsGrid_collapsePhone ipsType_center ipsSpacer_bottom'>
+		<div class='ipsGrid_span6 ipsPad'>
+			<h3 class="ipsType_minorHeading">Nombre de tu Admin CS</h3>
+			<input required="required" name="tagcs" autocomplete="off" type="text">
+			<br />
+			<a href='javascript:;' id="checkTagExists" class='ipsType_small'>Verificar la existencia del Tag CS ingresado</a>
+		</div>
+		<div class='ipsGrid_span6 ipsPad'>
+			<h3 class="ipsType_minorHeading">Contraseña de tu Admin CS</h3>
+			<input required="required" name="setinfo" autocomplete="new-password" type="text">
+		</div>
+	</div>
+
+	<input type="hidden" name="benefit" value="Admin CS Full" />
+	<input type="hidden" name="region" value="0" />
+	<input type="hidden" name="days" value="30" />
+	<input type="hidden" name="server" value="0" />
+
+	<ul class="ipsPad ipsToolList ipsToolList_horizontal ipsList_reset ipsAreaBackground ipsClearfix">
+		<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+		<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+	</ul>
+</div>
+
+<div id='stepThree' class='ipsHide'>
+	<h2 class='ipsType_center'>Selecciona la región de tu moneda</h2>
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Selecciona la moneda que se caracteriza en tu región. Por ejemplo: si eres de <strong>Argentina, vas a pagar con Pesos Argentinos</strong>; entonces, selecciona Argentina.</span>
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si no posees ninguna moneda de las puestas por defecto. Contáctate con algún Director en la <a href="/staff/">sección de Staff</a> para que te ayude. Veremos si más adelante podemos adaptar más métodos de compra pero, por el momento, solo se admiten las que están ahora.</span>
+	</ul>
+
+	<div class='ipsType_center ipsSpacer_top ipsSpacer_bottom'>
+		<div class='ipsGrid ipsGrid_collapsePhone moneyRegionClass ipsPos_center'>
+			{{$per = \IPS\Settings::i()->v_region_per;}}
+			{{$arg = \IPS\Settings::i()->v_region_arg;}}
+			{{$pp = \IPS\Settings::i()->v_region_pp;}}
+			{{$cl = \IPS\Settings::i()->v_region_cl;}}
+
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$per}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large ipsButton_primary{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/QLxob69.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Sol peruano [PER]</span>
+				</a>
+			</div>
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$arg}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large {{if !$per}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/45PNKIt.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Peso Argentino [ARS]</span>
+				</a>
+			</div>
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$pp}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large {{if !$per && !$arg}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/LyndgM9.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Dólares [USD]</span>
+				</a>
+			</div>
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$cl}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large {{if !$per && !$arg && !$pp}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/lr3710T.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Pesos Chilenos [CLP]</span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<ul class="ipsPad ipsToolList ipsToolList_horizontal ipsList_reset ipsAreaBackground ipsClearfix">
+		<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+		<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+	</ul>
+</div>
+
+<div id='stepFour' class='ipsHide'>
+	<h2 class='ipsType_center'>Elige el servidor</h2>
+	<div class='ipsType_center ipsSpacer_bottom'>
+		<div class="ipsGrid ipsGrid_collapsePhone ipsPos_center selectServerAdmin">
+			{{foreach $data['servers'] as $k => $s}}
+				<div class="ipsGrid_span3 ipsType_center">
+					<a class="ipsButton {{if $k == 0}}ipsButton_primary{{else}}ipsButton_light{{endif}} ipsButton_small ipsButton_fullWidth ipsSpacer_bottom">{$s}</a>
+				</div>
+			{{endforeach}}
+		</div>
+	</div>
+
+	<div class="ipsGrid ipsPadding ipsAreaBackground ipsPos_center ipsSpacer_bottom paymentBenefit">
+		<div class="ipsGrid_span6 ipsType_center"><strong><span data-price="Admin CS"></span> <span class="ipsType_small ipsType_light">/ mes</span></strong> Admin CS en un solo Servidor</div>
+		<div class="ipsGrid_span6 ipsType_center"><strong><span data-price="Admin CS Full"></span> <span class="ipsType_small ipsType_light">/ mes</span></strong> Admin CS en todos los Servidores (FULL)</div>
+	</div>
+
+	<h2 class='ipsType_center'>Elige la duración de tu Admin CS</h2>
+	<div class='ipsType_center ipsSpacer_bottom'>
+		<div id='daysBenefits' class='ipsGrid ipsGrid_collapsePhone ipsPos_center daysBenefitsClass'>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="30" class="ipsButton ipsButton_primary ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>30 días</strong></a>
+			</div>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="60" class="ipsButton ipsButton_light ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>60 días</strong></a>
+			</div>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="90" class="ipsButton ipsButton_light ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>90 días</strong></a>
+			</div>
+		</div>
+	</div>
+
+	<ul class="ipsPad ipsToolList ipsToolList_horizontal ipsList_reset ipsAreaBackground ipsClearfix">
+		<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+		<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+	</ul>
+</div>]]></template>
+ <template template_group="main" template_name="finallyBuyMessage" template_data="$type, $message" template_location="front" template_app="ventas"><![CDATA[<section class='ipsType_center'>
+	<div class='ipsBox ipsPad'>
+		{{if $type == 0}}
+			<i class='fa fa-times-circle ipsType_huge'></i>
+		{{elseif $type == 1}}
+			<i class='fa fa-history ipsType_huge'></i>
+		{{else}}
+			<i class='fa fa-check-circle ipsType_huge'></i>
+		{{endif}}
+
+		<div id='elErrorMessage' class='ipsPos_center'>{$message|raw}</div>
+
+		<hr class='ipsHr' />
+
+		<ul class='ipsList_inline'>
+			<li><a href='{url="app=forums&module=forums&controller=index" seoTemplate="forums"}' class='ipsButton ipsButton_primary ipsButton_medium'><i class="fa fa-home"></i>&nbsp;Ir al inicio</a></li>
+		</ul>
+	</div>
+</section>]]></template>
+ <template template_group="main" template_name="main" template_data="$url, $data" template_location="front" template_app="ventas"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__ventas_main"}</h1>
+
+	<hr class='ipsHr' />
+
+	<div class='ipsFlex ipsFlex-jc:between ipsFlex-ai:center ipsFlex-fw:wrap ipsGap:3'>
+		<div class='ipsFlex-flex:11'>
+			<a hreF='javascript:;' id='priceInfoDialog' data-ipsDialog data-ipsDialog-title='Precios de beneficios' data-ipsDialog-content='#priceInfo' class='ipsButton ipsButton_light'><i class="fa fa-dollar"></i>&nbsp;Precios de beneficios</a>
+
+			<div class='ipsHide ipsPadding' id='priceInfo'>
+				<div class='ipsGrid ipsGrid_collapsePhone'>
+					<div class='ipsGrid_span3 ipsPadding ipsAreaBackground ipsType_center ipsMargin_bottom'>
+						<span class='selectBenefits_text'>Perú</span>
+
+						<hr class='ipsHr' />
+
+						{{if !\IPS\Settings::i()->v_region_per}}
+							<div class='ipsType_center'>
+								<span class='ipsType_bold ipsType_warning'>Este método está deshabilitado temporalmente</span>
+							</div>
+						{{else}}
+							<span class='ipsPos_left'>VIP</span><span data-per-price="1" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>VIP Full</span><span data-per-price="2" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS</span><span data-per-price="3" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS FUll</span><span data-per-price="4" class='ipsPos_right ipsType_bold'></span>
+						{{endif}}
+					</div>
+					<div class='ipsGrid_span3 ipsPadding ipsAreaBackground ipsType_center ipsMargin_bottom'>
+						<span class='selectBenefits_text'>Argentina</span>
+
+						<hr class='ipsHr' />
+
+						{{if !\IPS\Settings::i()->v_region_arg}}
+							<div class='ipsType_center'>
+								<span class='ipsType_bold ipsType_warning'>Este método está deshabilitado temporalmente</span>
+							</div>
+						{{else}}
+							<span class='ipsPos_left'>VIP</span><span data-arg-price="1" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>VIP Full</span><span data-arg-price="2" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS</span><span data-arg-price="3" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS FUll</span><span data-arg-price="4" class='ipsPos_right ipsType_bold'></span>
+						{{endif}}
+					</div>
+					<div class='ipsGrid_span3 ipsPadding ipsAreaBackground ipsType_center ipsMargin_bottom'>
+						<span class='selectBenefits_text'>Paypal</span>
+
+						<hr class='ipsHr' />
+
+						{{if !\IPS\Settings::i()->v_region_pp}}
+							<div class='ipsType_center'>
+								<span class='ipsType_bold ipsType_warning'>Este método está deshabilitado temporalmente</span>
+							</div>
+						{{else}}
+							<span class='ipsPos_left'>VIP</span><span data-pp-price="1" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>VIP Full</span><span data-pp-price="2" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS</span><span data-pp-price="3" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS FUll</span><span data-pp-price="4" class='ipsPos_right ipsType_bold'></span>
+						{{endif}}
+					</div>
+					<div class='ipsGrid_span3 ipsPadding ipsAreaBackground ipsType_center ipsMargin_bottom'>
+						<span class='selectBenefits_text'>Chile</span>
+
+						<hr class='ipsHr' />
+
+						{{if !\IPS\Settings::i()->v_region_cl}}
+							<div class='ipsType_center'>
+								<span class='ipsType_bold ipsType_warning'>Este método está deshabilitado temporalmente</span>
+							</div>
+						{{else}}
+							<span class='ipsPos_left'>VIP</span><span data-cl-price="1" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>VIP Full</span><span data-cl-price="2" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS</span><span data-cl-price="3" class='ipsPos_right ipsType_bold'></span>
+							<br />
+							<span class='ipsPos_left'>Admin CS FUll</span><span data-cl-price="4" class='ipsPos_right ipsType_bold'></span>
+						{{endif}}
+					</div>
+				</div>
+
+				<dir class='ipsPadding ipsAreaBackground'>
+					<span class='ipsType_large'><strong class='ipsType_negative'>NOTA</strong>: Para ver el precio de los recursos de los servidores, ubicate debajo de la página y verás los botones de cada servidor correspondiente. Presionando sobre ellos, verás un formulario y los distintos métodos de pagos en cada región correspondiente y el precio a adquirir por cada recurso.</span>
+				</dir>
+			</div>
+		</div>
+		<div class='ipsFlex-flex:01 ipsResponsive_hideTablet ipsResponsive_hidePhone'>
+			<div class='ipsFlex ipsFlex-ai:center ipsFlex-jc:center ipsGap:3 ipsGap_row:0'>
+				{template="shareLinks" app="ventas" group="shareLinks" location="front" params="$url"}
+
+				{{if \IPS\Application::load('ventas')->canAccessLista()}}
+					<a href="{url='app=ventas&module=lista&controller=main' seoTemplate='lista'}" class='ipsButton ipsButton_important'>Lista de Ventas</a>
+				{{endif}}
+			</div>
+		</div>
+	</div>
+</div>
+
+{{if $data['promo_enable']}}
+	<div class='ipsMessage ipsMessage_success'>
+		{{if $data['promo_extra_double']}}
+			<strong>PROMOCIÓN ACTIVA</strong>: Cualquier compra de un beneficio sea <strong>VIP</strong> o <strong>Admin CS</strong>, se te duplicarán la cantidad de meses adquirido del mismo. Es decir, si compras 2 meses de VIP en Todos los Servidores, ¡se te acreditarán 4!.
+		{{else}}
+			<strong>PROMOCIÓN ACTIVA</strong>: Cualquier compra de un beneficio sea <strong>VIP</strong> o <strong>Admin CS</strong>, se te sumarán <strong>{$data['promo_extra']} mes(es)</strong> extras a la duración del mismo. Es decir, si compras 1 mes de Admin CS en 1 Servidor, ¡se te sumará 1 mes extra a tu duración!.
+		{{endif}}
+	</div>
+{{endif}}
+
+<div class='cVentas_stepsHeader ipsPadding ipsType_center ipsMargin_bottom'>
+	<ul class="ipsList_reset cVentas_steps">
+		<li data-step="1" class="cVentas_stepsActive"><span>Elegir beneficio</span></li>
+		<li data-step="2"><span>Verificar datos</span></li>
+		<li data-step="3"><span>Región o moneda</span></li>
+		<li data-step="4"><span>Detalles</span></li>
+		<li data-step="5"><span>Confirmar datos</span></li>
+		<li data-step="6"><span>Finalizar</span></li>
+	</ul>
+</div>
+
+<form id='dataVentas' action='/?app=ventas&module=main&controller=main&do=finishBuy' method='post' onkeypress='return event.keyCode != 13;'>
+	<div id='dataSelectBenefits'>
+		<div class='ipsPadding ipsBox selectBenefits ipsPos_center ipsSpacer_bottom'>
+			<div class='ipsGrid ipsGrid_collapsePhone ipsType_center ipsSpacer_bottom'>
+				<div class='ipsGrid_span6 ipsPadding ipsSpacer_bottom'>
+					<span class='ipsType_huge' style='color: #ffbf00; font-weight: bold; text-shadow: 0 0 .9em #ffbf00;'><i class="fa fa-star-o"></i></span>
+					<br />
+					<br />
+					<span class='selectBenefits_text'>VIP</span>
+
+					<hr class='ipsHr' />
+
+					<p class='ipsType_light'>Rango especial para los jugadores que solo desean disfrutar de los beneficios que se les ofrece.</p>
+
+					<hr class='ipsHr' />
+
+					<span class='ipsButton ipsButton_medium ipsButton_primary continue'>Adquirir VIP</span>
+				</div>
+				<div class='ipsGrid_span6 ipsPadding ipsAreaBackground'>
+					<span class='selectBenefits_text'>Beneficios</span>
+
+					<hr class='ipsHr' />
+
+					<p><i class='fa fa-check'></i>&nbsp;Slot reservado</p>
+					<p><i class='fa fa-check'></i>&nbsp;Tag CS reservado</p>
+					<p><i class='fa fa-check'></i>&nbsp;Ganancias extras en servidores con niveles</p>
+					<p><i class='fa fa-check'></i>&nbsp;Items extras en servidores con estética</p>
+					<p><i class='fa fa-check'></i>&nbsp;Inmune al Anti-retry, Anti-ping, y Afk-kicker</p>
+					<p><i class='fa fa-check'></i>&nbsp;Rango destacado</p>
+					<p><i class='fa fa-check'></i>&nbsp;Canales personalizados en nuestro discord</p>
+				</div>
+			</div>
+
+			<div class='ipsPadding ipsAreaBackground_light'>
+				<span class='ipsType_warning ipsType_bold ipsType_large'><u>Aclaración</u></span class='ipsType_large'>:&nbsp;<span>Recuerda que al adquirir este beneficio, no tendrás comandos administrativos. Para poseer comandos, debes comprar <span style='color: #ff7c00; font-weight: bold; text-shadow: 0 0 .9em #ff7c00;'>Admin CS</span>, que está debajo de este beneficio.</span>
+			</div>
+		</div>
+
+		<div class='ipsPadding ipsBox selectBenefits ipsPos_center ipsSpacer_bottom'>
+			<div class='ipsGrid ipsGrid_collapsePhone ipsType_center'>
+				<div class='ipsGrid_span6 ipsPadding ipsSpacer_bottom'>
+					<span class='ipsType_huge' style='color: #ff7c00; font-weight: bold; text-shadow: 0 0 .9em #ff7c00;'><i class="fa fa-user-secret"></i></span>
+					<br />
+					<br />
+					<span class='selectBenefits_text'>Admin CS</span>
+
+					<hr class='ipsHr' />
+
+					<p class='ipsType_light'>Rango donde tendrás el deber de controlar los servidores para que sea un lugar para disfrutar entre los jugadores que lo habitan.</p>
+
+					<hr class='ipsHr' />
+
+					<span class='ipsButton ipsButton_medium ipsButton_primary continue'>Adquirir Admin CS</span>
+				</div>
+				<div class='ipsGrid_span6 ipsPadding ipsAreaBackground'>
+					<span class='selectBenefits_text'>Beneficios</span>
+
+					<hr class='ipsHr' />
+
+					<p><i class='fa fa-check'></i>&nbsp;<span class='ipsType_bold' style="color: #ffbf00; font-weight: bold; text-shadow: 0 0 .9em #ffbf00;">¡LO QUE INCLUYE EL VIP!</span></p>
+					<p><i class='fa fa-check'></i>&nbsp;Escribir en verde en el Chat</p>
+					<p><i class='fa fa-check'></i>&nbsp;Comandos administrativos</p>
+					<p><i class='fa fa-check'></i>&nbsp;Inmunidad sobre comandos</p>
+					<p><i class='fa fa-check'></i>&nbsp;Grabación automática de demos</p>
+					<p><i class='fa fa-check'></i>&nbsp;Rango destacado</p>
+					<p><i class='fa fa-check'></i>&nbsp;Acceso a foro de ayuda para tu Admin</p>
+				</div>
+			</div>
+		</div>
+
+		<div class='ipsPadding ipsBox selectBenefits ipsPos_center ipsSpacer_bottom'>
+			<div class='ipsGrid ipsGrid_collapsePhone ipsType_center'>
+				<div class='ipsGrid_span6 ipsPadding'>
+					<span class='ipsType_huge' style='color: #7cff00; font-weight: bold; text-shadow: 0 0 .9em #7cff00;'><i class="fa fa-diamond"></i></span>
+					<br />
+					<br />
+					<span class='selectBenefits_text'>Recursos de Servidores</span>
+
+					<hr class='ipsHr' />
+
+					<p class='ipsType_light'>Adquiere puntos de los distintos servidores con niveles para poder mejorar tu personaje al máximo. <strong>Se requiere que vincules tu cuenta del servidor con la del foro</strong>.</p>
+
+					<hr class='ipsHr' />
+				</div>
+				<div class='ipsGrid_span6 ipsPadding'>
+					<a data-ipsdialog data-ipsDialog-title="Sistema de ventas: Servidor #01 Zombie Escape" data-ipsdialog-url='{url="app=ventas&module=main&controller=main&do=ze" seoTemplate="ventas_ze"}' class='ipsButton ipsButton_medium ipsButton_primary ipsButton_fullWidth ipsPos_center' style='width: 70%;'>#01 Zombie Escape</a>
+					<br />
+					<a data-ipsdialog data-ipsDialog-title="Sistema de ventas: Servidor #02 ZP Umbrella" data-ipsdialog-url='{url="app=ventas&module=main&controller=main&do=zpu" seoTemplate="ventas_zpu"}' class='ipsButton ipsButton_medium ipsButton_primary ipsButton_fullWidth ipsPos_center' style='width: 70%;'>#02 ZP Umbrella</a>
+					<br />
+					<a data-ipsdialog data-ipsDialog-title="Sistema de ventas: Servidor #08 ZP Annihilation" data-ipsdialog-url='{url="app=ventas&module=main&controller=main&do=zpa" seoTemplate="ventas_zpa"}' class='ipsButton ipsButton_medium ipsButton_primary ipsButton_fullWidth ipsPos_center' style='width: 70%;'>#08 ZP Annihilation</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id='verifyData' class='ipsBox ipsPadding ipsHide ipsSpacer_both ipsSpacer_half ipsClearfix'></div>
+
+	<div id='dataConfirm' class='ipsBox ipsPadding ipsHide ipsSpacer_both ipsSpacer_half'>
+		<h2 class='ipsType_center'>¡Confirma que los datos sean correctos!</h2>
+		
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;{$data['name']}, por favor, verifica que todo esté ingresado correctamente. Todos los datos juntados se guardarán en nuestro sistema para cuando, se procedan los siguientes pasos, se pueda llevar a cabo la activación del beneficio adquirido.</li>
+		</ul>
+
+		<div class="ipsGrid ipsGrid_collapsePhone ipsPadding ipsType_center ipsSpacer_bottom">
+			<div class='ipsGrid_span4 ipsPadding'><h1>{$data['name']} (#{$data['member_id']})</h1><span>Nombre en el Foro</span></div>
+			<div class='ipsGrid_span4 ipsPadding'><h1>{$data['email']}</h1><span>Email</span></div>
+			<div class='ipsGrid_span4 ipsPadding'><h1><span data-confirm="region"></span></h1><span>Región</span></div>
+			<div class='ipsGrid_span3 ipsPadding'><h1><span data-confirm="tagcs"></span></h1><span>Tag CS</span></div>
+			<div class='ipsGrid_span3 ipsPadding'><h1><span data-confirm="benefit"></span></h1><span>Tipo de beneficio</span></div>
+			<div class='ipsGrid_span3 ipsPadding'><h1><span data-confirm="server"></span></h1><span>Servidor</span></div>
+			<div class='ipsGrid_span3 ipsPadding'>
+				{{if \IPS\Settings::i()->v_b_promo_enable}}
+					{{if \IPS\Settings::i()->v_b_promo_extra_double}}
+						<h1><span data-confirm="days"></span>&nbsp;(duplicado)</h1>
+					{{else}}
+						{{if \IPS\Settings::i()->v_b_promo_extra}}
+							<h1><span data-confirm="days"></span>&nbsp;(+{expression="(\IPS\Settings::i()->v_b_promo_extra * 30)" raw="true"} días)</h1>
+						{{else}}
+							<h1><span data-confirm="days"></span></h1>
+						{{endif}}
+					{{endif}}
+				{{else}}
+					<h1><span data-confirm="days"></span></h1>
+				{{endif}}
+				<span>Duración del beneficio</span>
+			</div>
+			<div class='ipsGrid_span12 ipsPadding'><h1><span data-confirm="price"></span></h1><span>Total a abonar</span></div>
+		</div>
+
+		<input type="hidden" name="money_real" value="0" />
+
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Una vez adquirido el beneficio, no podrás renovarlo hasta que falten 7 días para su finalización. Para corroborarlo, debes ir al panel que se te otorga una vez que se te de dicho beneficio y podrás ver todos los datos.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si quieres hacer una renovación, debes haber ingresado correctamente los mismos datos de tu primer pedido para que el sistema detecte que se trate del mismo. El resto se encargará el procesamiento de venta y pago.</span></li>
+		</ul>
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPadding ipsSpacer_top">
+			<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+			<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+		</ul>
+	</div>
+
+	<div id='finishBuy' class='ipsBox ipsPadding ipsHide ipsSpacer_both ipsSpacer_half ipsClearfix'>
+		<h2 class='ipsType_center'>Finalizando compra . . .</h2>
+
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Podrás optar por los siguientes métodos de pago para proceder el mismo en la compra de tu beneficio. Recuerda que, si falta algún método en el cual tu puedas pagarlo, habla con algún <a href="/staff/">miembro del Staff</a> y lo analizaremos para poder agregarlo en la compra..</li>
+		</ul>
+
+		<div id='methorPayments' class="ipsPadding ipsSpacer_both ipsType_center"></div>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<h2 class="ipsType_center">Términos y Condiciones</h2>
+			<div id="terms" class="ipsPos_center ipsBox ipsSpacer_both"></div>
+		{{endif}}
+
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Presiona en el botón <strong>Finalizar</strong>, una vez presionado, se te enviará un mensaje privado con los datos de tu pedido y para realizar el pago del mismo.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si estás pagando en la región Argentina, tu beneficio se activará <strong>AUTOMÁTICAMENTE</strong>. En las otras regiones será de forma manual por algún <strong>Director de la comunidad</strong>. Dentro de todo, en el mensaje privado con la información de tu beneficio, tendrás las instrucciones necesarias para que sepas todo al pie de la letra.</li>
+			<li class='ipsType_light'><i style='color: orange' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si quieres comprarle a un amigo, debes decirle que complete los pasos de compra desde su cuenta de foro; una vez finalizado y obtenido el enlace de pago, debe pasarte dicho enlace y pagarselo. El resto lo hará automáticamente el sistema y le llegará a tu amigo como regalo tuyo.</li>
+			<li class='ipsType_light'><i style='color: red' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;El <strong>Staff de Drunk-Gaming</strong> se reserva el <strong><u>derecho de suspender o remover las cuentas de los usuarios que no cumplas el reglamento impuesto por la comunidad</u></strong>. Para eso, visite <a href="/reglamento/" class='ipsType_bold'>este enlace</a> donde figuran todas las reglas ilícitas.</li>
+		</ul>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<p class="ipsType_center"><span class="ipsToggle ipsToggle_off" id="acceptTerms" tabindex="0"><span data-role="status">Off</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{else}}
+			<p class="ipsType_center ipsHide"><span class="ipsToggle ipsToggle_on" id="acceptTerms" tabindex="0"><span data-role="status">On</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{endif}}
+
+		<p class="ipsType_center ipsHide"><span class="ipsToggle ipsToggle_off" id="acceptToAdmin" tabindex="0"><span data-role="status">Off</span></span>&nbsp;He leido todas las reglas impuestas por la comunidad y me comprometo a, en base a ello, cuidar los servidores para mantener la comunidad como un lugar disfrutable para los jugadores y/o superiores.</p>
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPadding ipsSpacer_top">
+			{{if \IPS\Settings::i()->v_show_terms}}
+				<li><span id='finishButton' class="ipsButton ipsButton_alternate ipsButton_disabled">Finalizar</span></li>
+			{{else}}
+				<li><span id='finishButton' class="ipsButton ipsButton_primary">Finalizar</span></li>
+			{{endif}}
+			<li><span class="ipsLoading ipsLoading_dark ipsLoading_small ipsPadding ipsHide"></span></li>
+		</ul>
+	</div>
+
+	<div id="linkPayments" class="ipsType_center ipsHide">
+		<div class='ipsPadding'>
+			<h2 class='ipsType_pageTitle'>¡Presta atención!</h2>
+
+			<p style='font-size: 15px;'>Ya casi has finalizado de hacer los pasos para realizar tu pedido. Ahora solo debes hacer un último paso que es <strong>realizar el pago y registrar que lo hayas hecho</strong>. Para realizar el pago, revisa tu mensajería privada que se te enviará un mensaje con los datos para realizar el mismo. Una vez realizado el pago, dirígete a la sección de <a class='ipsType_bold' href="{url='app=ventas&module=register&controller=main' seoTemplate='register'}">Registros de Venta</a> para mandarnos un formulario con el comprobante/ticket de que has realizado el pago. Una vez enviado, los Directores de la comunidad se encargarán de activar manualmente tu pedido adquirido.</p>
+
+			<p style='font-size: 15px; color: #ff0000;'>Si eres de <strong>Argentina</strong>, recuerda que los pedidos que realices en la comunidad se acreditan <strong>AUTOMÁTICAMENTE</strong>. No hace falta que realices el registro de tu venta ya que sólo necesitas realizar el pago y dentro de las próximas horas tu pedido se te activará por nuestro sistema de procesamiento de pagos.</p>
+		</div>
+
+		<div class='ipsPadding ipsAreaBackground_light'>
+			<a href="{url='app=ventas&module=register&controller=main' seoTemplate='register'}" class="ipsButton ipsButton_important"><i class="fa fa-sign-in"></i>&nbsp;Registrar Venta</a>
+			<a href="/" class="ipsButton ipsButton_alternate"><i class="fa fa-home"></i>&nbsp;Ir al inicio del foro</a>
+		</div>
+	</div>
+</form>]]></template>
+ <template template_group="main" template_name="vipDataHtml" template_data="$data" template_location="front" template_app="ventas"><![CDATA[<div id='stepTwo'>
+	<h2 class='ipsType_center'>Completa los campos necesarios para reservar tu VIP</h2>
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;En el primer campo, ingresa tu Tag CS que utilices en los servidores para reservarlo en tu pedido. Debe ser un Tag que no esté utilizado por nadie.</span></li>
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;En el segundo campo, ingresa una contraseña para poder proteger el Tag. La contraseña no debe ser ni fácil (para que los demas no lo descubran) ni difícil (para poder acordártela en caso de olvidarla).</span></li>
+	</ul>
+
+	<div class='ipsGrid ipsGrid_collapsePhone ipsType_center ipsSpacer_bottom'>
+		<div class='ipsGrid_span6 ipsPad'>
+			<h3 class="ipsType_minorHeading">Nombre de tu VIP</h3>
+			<input required="required" name="tagcs" autocomplete="off" type="text">
+			<br />
+			<a href='javascript:;' id="checkTagExists" class='ipsType_small'>Verificar la existencia del Tag CS ingresado</a>
+		</div>
+		<div class='ipsGrid_span6 ipsPad'>
+			<h3 class="ipsType_minorHeading">Contraseña de tu VIP</h3>
+			<input required="required" name="setinfo" autocomplete="new-password" type="text">
+		</div>
+	</div>
+
+	<input type="hidden" name="benefit" value="VIP Full" />
+	<input type="hidden" name="region" value="0" />
+	<input type="hidden" name="days" value="30" />
+	<input type="hidden" name="server" value="0" />
+
+	<ul class="ipsPad ipsToolList ipsToolList_horizontal ipsList_reset ipsAreaBackground ipsClearfix">
+		<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+		<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+	</ul>
+</div>
+
+<div id='stepThree' class='ipsHide'>
+	<h2 class='ipsType_center'>Selecciona la región de tu moneda</h2>
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Selecciona la moneda que se caracteriza en tu región. Por ejemplo: si eres de <strong>Argentina, vas a pagar con Pesos Argentinos</strong>; entonces, selecciona Argentina.</span>
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si no posees ninguna moneda de las puestas por defecto. Contáctate con algún Director en la <a href="/staff/">sección de Staff</a> para que te ayude. Veremos si más adelante podemos adaptar más métodos de compra pero, por el momento, solo se admiten las que están ahora.</span>
+	</ul>
+
+	<div class='ipsType_center ipsSpacer_top ipsSpacer_bottom'>
+		<div class='ipsGrid ipsGrid_collapsePhone moneyRegionClass ipsPos_center'>
+			{{$per = \IPS\Settings::i()->v_region_per;}}
+			{{$arg = \IPS\Settings::i()->v_region_arg;}}
+			{{$pp = \IPS\Settings::i()->v_region_pp;}}
+			{{$cl = \IPS\Settings::i()->v_region_cl;}}
+
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$per}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large ipsButton_primary{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/QLxob69.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Sol peruano [PER]</span>
+				</a>
+			</div>
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$arg}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large {{if !$per}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/45PNKIt.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Peso Argentino [ARS]</span>
+				</a>
+			</div>
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$pp}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large {{if !$per && !$arg}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/LyndgM9.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Dólares [USD]</span>
+				</a>
+			</div>
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$cl}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large {{if !$per && !$arg && !$pp}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/lr3710T.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Pesos Chilenos [CLP]</span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<ul class="ipsPad ipsToolList ipsToolList_horizontal ipsList_reset ipsAreaBackground ipsClearfix">
+		<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+		<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+	</ul>
+</div>
+
+<div id='stepFour' class='ipsHide'>
+	<h2 class='ipsType_center'>Elige el servidor</h2>
+	<div class='ipsType_center ipsSpacer_bottom'>
+		<div class="ipsGrid ipsGrid_collapsePhone ipsPos_center selectServerVip">
+			{{foreach $data['servers'] as $k => $s}}
+				<div class="ipsGrid_span3 ipsType_center">
+					<a class="ipsButton {{if $k == 0}}ipsButton_primary{{else}}ipsButton_light{{endif}} ipsButton_small ipsButton_fullWidth ipsSpacer_bottom">{$s}</a>
+				</div>
+			{{endforeach}}
+		</div>
+	</div>
+
+	<div class="ipsGrid ipsPadding ipsAreaBackground ipsPos_center ipsSpacer_bottom paymentBenefit">
+		<div class="ipsGrid_span6 ipsType_center"><strong><span data-price="VIP"></span> <span class="ipsType_small ipsType_light">/ mes</span></strong> VIP en un solo Servidor</div>
+		<div class="ipsGrid_span6 ipsType_center"><strong><span data-price="VIP Full"></span> <span class="ipsType_small ipsType_light">/ mes</span></strong> VIP en todos los Servidores (FULL)</div>
+	</div>
+
+	<h2 class='ipsType_center'>Elige la duración de tu VIP</h2>
+	<div class='ipsType_center ipsSpacer_bottom'>
+		<div id='daysBenefits' class='ipsGrid ipsGrid_collapsePhone ipsPos_center daysBenefitsClass'>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="7" class="ipsButton ipsButton_light ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>7 días</strong></a>
+			</div>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="15" class="ipsButton ipsButton_light ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>15 días</strong></a>
+			</div>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="30" class="ipsButton ipsButton_primary ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>30 días</strong></a>
+			</div>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="60" class="ipsButton ipsButton_light ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>60 días</strong></a>
+			</div>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="90" class="ipsButton ipsButton_light ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>90 días</strong></a>
+			</div>
+		</div>
+	</div>
+
+	<ul class="ipsPad ipsToolList ipsToolList_horizontal ipsList_reset ipsAreaBackground ipsClearfix">
+		<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+		<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+	</ul>
+</div>]]></template>
+ <template template_group="register" template_name="register" template_data="$c, $form" template_location="front" template_app="ventas"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__ventas_register"}</h1>
+</div>
+
+<div class='ipsPadding ipsBox ipsSpacer_bottom'>
+	<span class='ipsType_large'>Esta sección es para <strong>registrar ventas pagadas</strong>, es decir, si has realizado una compra en la <a href='/ventas/'>sección de ventas</a> y has pagado como corresponde, debes visitar este sitio para poder registrar que lo hayas realizado y nosotros poder acreditar la misma según los datos. Si has comprado mediante Argentina, no recomendamos usar este sitio ya que las compras en Argentina, <strong>son automáticas</strong>.</span>
+	<br />
+	<br />
+	<span class='ipsType_large'>Abajo se te mostrará un formulario en caso de que hayas realizado una compra, de lo contrario, no mostrará nada. Si has realizado una compra, se te mostrarán todos los datos y debes completar el formulario mencionado para poder llevar a cabo el registro.</span>
+	<br />
+	<br />
+	<span class='ipsType_large'>¡Gracias por ayudar a <strong><u>Drunk-Gaming</u></strong>!</span>
+</div>
+
+{{if $c}}
+	<div class='ipsBox'>{$form|raw}</div>
+{{else}}
+	<div class='ipsPadding ipsBox ipsType_center'><span class='ipsType_light ipsType_large'>No se han encontrado compras que hayas realizado</span></div>
+{{endif}}]]></template>
+ <template template_group="register" template_name="registerZE" template_data="$c, $form" template_location="front" template_app="ventas"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__ventas_register_ze"}</h1>
+</div>
+
+<div class='ipsPadding ipsBox ipsSpacer_bottom'>
+	<span class='ipsType_large'>Esta sección es para <strong>registrar ventas pagadas</strong>, es decir, si has realizado una compra en la <a href='/ventas/'>sección de ventas</a> y has pagado como corresponde, debes visitar este sitio para poder registrar que lo hayas realizado y nosotros poder acreditar la misma según los datos. Si has comprado mediante Argentina, no recomendamos usar este sitio ya que las compras en Argentina, <strong>son automáticas</strong>.</span>
+	<br />
+	<br />
+	<span class='ipsType_large'>Abajo se te mostrará un formulario en caso de que hayas realizado una compra, de lo contrario, no mostrará nada. Si has realizado una compra, se te mostrarán todos los datos y debes completar el formulario mencionado para poder llevar a cabo el registro.</span>
+	<br />
+	<br />
+	<span class='ipsType_large'>¡Gracias por ayudar a <strong><u>Drunk-Gaming</u></strong>!</span>
+</div>
+
+{{if $c}}
+	<div class='ipsBox'>{$form|raw}</div>
+{{else}}
+	<div class='ipsPadding ipsBox ipsType_center'><span class='ipsType_light ipsType_large'>No se han encontrado compras que hayas realizado</span></div>
+{{endif}}]]></template>
+ <template template_group="register" template_name="registerZPA" template_data="$c, $form" template_location="front" template_app="ventas"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__ventas_register_zpa"}</h1>
+</div>
+
+<div class='ipsPadding ipsBox ipsSpacer_bottom'>
+	<span class='ipsType_large'>Esta sección es para <strong>registrar ventas pagadas</strong>, es decir, si has realizado una compra en la <a href='/ventas/'>sección de ventas</a> y has pagado como corresponde, debes visitar este sitio para poder registrar que lo hayas realizado y nosotros poder acreditar la misma según los datos. Si has comprado mediante Argentina, no recomendamos usar este sitio ya que las compras en Argentina, <strong>son automáticas</strong>.</span>
+	<br />
+	<br />
+	<span class='ipsType_large'>Abajo se te mostrará un formulario en caso de que hayas realizado una compra, de lo contrario, no mostrará nada. Si has realizado una compra, se te mostrarán todos los datos y debes completar el formulario mencionado para poder llevar a cabo el registro.</span>
+	<br />
+	<br />
+	<span class='ipsType_large'>¡Gracias por ayudar a <strong><u>Drunk-Gaming</u></strong>!</span>
+</div>
+
+{{if $c}}
+	<div class='ipsBox'>{$form|raw}</div>
+{{else}}
+	<div class='ipsPadding ipsBox ipsType_center'><span class='ipsType_light ipsType_large'>No se han encontrado compras que hayas realizado</span></div>
+{{endif}}]]></template>
+ <template template_group="register" template_name="registerZPU" template_data="$c, $form" template_location="front" template_app="ventas"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__ventas_register_zpu"}</h1>
+</div>
+
+<div class='ipsPadding ipsBox ipsSpacer_bottom'>
+	<span class='ipsType_large'>Esta sección es para <strong>registrar ventas pagadas</strong>, es decir, si has realizado una compra en la <a href='/ventas/'>sección de ventas</a> y has pagado como corresponde, debes visitar este sitio para poder registrar que lo hayas realizado y nosotros poder acreditar la misma según los datos. Si has comprado mediante Argentina, no recomendamos usar este sitio ya que las compras en Argentina, <strong>son automáticas</strong>.</span>
+	<br />
+	<br />
+	<span class='ipsType_large'>Abajo se te mostrará un formulario en caso de que hayas realizado una compra, de lo contrario, no mostrará nada. Si has realizado una compra, se te mostrarán todos los datos y debes completar el formulario mencionado para poder llevar a cabo el registro.</span>
+	<br />
+	<br />
+	<span class='ipsType_large'>¡Gracias por ayudar a <strong><u>Drunk-Gaming</u></strong>!</span>
+</div>
+
+{{if $c}}
+	<div class='ipsBox'>{$form|raw}</div>
+{{else}}
+	<div class='ipsPadding ipsBox ipsType_center'><span class='ipsType_light ipsType_large'>No se han encontrado compras que hayas realizado</span></div>
+{{endif}}]]></template>
+ <template template_group="shareLinks" template_name="shareLinks" template_data="$url, $in_box=TRUE" template_location="front" template_app="ventas"><![CDATA[{{if $in_box}}
+	{{$id = mt_rand();}}
+	<a href='#elShareItem_{$id}_menu' id='elShareItem_{$id}' data-ipsMenu class='ipsShareButton ipsButton ipsButton_link ipsButton_link--light'><span><i class='fa fa-share-alt'></i></span>&nbsp;&nbsp;{lang="share"}</a>
+
+	<div class='ipsPadding ipsMenu ipsMenu_auto ipsHide' id='elShareItem_{$id}_menu' data-controller="core.front.core.sharelink">
+		<ul class='ipsList_inline'>
+			<li><a href="https://www.facebook.com/sharer/sharer.php?u={$url}" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='{lang="facebook_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-facebook"></i></a></li>
+			<li><a href="http://twitter.com/share?url={$url}" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='{lang="twitter_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-twitter"></i></a></li>
+			<li><a href="https://plus.google.com/share?url={$url}" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='{lang="google_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-google-plus"></i></a></li>
+			<li><a href="http://www.reddit.com/submit?url={$url}&amp;title={lang='module__servidores_main'}" class="cShareLink cShareLink_reddit" target="_blank" title='{lang="reddit_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-reddit"></i></a></li>
+		</ul>
+	</div>
+{{else}}
+	<ul class='ipsList_inline'>
+		<li><a href="https://www.facebook.com/sharer/sharer.php?u={$url}" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='{lang="facebook_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-facebook"></i></a></li>
+		<li><a href="http://twitter.com/share?url={$url}" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='{lang="twitter_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-twitter"></i></a></li>
+		<li><a href="https://plus.google.com/share?url={$url}" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='{lang="google_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-google-plus"></i></a></li>
+		<li><a href="http://www.reddit.com/submit?url={$url}&amp;title={lang='module__servidores_main'}" class="cShareLink cShareLink_reddit" target="_blank" title='{lang="reddit_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-reddit"></i></a></li>
+	</ul>
+{{endif}}]]></template>
+ <template template_group="widgets" template_name="ventasWidget" template_data="" template_location="front" template_app="ventas"><![CDATA[<div class='ipsPadding ipsType_center ipsWidget_inner'>
+	<a href='{url="app=ventas&module=main&controller=main" seoTemplate="ventas"}'><img src="https://www.DrunkGaming.net/esthetic/ventas_widget.png" /></a><br>
+
+	<hr class='ipsHr' />
+
+	<span class='ipsType_bold ipsType_large'>Ventas Drunk-Gaming</span>
+
+	<hr class='ipsHr' />
+
+	<div class='ipsFlex ipsFlex-jc:between ipsFlex-ai:center ipsFlex-fw:wrap ipsGap:3'>
+		<div class='ipsFlex-flex:06'>
+			{{$v = \IPS\Application::load('ventas')->getVIPs();}}
+			<h1 class='ipsType_pageTitle' style='color: #ffbf00; font-weight: bold; text-shadow: 0 0 .9em #ffbf00;'>{$v}</h1>
+			<span class='ipsType_light'><i class='fa fa-star-o'></i>&nbsp;VIP</span>
+		</div>
+		<div class='ipsFlex-flex:06'>
+			{{$a = \IPS\Application::load('ventas')->getAdminCSs();}}
+			<h1 class='ipsType_pageTitle' style='color: #ff7c00; font-weight: bold; text-shadow: 0 0 .9em #ff7c00;'>{$a}</h1>
+			<span class='ipsType_light'><i class='fa fa-user-secret'></i>&nbsp;Admin CS</span>
+		</div>
+	</div>
+</div>]]></template>
+ <template template_group="ze" template_name="ze" template_data="$data" template_location="front" template_app="ventas"><![CDATA[{{if !\IPS\Request::i()->isAjax()}}
+	<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+		<h1 class='ipsType_pageTitle'>{lang="module__ventas_main"}</h1>
+	</div>
+{{endif}}
+
+{{if !$data['ze_check_vinc']}}
+	<div class='ipsPadding {{if !\IPS\Request::i()->isAjax()}}ipsBox{{endif}}'>
+		<div class='ipsMessage ipsMessage_info'>
+			Debes tener la cuenta del Zombie Escape vinculada al foro para poder realizar una compra. Para vincular tu cuenta del Zombie Escape con la del foro, debes ingresar al servidor de juego, e ir a la Opción <strong>Vincular mi cuenta</strong> que aparecerá tanto en el menú de Ingreso como en el menú de Opciones de Usuario.
+		</div>
+
+		<hr class='ipsHr' />
+
+		{template="zeInformation" app="ventas" group="ze" location="front"}
+	</div>
+{{else}}
+	<div class='ipsGrid ipsGrid_collapsePhone ipsPad {{if !\IPS\Request::i()->isAjax()}}ipsBox{{endif}}'>
+		<div class='ipsGrid_span4 ipsPad ipsAreaBackground_light ipsSpacer_bottom'>
+			{$data['ze_form']|raw}
+
+			{{if $data['percent_extra']}}
+				<div class='ipsMessage ipsMessage_success ipsSpacer_top'>
+					Todos los puntos adquiridos <strong>sumarán un {$data['percent_extra']}% extra</strong>. Por ejemplo: Si compras <strong>1.000 pL, sabiendo que hay un 50% extras, se te dará unos 500 pL</strong> de más gracias a la promoción activada.
+				</div>
+			{{endif}}
+		</div>
+		<div class='ipsGrid_span8'>{template="zeInformation" app="ventas" group="ze" location="front"}</div>
+	</div>
+{{endif}}]]></template>
+ <template template_group="ze" template_name="zeInformation" template_data="" template_location="front" template_app="ventas"><![CDATA[{{$per_ze = \IPS\Settings::i()->v_region_per_ze;}}
+{{$arg_ze = \IPS\Settings::i()->v_region_arg_ze;}}
+{{$pp_ze = \IPS\Settings::i()->v_region_pp_ze;}}
+{{$cl_ze = \IPS\Settings::i()->v_region_cl_ze;}}
+
+<div id='zeSelectRegion' class='ipsType_center'>
+	<span class='ipsType_large ipsType_bold'>Métodos de pago, precios y demás información</span>
+
+	<ul class='ipsGrid ipsGrid_collapsePhone ipsMargin_top zeMoneyRegionClass'>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$per_ze}}ipsButton_disabled ipsButton_light zeRegionDisabled0{{else}}ipsButton_primary{{endif}} ipsButton_fullWidth'>Perú</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$arg_ze}}ipsButton_disabled ipsButton_light zeRegionDisabled1{{else}}{{if !$per_ze}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Argentina</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$pp_ze}}ipsButton_disabled ipsButton_light zeRegionDisabled2{{else}}{{if !$per_ze && !$arg_ze}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Paypal</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$cl_ze}}ipsButton_disabled ipsButton_light zeRegionDisabled3{{else}}{{if !$per_ze && !$arg_ze && !$pp_ze}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Chile</a></li>
+	</ul>
+
+	<ul class='ipsList_inline ipsMargin_bottom'>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #999900; color: #fff;'>Puntos de Legado</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="3"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 1.000)</span>
+		</li>
+	</ul>
+
+	<hr class='ipsHr' />
+
+	<div id='zeMethodPayments' class="ipsPadding ipsSpacer_both ipsType_center"></div>
+
+	<hr class='ipsHr' />
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si tienes alguna duda sobre los métodos de pago, habla con cualquiera de nuestros directores en la <a href="/staff/">sección de Staff</a>. Ellos te ayudarán y resolverán las dudas que tengas sobre las ventas y sus derivados.</span></li>
+		<li class='ipsType_light'><i style='color: red' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;El <strong>Staff de Drunk-Gaming</strong> se reserva el derecho de suspender o remover las cuentas de los usuarios que no cumplas el reglamento impuesto por la comunidad. Para eso, visite <a href="/reglamento/" class='ipsType_bold'>este enlace</a> donde figuran todas las reglas ilícitas.</li>
+	</ul>
+</div>]]></template>
+ <template template_group="ze" template_name="zePost" template_data="$data_forum, $data" template_location="front" template_app="ventas"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__ventas_main"}</h1>
+</div>
+
+<div class='cVentas_stepsHeader ipsPadding ipsType_center ipsMargin_bottom'>
+	<ul class="ipsList_reset cVentas_steps">
+		<li data-step="1" class="cVentas_stepsActive"><span>Confirmar datos</span></li>
+		<li data-step="2"><span>Finalizar</span></li>
+	</ul>
+</div>
+
+{{$temp_pl = 0;}}
+
+<form id='zeDataVentas' action='/?app=ventas&module=main&controller=main&do=zeFinishBuy' method='post' onkeypress='return event.keyCode != 13;'>
+	<div id='zeDataConfirm' class='ipsBox ipsPad ipsSpacer_both ipsSpacer_half'>
+		<h2 class='ipsType_center'>¡Confirma que los datos sean correctos!</h2>
+		
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;{$data_forum['name']}, por favor, verifica que todo esté ingresado correctamente. Todos los datos juntados se guardarán en nuestro sistema para cuando, se procedan los siguientes pasos, se pueda llevar a cabo la activación de los recursos adquiridos.</li>
+		</ul>
+
+		<div class='ipsColumns ipsColumns_bothSpacing ipsColumns_halfSpacing ipsColumns_collapsePhone'>
+			<div class='ipsColumn ipsColumn_fixed ipsColumn_veryWide'>
+				<ul class='ipsDataList ipsAreaBackground_light ipsType_light ipsType_large ipsSpacer_bottom'>
+					<li class='ipsDataItem ipsPad'>Cuenta: <span class='ipsType_bold'>{$data['name']}</span> (ID: #{$data['acc_id']})</li>
+					{{if $data['pl']}}
+						{{if $data['pl_extra']}}
+							<li class='ipsDataItem ipsPad'>
+								<span>Puntos de Legado: <span id='pl' data-pl="{$data['pl']}" class='ipsType_bold'>{$data['pl']}</span></span>
+								<ol class='ipsSpacer_top'>
+									<dt>Extras de pL: <span id='plExtra' data-pl-extra="{$data['pl_extra']}" class='ipsType_bold'>{$data['pl_extra']}</span></dt>
+									{{if $data['percent_extra']}}
+										<dt>- - - -</dt>
+										{{$temp_pl = (int) (($data['percent_extra'] * $data['pl']) / 100);}}
+										<dt>Extra por el {$data['percent_extra']}%: <span class='ipsType_bold'>{$temp_pl}</span></dt>
+									{{endif}}
+									<dt>- - - -</dt>
+									<dt>Total de pL: <span class='ipsType_bold'>{$data['pl'] + $data['pl_extra'] + $temp_pl}</span></dt>
+								</ol>
+							</li>
+						{{else}}
+							<li class='ipsDataItem ipsPad'>Puntos de Legado: <span id='pl' data-pl="{$data['pl']}" class='ipsType_bold'>{$data['pl']}</span></li>
+						{{endif}}
+					{{endif}}
+					<li class='ipsDataItem ipsPad'>Región: <span data-region="{$data['region']}" class='ipsType_bold'></span></li>
+				</ul>
+
+				<div class='ipsPad ipsAreaBackground_light ipsType_center ipsSpacer_bottom'>
+					<span class='ipsType_large'>Total a abonar: <span data-price-total="{$data['region']}" class='ipsType_bold'></span></span>
+				</div>
+			</div>
+			<div class='ipsColumn ipsColumn_fluid ipsPad ipsAreaBackground_light ipsType_center'>
+				{template="zeInformation" app="ventas" group="ze" location="front"}
+			</div>
+		</div>
+
+		<input type="hidden" name="ze_id" value="{$data['acc_id']}" />
+		<input type="hidden" name="ze_pl" value="{$data['pl'] + $data['pl_extra'] + $temp_pl}" />
+		<input type="hidden" name="ze_region" value="{$data['region']}" />
+		<input type="hidden" name="ze_code" value="{$data['code']}" />
+		<input type="hidden" name="ze_total" value="" />
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPad ipsSpacer_top">
+			<li><span class="ipsButton ipsButton_primary zeContinue">Continuar</span></li>
+			<li class="ipsPos_left"><a href='{url="app=ventas&module=main&controller=main" seoTemplate="ventas"}' class="ipsButton ipsButton_alternate">Volver</a></li>
+		</ul>
+	</div>
+
+	<div id='zeFinishBuy' class='ipsBox ipsPad ipsHide ipsSpacer_both ipsSpacer_half ipsClearfix'>
+		<h2 class='ipsType_center'>Finalizando compra...</h2>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<h2 class="ipsType_center">Términos y Condiciones</h2>
+			<div id="terms" class="ipsPos_center ipsBox ipsSpacer_both"></div>
+		{{endif}}
+
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Presiona en el botón <strong>Finalizar</strong>, una vez presionado, te saldrá un enlace (dependiento la región y tu método de pago) que deberás copiar y pegar en tu navegador para proceder al pago. Te llegará un mensaje privado con toda la información y el enlace de pago.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si deseas pagar con boleta, debes seleccionar (si la región o método de pago lo permite) que vas a pagar en efectivo, luego imprimir la boleta y llevarla a una sucursal más cercana.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si quieres comprarle a un amigo, debes decirle que complete los pasos de compra desde su cuenta de foro; una vez finalizado y obtenido el enlace de pago, debe pasarte dicho enlace y pagarselo. El resto lo hará automáticamente el sistema y le llegará a tu amigo como regalo tuyo.</li>
+			<li class='ipsType_light'><i style='color: orange' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si por casualidades del sistema, hay un error de cálculo a la hora de realizar el abono, contáctate con algún Director (marcado en color rojo) y coméntale sobre el error; en este caso, no hagas nada y déjanos a nosotros el trabajo; lo arreglaremos lo antes posible.</span></li>
+		</ul>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<p class="ipsType_center"><span class="ipsToggle ipsToggle_off" id="zeAcceptTerms" tabindex="0"><span data-role="status">Off</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{else}}
+			<p class="ipsType_center ipsHide"><span class="ipsToggle ipsToggle_on" id="zeAcceptTerms" tabindex="0"><span data-role="status">On</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{endif}}
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPadding ipsSpacer_top">
+			{{if \IPS\Settings::i()->v_show_terms}}
+				<li><span id='zeFinishButton' class="ipsButton ipsButton_alternate ipsButton_disabled">Finalizar</span></li>
+			{{else}}
+				<li><span id='zeFinishButton' class="ipsButton ipsButton_primary">Finalizar</span></li>
+			{{endif}}
+			<li><span class="ipsLoading ipsLoading_dark ipsLoading_small ipsPadding ipsHide"></span></li>
+		</ul>
+	</div>
+
+	<div id="linkPayments" class="ipsPad ipsType_center ipsHide">
+		<h3>¡Presta atención!</h3>
+
+		<p>Ya casi has finalizado de hacer los pasos para comprar tus puntos. Ahora solo debes hacer un último paso que es, proceder el pago para tener los puntos en tu cuenta. En breve, se te enviará un mensaje privado indicando datos de tu pedido, código de recuperación, entre otros; mientras que abajo, te dejamos los datos resumidamente para poder pagar. Si pierdes este modal, tienes el mensaje privado donde podrás volver a ver los datos mencionados. También puedes pagar en el momento que desees, pero recuerda que tienes poco tiempo porque la mayoría de las ventas, <strong>expira de 7 a 30 días</strong>.</p>
+
+		{{if $data['region'] == 0}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Interbank</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta</p>
+				<input type="text" onclick="this.select();" value="" />
+				<p>Dicho número está a nombre de <strong>Jairo Ponte R</strong>.</p>
+			</div>
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>BCP</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta</p>
+				<input type="text" onclick="this.select();" value="" />
+				<p>Dicho número está a nombre de <strong>Jairo Ponte R</strong>.</p>
+			</div>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-ze/">Registros de ventas del ZE</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{elseif $data['region'] == 1}}
+			<div class="ipsSpacer_both">
+				<a href="" target="_blank" class="ipsButton ipsButton_fullWidth ipsButton_primary"><i class="fa fa-usd ipsPos_left"></i> <strong>Boleta de CuentaDigital (efectivo), tarjeta Ualá</strong><span class="priceDesc">Se abona en PagoFácil, RapiPago, etc. o usando Ualá (transferencia instantánea).</span></a>
+			</div>
+
+			<div class="ipsSpacer_both">
+				<a href="" target="_blank" class="ipsButton ipsButton_fullWidth ipsButton_primary"><i class="fa fa-credit-card ipsPos_left"></i> <strong>Dinero en MercadoPago, tarjeta de crédito o débito</strong><span class="priceDesc">Pagos procesados por MercadoPago</span></a>
+			</div>
+
+			<hr class="ipsHr" />
+
+			<p>Si querés que un amigo pague por vos o querés abonar más tarde, usá los siguientes links. También, este es un método para realizar un "regalo" a un amigo. Si quieres regalarle recursos a un amigo, debes decirle que haga el pedido mediante la <a href="/ventas/">sección de ventas</a> y una vez finalizado la misma, debe darte el enlace generado para proceder el pago y que lo demás lo haga el sistema:</p>
+			
+			<div class="ipsSpacer_both ipsSpacer_bottom">
+				<h3 class="ipsType_minorHeading">Abonar con boleta de CuentaDigital</h3>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+			<div class="ipsSpacer_both ipsSpacer_bottom">
+				<h3 class="ipsType_minorHeading">Abonar con tarjeta</h3>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+		{{elseif $data['region'] == 2}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Pagar a Jairito Mapper</h2>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Pagar a Atsel.</h2>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+
+			<p>Puedes pagar a cualquiera de los dos. La idea es que, una vez pagado, puedas tener ya tus recursos con los pasos a seguir una vez depositado el dinero.</p>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-ze/">Registros de ventas del ZE</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{elseif $data['region'] == 3}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Bancoestado</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta RUT</p>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-ze/">Registros de ventas del ZE</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{endif}}
+
+		<a href="/" class="ipsButton ipsButton_alternate"><i class="fa fa-home"></i>&nbsp;Ir al inicio del foro</a>
+	</div>
+</form>]]></template>
+ <template template_group="zpa" template_name="zpa" template_data="$data" template_location="front" template_app="ventas"><![CDATA[{{if !\IPS\Request::i()->isAjax()}}
+	<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+		<h1 class='ipsType_pageTitle'>{lang="module__ventas_main"}</h1>
+	</div>
+{{endif}}
+
+{{if !$data['zpa_check_vinc']}}
+	<div class='ipsPadding {{if !\IPS\Request::i()->isAjax()}}ipsBox{{endif}}'>
+		<div class='ipsMessage ipsMessage_info'>
+			Debes tener la cuenta del ZP Annihilation vinculada al foro para poder realizar una compra. Para vincular tu cuenta del ZP Annihilation con la del foro, debes ingresar al servidor de juego, e ir a la Opción <strong>Vincular mi cuenta</strong> que aparecerá tanto en el menú de Ingreso como en el menú de Opciones de Usuario.
+		</div>
+
+		<hr class='ipsHr' />
+
+		{template="zpaInformation" app="ventas" group="zpa" location="front"}
+	</div>
+{{else}}
+	<div class='ipsGrid ipsGrid_collapsePhone ipsPad {{if !\IPS\Request::i()->isAjax()}}ipsBox{{endif}}'>
+		<div class='ipsGrid_span4 ipsPad ipsAreaBackground_light ipsSpacer_bottom'>
+			{$data['zpa_form']|raw}
+
+			{{if $data['percent_extra']}}
+				<div class='ipsMessage ipsMessage_success ipsSpacer_top'>
+					Todos los puntos adquiridos <strong>sumarán un {$data['percent_extra']}% extra</strong>. Por ejemplo: Si compras <strong>1.000 pH, sabiendo que hay un 50% extras, se te dará unos 500 pH</strong> de más gracias a la promoción activada.
+				</div>
+			{{endif}}
+		</div>
+		<div class='ipsGrid_span8'>{template="zpaInformation" app="ventas" group="zpa" location="front"}</div>
+	</div>
+{{endif}}]]></template>
+ <template template_group="zpa" template_name="zpaInformation" template_data="" template_location="front" template_app="ventas"><![CDATA[{{$per_zpa = \IPS\Settings::i()->v_region_per_zpa;}}
+{{$arg_zpa = \IPS\Settings::i()->v_region_arg_zpa;}}
+{{$pp_zpa = \IPS\Settings::i()->v_region_pp_zpa;}}
+{{$cl_zpa = \IPS\Settings::i()->v_region_cl_zpa;}}
+
+<div id='zpaSelectRegion' class='ipsType_center'>
+	<span class='ipsType_large ipsType_bold'>Métodos de pago, precios y demás información</span>
+
+	<ul class='ipsGrid ipsGrid_collapsePhone ipsMargin_top zpaMoneyRegionClass'>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$per_zpa}}ipsButton_disabled ipsButton_light zpaRegionDisabled0{{else}}ipsButton_primary{{endif}} ipsButton_fullWidth'>Perú</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$arg_zpa}}ipsButton_disabled ipsButton_light zpaRegionDisabled1{{else}}{{if !$per_zpa}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Argentina</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$pp_zpa}}ipsButton_disabled ipsButton_light zpaRegionDisabled2{{else}}{{if !$per_zpa && !$arg_zpa}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Paypal</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$cl_zpa}}ipsButton_disabled ipsButton_light zpaRegionDisabled3{{else}}{{if !$per_zpa && !$arg_zpa && !$pp_zpa}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Chile</a></li>
+	</ul>
+
+	<ul class='ipsList_inline ipsSpacer_bottom'>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #000099; color: #fff;'>Puntos Humanos</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="1"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 25)</span>
+		</li>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #990000; color: #fff;'>Puntos Zombies</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="2"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 25)</span>
+		</li>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #999900; color: #fff;'>Puntos de Legado</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="3"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 50)</span>
+		</li>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #009900; color: #fff;'>Saldo</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="4"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 100)</span>
+		</li>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #009999; color: #fff;'>Diamantes</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="5"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 5)</span>
+		</li>
+	</ul>
+
+	<hr class='ipsHr' />
+
+	<div id='zpaMethorPayments' class="ipsPadding ipsSpacer_both ipsType_center"></div>
+
+	<hr class='ipsHr' />
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si tienes alguna duda sobre los métodos de pago, habla con cualquiera de nuestros directores enla <a href="/staff/">sección de Staff</a>. Ellos te ayudarán y resolverán las dudas que tengas sobre las ventas y sus deribados.</span></li>
+		<li class='ipsType_light'><i style='color: red' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;El <strong>Staff de Drunk-Gaming</strong> se reserva el derecho de suspender o remover las cuentas de los usuarios que no cumplas el reglamento impuesto por la comunidad. Para eso, visite <a href="/reglamento/" class='ipsType_bold'>este enlace</a> donde figuran todas las reglas ilícitas.</li>
+	</ul>
+</div>]]></template>
+ <template template_group="zpa" template_name="zpaPost" template_data="$data_forum, $data" template_location="front" template_app="ventas"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__ventas_main"}</h1>
+</div>
+
+<div class='cVentas_stepsHeader ipsPadding ipsType_center ipsMargin_bottom'>
+	<ul class="ipsList_reset cVentas_steps">
+		<li data-step="1" class="cVentas_stepsActive"><span>Confirmar datos</span></li>
+		<li data-step="2"><span>Finalizar</span></li>
+	</ul>
+</div>
+
+{{$temp_ph = 0;}}
+{{$temp_pz = 0;}}
+{{$temp_pl = 0;}}
+{{$temp_ps = 0;}}
+{{$temp_pd = 0;}}
+
+<form id='zpaDataVentas' action='/?app=ventas&module=main&controller=main&do=zpaFinishBuy' method='post' onkeypress='return event.keyCode != 13;'>
+	<div id='zpaDataConfirm' class='ipsBox ipsPad ipsSpacer_both ipsSpacer_half'>
+		<h2 class='ipsType_center'>¡Confirma que los datos sean correctos!</h2>
+		
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;{$data_forum['name']}, por favor, verifica que todo esté ingresado correctamente. Todos los datos juntados se guardarán en nuestro sistema para cuando, se procedan los siguientes pasos, se pueda llevar a cabo la activación de los recursos adquiridos.</li>
+		</ul>
+
+		<div class='ipsColumns ipsColumns_bothSpacing ipsColumns_halfSpacing ipsColumns_collapsePhone'>
+			<div class='ipsColumn ipsColumn_fixed ipsColumn_veryWide'>
+				<ul class='ipsDataList ipsAreaBackground_light ipsType_light ipsType_large ipsSpacer_bottom'>
+					<li class='ipsDataItem ipsPad'>Cuenta: <span class='ipsType_bold'>{$data['name']}</span> (ID: #{$data['acc_id']})</li>
+					{{if $data['ph']}}
+						{{if $data['ph_extra']}}
+							<li class='ipsDataItem ipsPad'>
+								<span>Puntos Humanos: <span id='ph' data-ph="{$data['ph']}" class='ipsType_bold'>{$data['ph']}</span></span>
+								<ol class='ipsSpacer_top'>
+									<dt>Extras de pH: <span id='phExtra' data-ph-extra="{$data['ph_extra']}" class='ipsType_bold'>{$data['ph_extra']}</span></dt>
+									{{if $data['percent_extra']}}
+										<dt>- - - -</dt>
+										{{$temp_ph = (int) (($data['percent_extra'] * $data['ph']) / 100);}}
+										<dt>Extra por el {$data['percent_extra']}%: <span class='ipsType_bold'>{$temp_ph}</span></dt>
+									{{endif}}
+									<dt>- - - -</dt>
+									<dt>Total de pH: <span class='ipsType_bold'>{$data['ph'] + $data['ph_extra'] + $temp_ph}</span></dt>
+								</ol>
+							</li>
+						{{else}}
+							<li class='ipsDataItem ipsPad'>Puntos Humanos: <span id='ph' data-ph="{$data['ph']}" class='ipsType_bold'>{$data['ph']}</span></li>
+						{{endif}}
+					{{endif}}
+					{{if $data['pz']}}
+						{{if $data['pz_extra']}}
+							<li class='ipsDataItem ipsPad'>
+								<span>Puntos Zombies: <span id='pz' data-pz="{$data['pz']}" class='ipsType_bold'>{$data['pz']}</span></span>
+								<ol class='ipsSpacer_top'>
+									<dt>Extras de pZ: <span id='pzExtra' data-pz-extra="{$data['pz_extra']}" class='ipsType_bold'>{$data['pz_extra']}</span></dt>
+									{{if $data['percent_extra']}}
+										<dt>- - - -</dt>
+										{{$temp_pz = (int) (($data['percent_extra'] * $data['pz']) / 100);}}
+										<dt>Extra por el {$data['percent_extra']}%: <span class='ipsType_bold'>{$temp_pz}</span></dt>
+									{{endif}}
+									<dt>- - - -</dt>
+									<dt>Total de pZ: <span class='ipsType_bold'>{$data['pz'] + $data['pz_extra'] + $temp_pz}</span></dt>
+								</ol>
+							</li>
+						{{else}}
+							<li class='ipsDataItem ipsPad'>Puntos Zombies: <span id='pz' data-pz="{$data['pz']}" class='ipsType_bold'>{$data['pz']}</span></li>
+						{{endif}}
+					{{endif}}
+					{{if $data['pl']}}
+						{{if $data['pl_extra']}}
+							<li class='ipsDataItem ipsPad'>
+								<span>Puntos de Legado: <span id='pl' data-pl="{$data['pl']}" class='ipsType_bold'>{$data['pl']}</span></span>
+								<ol class='ipsSpacer_top'>
+									<dt>Extras de pL: <span id='plExtra' data-pl-extra="{$data['pl_extra']}" class='ipsType_bold'>{$data['pl_extra']}</span></dt>
+									{{if $data['percent_extra']}}
+										<dt>- - - -</dt>
+										{{$temp_pl = (int) (($data['percent_extra'] * $data['pl']) / 100);}}
+										<dt>Extra por el {$data['percent_extra']}%: <span class='ipsType_bold'>{$temp_pl}</span></dt>
+									{{endif}}
+									<dt>- - - -</dt>
+									<dt>Total de pL: <span class='ipsType_bold'>{$data['pl'] + $data['pl_extra'] + $temp_pl}</span></dt>
+								</ol>
+							</li>
+						{{else}}
+							<li class='ipsDataItem ipsPad'>Puntos de Legado: <span id='pl' data-pl="{$data['pl']}" class='ipsType_bold'>{$data['pl']}</span></li>
+						{{endif}}
+					{{endif}}
+					{{if $data['ps']}}
+						{{if $data['ps_extra']}}
+							<li class='ipsDataItem ipsPad'>
+								<span>Saldo: <span id='ps' data-ps="{$data['ps']}" class='ipsType_bold'>{$data['ps']}</span></span>
+								<ol class='ipsSpacer_top'>
+									<dt>Extras de Saldo: <span id='psExtra' data-ps-extra="{$data['ps_extra']}" class='ipsType_bold'>{$data['ps_extra']}</span></dt>
+									{{if $data['percent_extra']}}
+										<dt>- - - -</dt>
+										{{$temp_ps = (int) (($data['percent_extra'] * $data['ps']) / 100);}}
+										<dt>Extra por el {$data['percent_extra']}%: <span class='ipsType_bold'>{$temp_ps}</span></dt>
+									{{endif}}
+									<dt>- - - -</dt>
+									<dt>Total de Saldo: <span class='ipsType_bold'>{$data['ps'] + $data['ps_extra'] + $temp_ps}</span></dt>
+								</ol>
+							</li>
+						{{else}}
+							<li class='ipsDataItem ipsPad'>Saldo: <span id='ps' data-ps="{$data['ps']}" class='ipsType_bold'>{$data['ps']}</span></li>
+						{{endif}}
+					{{endif}}
+					{{if $data['pd']}}
+						{{if $data['pd_extra']}}
+							<li class='ipsDataItem ipsPad'>
+								<span>Diamantes: <span id='pd' data-pd="{$data['pd']}" class='ipsType_bold'>{$data['pd']}</span></span>
+								<ol class='ipsSpacer_top'>
+									<dt>Extras de Diamante: <span id='pdExtra' data-pd-extra="{$data['pd_extra']}" class='ipsType_bold'>{$data['pd_extra']}</span></dt>
+									{{if $data['percent_extra']}}
+										<dt>- - - -</dt>
+										{{$temp_pd = (int) (($data['percent_extra'] * $data['pd']) / 100);}}
+										<dt>Extra por el {$data['percent_extra']}%: <span class='ipsType_bold'>{$temp_pd}</span></dt>
+									{{endif}}
+									<dt>- - - -</dt>
+									<dt>Total de Diamante: <span class='ipsType_bold'>{$data['pd'] + $data['pd_extra'] + $temp_pd}</span></dt>
+								</ol>
+							</li>
+						{{else}}
+							<li class='ipsDataItem ipsPad'>Diamantes: <span id='pd' data-pd="{$data['pd']}" class='ipsType_bold'>{$data['pd']}</span></li>
+						{{endif}}
+					{{endif}}
+					<li class='ipsDataItem ipsPad'>Región: <span data-region="{$data['region']}" class='ipsType_bold'></span></li>
+				</ul>
+
+				<div class='ipsPad ipsAreaBackground_light ipsType_center ipsSpacer_bottom'>
+					<span class='ipsType_large'>Total a abonar: <span data-price-total="{$data['region']}" class='ipsType_bold'></span></span>
+				</div>
+			</div>
+			<div class='ipsColumn ipsColumn_fluid ipsPad ipsAreaBackground_light ipsType_center'>
+				{template="zpaInformation" app="ventas" group="zpa" location="front"}
+			</div>
+		</div>
+
+		<input type="hidden" name="zpa_id" value="{$data['acc_id']}" />
+		<input type="hidden" name="zpa_ph" value="{$data['ph'] + $data['ph_extra'] + $temp_ph}" />
+		<input type="hidden" name="zpa_pz" value="{$data['pz'] + $data['pz_extra'] + $temp_pz}" />
+		<input type="hidden" name="zpa_pl" value="{$data['pl'] + $data['pl_extra'] + $temp_pl}" />
+		<input type="hidden" name="zpa_ps" value="{$data['ps'] + $data['ps_extra'] + $temp_ps}" />
+		<input type="hidden" name="zpa_pd" value="{$data['pd'] + $data['pd_extra'] + $temp_pd}" />
+		<input type="hidden" name="zpa_region" value="{$data['region']}" />
+		<input type="hidden" name="zpa_code" value="{$data['code']}" />
+		<input type="hidden" name="zpa_total" value="" />
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPad ipsSpacer_top">
+			<li><span class="ipsButton ipsButton_primary zpaContinue">Continuar</span></li>
+			<li class="ipsPos_left"><a href='{url="app=ventas&module=main&controller=main" seoTemplate="ventas"}' class="ipsButton ipsButton_alternate">Volver</a></li>
+		</ul>
+	</div>
+
+	<div id='zpaFinishBuy' class='ipsBox ipsPad ipsHide ipsSpacer_both ipsSpacer_half ipsClearfix'>
+		<h2 class='ipsType_center'>Finalizando compra...</h2>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<h2 class="ipsType_center">Términos y Condiciones</h2>
+			<div id="terms" class="ipsPos_center ipsBox ipsSpacer_both"></div>
+		{{endif}}
+
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Presiona en el botón <strong>Finalizar</strong>, una vez presionado, te saldrá un enlace (dependiento la región y tu método de pago) que deberás copiar y pegar en tu navegador para proceder al pago. Te llegará un mensaje privado con toda la información y el enlace de pago.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si deseas pagar con boleta, debes seleccionar (si la región o método de pago lo permite) que vas a pagar en efectivo, luego imprimir la boleta y llevarla a una sucursal más cercana.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si quieres comprarle a un amigo, debes decirle que complete los pasos de compra desde su cuenta de foro; una vez finalizado y obtenido el enlace de pago, debe pasarte dicho enlace y pagarselo. El resto lo hará automáticamente el sistema y le llegará a tu amigo como regalo tuyo.</li>
+			<li class='ipsType_light'><i style='color: orange' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si por casualidades del sistema, hay un error de cálculo a la hora de realizar el abono, contáctate con algún Director (marcado en color rojo) y coméntale sobre el error; en este caso, no hagas nada y déjanos a nosotros el trabajo; lo arreglaremos lo antes posible.</span></li>
+		</ul>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<p class="ipsType_center"><span class="ipsToggle ipsToggle_off" id="zpaAcceptTerms" tabindex="0"><span data-role="status">Off</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{else}}
+			<p class="ipsType_center ipsHide"><span class="ipsToggle ipsToggle_on" id="zpaAcceptTerms" tabindex="0"><span data-role="status">On</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{endif}}
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPadding ipsSpacer_top">
+			{{if \IPS\Settings::i()->v_show_terms}}
+				<li><span id='zpaFinishButton' class="ipsButton ipsButton_alternate ipsButton_disabled">Finalizar</span></li>
+			{{else}}
+				<li><span id='zpaFinishButton' class="ipsButton ipsButton_primary">Finalizar</span></li>
+			{{endif}}
+			<li><span class="ipsLoading ipsLoading_dark ipsLoading_small ipsPadding ipsHide"></span></li>
+		</ul>
+	</div>
+
+	<div id="linkPayments" class="ipsPad ipsType_center ipsHide">
+		<h3>¡Presta atención!</h3>
+
+		<p>Ya casi has finalizado de hacer los pasos para comprar tus puntos. Ahora solo debes hacer un último paso que es, proceder el pago para tener los puntos en tu cuenta. En breve, se te enviará un mensaje privado indicando datos de tu pedido, código de recuperación, entre otros; mientras que abajo, te dejamos los datos resumidamente para poder pagar. Si pierdes este modal, tienes el mensaje privado donde podrás volver a ver los datos mencionados. También puedes pagar en el momento que desees, pero recuerda que tienes poco tiempo porque la mayoría de las ventas, <strong>expira de 7 a 30 días</strong>.</p>
+
+		{{if $data['region'] == 0}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Interbank</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta</p>
+				<input type="text" onclick="this.select();" value="" />
+				<p>Dicho número está a nombre de <strong>Jairo Ponte R</strong>.</p>
+			</div>
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>BCP</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta</p>
+				<input type="text" onclick="this.select();" value="" />
+				<p>Dicho número está a nombre de <strong>Jairo Ponte R</strong>.</p>
+			</div>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-zpa/">Registros de ventas del ZPA</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{elseif $data['region'] == 1}}
+			<div class="ipsSpacer_both">
+				<a href="" target="_blank" class="ipsButton ipsButton_fullWidth ipsButton_primary"><i class="fa fa-usd ipsPos_left"></i> <strong>Boleta de CuentaDigital (efectivo), tarjeta Ualá</strong><span class="priceDesc">Se abona en PagoFácil, RapiPago, etc. o usando Ualá (transferencia instantánea).</span></a>
+			</div>
+
+			<div class="ipsSpacer_both">
+				<a href="" target="_blank" class="ipsButton ipsButton_fullWidth ipsButton_primary"><i class="fa fa-credit-card ipsPos_left"></i> <strong>Dinero en MercadoPago, tarjeta de crédito o débito</strong><span class="priceDesc">Pagos procesados por MercadoPago</span></a>
+			</div>
+
+			<hr class="ipsHr" />
+
+			<p>Si querés que un amigo pague por vos o querés abonar más tarde, usá los siguientes links. También, este es un método para realizar un "regalo" a un amigo. Si quieres regalarle recursos a un amigo, debes decirle que haga el pedido mediante la <a href="/ventas/">sección de ventas</a> y una vez finalizado la misma, debe darte el enlace generado para proceder el pago y que lo demás lo haga el sistema:</p>
+			
+			<div class="ipsSpacer_both ipsSpacer_bottom">
+				<h3 class="ipsType_minorHeading">Abonar con boleta de CuentaDigital</h3>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+			<div class="ipsSpacer_both ipsSpacer_bottom">
+				<h3 class="ipsType_minorHeading">Abonar con tarjeta</h3>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+		{{elseif $data['region'] == 2}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Pagar a Jairito Mapper</h2>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Pagar a Atsel.</h2>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+
+			<p>Puedes pagar a cualquiera de los dos. La idea es que, una vez pagado, puedas tener ya tus recursos con los pasos a seguir una vez depositado el dinero.</p>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-zpa/">Registros de ventas del ZPA</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{elseif $data['region'] == 3}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Bancoestado</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta RUT</p>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-zpa/">Registros de ventas del ZPA</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{endif}}
+
+		<a href="/" class="ipsButton ipsButton_alternate"><i class="fa fa-home"></i>&nbsp;Ir al inicio del foro</a>
+	</div>
+</form>]]></template>
+ <template template_group="zpu" template_name="zpu" template_data="$data" template_location="front" template_app="ventas"><![CDATA[{{if !\IPS\Request::i()->isAjax()}}
+	<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+		<h1 class='ipsType_pageTitle'>{lang="module__ventas_main"}</h1>
+	</div>
+{{endif}}
+
+{{if !$data['zpu_check_vinc']}}
+	<div class='ipsPadding {{if !\IPS\Request::i()->isAjax()}}ipsBox{{endif}}'>
+		<div class='ipsMessage ipsMessage_info'>
+			Debes tener la cuenta del ZP Umbrella vinculada al foro para poder realizar una compra. Para vincular tu cuenta del ZP Umbrella con la del foro, debes ingresar al servidor de juego, e ir a la Opción <strong>Vincular mi cuenta</strong> que aparecerá tanto en el menú de Ingreso como en el menú de Opciones de Usuario.
+		</div>
+
+		<hr class='ipsHr' />
+
+		{template="zpuInformation" app="ventas" group="zpu" location="front"}
+	</div>
+{{else}}
+	<div class='ipsGrid ipsGrid_collapsePhone ipsPad {{if !\IPS\Request::i()->isAjax()}}ipsBox{{endif}}'>
+		<div class='ipsGrid_span4 ipsPad ipsAreaBackground_light ipsSpacer_bottom'>
+			{$data['zpu_form']|raw}
+
+			{{if $data['percent_extra']}}
+				<div class='ipsMessage ipsMessage_success ipsSpacer_top'>
+					Todos los puntos adquiridos <strong>sumarán un {$data['percent_extra']}% extra</strong>. Por ejemplo: Si compras <strong>1.000 Saldo, sabiendo que hay un 50% extras, se te dará unos 500 de Saldo</strong> de más gracias a la promoción activada.
+				</div>
+			{{endif}}
+		</div>
+		<div class='ipsGrid_span8'>{template="zpuInformation" app="ventas" group="zpu" location="front"}</div>
+	</div>
+{{endif}}]]></template>
+ <template template_group="zpu" template_name="zpuInformation" template_data="" template_location="front" template_app="ventas"><![CDATA[{{$per_zpu = \IPS\Settings::i()->v_region_per_zpu;}}
+{{$arg_zpu = \IPS\Settings::i()->v_region_arg_zpu;}}
+{{$pp_zpu = \IPS\Settings::i()->v_region_pp_zpu;}}
+{{$cl_zpu = \IPS\Settings::i()->v_region_cl_zpu;}}
+
+<div id='zpuSelectRegion' class='ipsType_center'>
+	<span class='ipsType_large ipsType_bold'>Métodos de pago, precios y demás información</span>
+
+	<ul class='ipsGrid ipsGrid_collapsePhone ipsMargin_top zpuMoneyRegionClass'>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$per_zpu}}ipsButton_disabled ipsButton_light zpuRegionDisabled0{{else}}ipsButton_primary{{endif}} ipsButton_fullWidth'>Perú</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$arg_zpu}}ipsButton_disabled ipsButton_light zpuRegionDisabled1{{else}}{{if !$per_zpu}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Argentina</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$pp_zpu}}ipsButton_disabled ipsButton_light zpuRegionDisabled2{{else}}{{if !$per_zpu && !$arg_zpu}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Paypal</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$cl_zpu}}ipsButton_disabled ipsButton_light zpuRegionDisabled3{{else}}{{if !$per_zpu && !$arg_zpu && !$pp_zpu}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Chile</a></li>
+	</ul>
+
+	<ul class='ipsList_inline ipsSpacer_bottom'>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #009900; color: #fff;'>Saldo</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="3"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 2000)</span>
+		</li>
+	</ul>
+
+	<hr class='ipsHr' />
+
+	<div id='zpuMethodPayments' class="ipsPadding ipsSpacer_both ipsType_center"></div>
+
+	<hr class='ipsHr' />
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si tienes alguna duda sobre los métodos de pago, habla con cualquiera de nuestros directores enla <a href="/staff/">sección de Staff</a>. Ellos te ayudarán y resolverán las dudas que tengas sobre las ventas y sus deribados.</span></li>
+		<li class='ipsType_light'><i style='color: red' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;El <strong>Staff de Drunk-Gaming</strong> se reserva el derecho de suspender o remover las cuentas de los usuarios que no cumplas el reglamento impuesto por la comunidad. Para eso, visite <a href="/reglamento/" class='ipsType_bold'>este enlace</a> donde figuran todas las reglas ilícitas.</li>
+	</ul>
+</div>]]></template>
+ <template template_group="zpu" template_name="zpuPost" template_data="$data_forum, $data" template_location="front" template_app="ventas"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__ventas_main"}</h1>
+</div>
+
+<div class='cVentas_stepsHeader ipsPadding ipsType_center ipsMargin_bottom'>
+	<ul class="ipsList_reset cVentas_steps">
+		<li data-step="1" class="cVentas_stepsActive"><span>Confirmar datos</span></li>
+		<li data-step="2"><span>Finalizar</span></li>
+	</ul>
+</div>
+
+{{$temp_ps = 0;}}
+
+<form id='zpuDataVentas' action='/?app=ventas&module=main&controller=main&do=zpuFinishBuy' method='post' onkeypress='return event.keyCode != 13;'>
+	<div id='zpuDataConfirm' class='ipsBox ipsPad ipsSpacer_both ipsSpacer_half'>
+		<h2 class='ipsType_center'>¡Confirma que los datos sean correctos!</h2>
+		
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;{$data_forum['name']}, por favor, verifica que todo esté ingresado correctamente. Todos los datos juntados se guardarán en nuestro sistema para cuando, se procedan los siguientes pasos, se pueda llevar a cabo la activación de los recursos adquiridos.</li>
+		</ul>
+
+		<div class='ipsColumns ipsColumns_bothSpacing ipsColumns_halfSpacing ipsColumns_collapsePhone'>
+			<div class='ipsColumn ipsColumn_fixed ipsColumn_veryWide'>
+				<ul class='ipsDataList ipsAreaBackground_light ipsType_light ipsType_large ipsSpacer_bottom'>
+					<li class='ipsDataItem ipsPad'>Cuenta: <span class='ipsType_bold'>{$data['name']}</span> (ID: #{$data['acc_id']})</li>
+					{{if $data['ps']}}
+						{{if $data['ps_extra']}}
+							<li class='ipsDataItem ipsPad'>
+								<span>Saldo: <span id='ps' data-ps="{$data['ps']}" class='ipsType_bold'>{$data['ps']}</span></span>
+								<ol class='ipsSpacer_top'>
+									<dt>Extras de Saldo: <span id='plExtra' data-ps-extra="{$data['ps_extra']}" class='ipsType_bold'>{$data['ps_extra']}</span></dt>
+									{{if $data['percent_extra']}}
+										<dt>- - - -</dt>
+										{{$temp_ps = (int) (($data['percent_extra'] * $data['ps']) / 100);}}
+										<dt>Extra por el {$data['percent_extra']}%: <span class='ipsType_bold'>{$temp_ps}</span></dt>
+									{{endif}}
+									<dt>- - - -</dt>
+									<dt>Total de Saldo: <span class='ipsType_bold'>{$data['ps'] + $data['ps_extra'] + $temp_ps}</span></dt>
+								</ol>
+							</li>
+						{{else}}
+							<li class='ipsDataItem ipsPad'>Saldo: <span id='ps' data-ps="{$data['ps']}" class='ipsType_bold'>{$data['ps']}</span></li>
+						{{endif}}
+					{{endif}}
+					<li class='ipsDataItem ipsPad'>Región: <span data-region="{$data['region']}" class='ipsType_bold'></span></li>
+				</ul>
+
+				<div class='ipsPad ipsAreaBackground_light ipsType_center ipsSpacer_bottom'>
+					<span class='ipsType_large'>Total a abonar: <span data-price-total="{$data['region']}" class='ipsType_bold'></span></span>
+				</div>
+			</div>
+			<div class='ipsColumn ipsColumn_fluid ipsPad ipsAreaBackground_light ipsType_center'>
+				{template="zpuInformation" app="ventas" group="zpu" location="front"}
+			</div>
+		</div>
+
+		<input type="hidden" name="zpu_id" value="{$data['acc_id']}" />
+		<input type="hidden" name="zpu_ps" value="{$data['ps'] + $data['ps_extra'] + $temp_ps}" />
+		<input type="hidden" name="zpu_region" value="{$data['region']}" />
+		<input type="hidden" name="zpu_code" value="{$data['code']}" />
+		<input type="hidden" name="zpu_total" value="" />
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPad ipsSpacer_top">
+			<li><span class="ipsButton ipsButton_primary zpuContinue">Continuar</span></li>
+			<li class="ipsPos_left"><a href='{url="app=ventas&module=main&controller=main" seoTemplate="ventas"}' class="ipsButton ipsButton_alternate">Volver</a></li>
+		</ul>
+	</div>
+
+	<div id='zpuFinishBuy' class='ipsBox ipsPad ipsHide ipsSpacer_both ipsSpacer_half ipsClearfix'>
+		<h2 class='ipsType_center'>Finalizando compra...</h2>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<h2 class="ipsType_center">Términos y Condiciones</h2>
+			<div id="terms" class="ipsPos_center ipsBox ipsSpacer_both"></div>
+		{{endif}}
+
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Presiona en el botón <strong>Finalizar</strong>, una vez presionado, te saldrá un enlace (dependiento la región y tu método de pago) que deberás copiar y pegar en tu navegador para proceder al pago. Te llegará un mensaje privado con toda la información y el enlace de pago.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si deseas pagar con boleta, debes seleccionar (si la región o método de pago lo permite) que vas a pagar en efectivo, luego imprimir la boleta y llevarla a una sucursal más cercana.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si quieres comprarle a un amigo, debes decirle que complete los pasos de compra desde su cuenta de foro; una vez finalizado y obtenido el enlace de pago, debe pasarte dicho enlace y pagarselo. El resto lo hará automáticamente el sistema y le llegará a tu amigo como regalo tuyo.</li>
+			<li class='ipsType_light'><i style='color: orange' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si por casualidades del sistema, hay un error de cálculo a la hora de realizar el abono, contáctate con algún Director (marcado en color rojo) y coméntale sobre el error; en este caso, no hagas nada y déjanos a nosotros el trabajo; lo arreglaremos lo antes posible.</span></li>
+		</ul>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<p class="ipsType_center"><span class="ipsToggle ipsToggle_off" id="zpuAcceptTerms" tabindex="0"><span data-role="status">Off</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{else}}
+			<p class="ipsType_center ipsHide"><span class="ipsToggle ipsToggle_on" id="zpuAcceptTerms" tabindex="0"><span data-role="status">On</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{endif}}
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPadding ipsSpacer_top">
+			{{if \IPS\Settings::i()->v_show_terms}}
+				<li><span id='zpuFinishButton' class="ipsButton ipsButton_alternate ipsButton_disabled">Finalizar</span></li>
+			{{else}}
+				<li><span id='zpuFinishButton' class="ipsButton ipsButton_primary">Finalizar</span></li>
+			{{endif}}
+			<li><span class="ipsLoading ipsLoading_dark ipsLoading_small ipsPadding ipsHide"></span></li>
+		</ul>
+	</div>
+
+	<div id="linkPayments" class="ipsPad ipsType_center ipsHide">
+		<h3>¡Presta atención!</h3>
+
+		<p>Ya casi has finalizado de hacer los pasos para comprar tus puntos. Ahora solo debes hacer un último paso que es, proceder el pago para tener los puntos en tu cuenta. En breve, se te enviará un mensaje privado indicando datos de tu pedido, código de recuperación, entre otros; mientras que abajo, te dejamos los datos resumidamente para poder pagar. Si pierdes este modal, tienes el mensaje privado donde podrás volver a ver los datos mencionados. También puedes pagar en el momento que desees, pero recuerda que tienes poco tiempo porque la mayoría de las ventas, <strong>expira de 7 a 30 días</strong>.</p>
+
+		{{if $data['region'] == 0}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Interbank</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta</p>
+				<input type="text" onclick="this.select();" value="" />
+				<p>Dicho número está a nombre de <strong>Jairo Ponte R</strong>.</p>
+			</div>
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>BCP</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta</p>
+				<input type="text" onclick="this.select();" value="" />
+				<p>Dicho número está a nombre de <strong>Jairo Ponte R</strong>.</p>
+			</div>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-zpu/">Registros de ventas del ZPU</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{elseif $data['region'] == 1}}
+			<div class="ipsSpacer_both">
+				<a href="" target="_blank" class="ipsButton ipsButton_fullWidth ipsButton_primary"><i class="fa fa-usd ipsPos_left"></i> <strong>Boleta de CuentaDigital (efectivo), tarjeta Ualá</strong><span class="priceDesc">Se abona en PagoFácil, RapiPago, etc. o usando Ualá (transferencia instantánea).</span></a>
+			</div>
+
+			<div class="ipsSpacer_both">
+				<a href="" target="_blank" class="ipsButton ipsButton_fullWidth ipsButton_primary"><i class="fa fa-credit-card ipsPos_left"></i> <strong>Dinero en MercadoPago, tarjeta de crédito o débito</strong><span class="priceDesc">Pagos procesados por MercadoPago</span></a>
+			</div>
+
+			<hr class="ipsHr" />
+
+			<p>Si querés que un amigo pague por vos o querés abonar más tarde, usá los siguientes links. También, este es un método para realizar un "regalo" a un amigo. Si quieres regalarle recursos a un amigo, debes decirle que haga el pedido mediante la <a href="/ventas/">sección de ventas</a> y una vez finalizado la misma, debe darte el enlace generado para proceder el pago y que lo demás lo haga el sistema:</p>
+			
+			<div class="ipsSpacer_both ipsSpacer_bottom">
+				<h3 class="ipsType_minorHeading">Abonar con boleta de CuentaDigital</h3>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+			<div class="ipsSpacer_both ipsSpacer_bottom">
+				<h3 class="ipsType_minorHeading">Abonar con tarjeta</h3>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+		{{elseif $data['region'] == 2}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Pagar a Jairito Mapper</h2>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Pagar a Atsel.</h2>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+
+			<p>Puedes pagar a cualquiera de los dos. La idea es que, una vez pagado, puedas tener ya tus recursos con los pasos a seguir una vez depositado el dinero.</p>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-zpu/">Registros de ventas del ZPU</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{elseif $data['region'] == 3}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Bancoestado</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta RUT</p>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-zpu/">Registros de ventas del ZPU</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{endif}}
+
+		<a href="/" class="ipsButton ipsButton_alternate"><i class="fa fa-home"></i>&nbsp;Ir al inicio del foro</a>
+	</div>
+</form>]]></template>
+ <css css_location="front" css_app="ventas" css_attributes="" css_path="." css_name="main.css"><![CDATA[.cShareLink_google {
+	background: #4285F4;
+}
+
+.cVentas_stepsHeader {
+	height: 100%;
+}
+
+.cVentas_steps {
+	display: table;
+	max-width: 85%;
+	margin: 0 auto;
+}
+
+.cVentas_steps > li {
+	display: table-cell;
+	width: 1%;
+	text-align: center;
+	position: relative;
+	margin-top: 35px;
+}
+
+.cVentas_steps > li:before {
+	content: attr(data-step);
+	font-size: 20px;
+	font-weight: bold;
+	display: block;
+	width: 42px;
+	height: 42px;
+	line-height: 42px;
+	border-radius: 42px;
+	text-align: center;
+	color: #fff;
+	background: #a1a1a1;
+	margin: 0 auto 5px;
+	z-index: 1;
+	position: relative;
+}
+
+.cVentas_steps > li span,
+.cVentas_steps > li a {
+	font-size: 15px;
+	color: #a1a1a1;
+}
+
+.cVentas_steps > li span:before,
+.cVentas_steps > li span:after,
+.cVentas_steps > li a:before,
+.cVentas_steps > li a:after {
+	content: '';
+	display: block;
+	height: 6px;
+	background: #a1a1a1;
+	position: absolute;
+	top: 19px;
+	width: 50%;
+}
+
+html[dir=ltr] .cVentas_steps > li span:before,
+html[dir=ltr] .cVentas_steps > li a:before,
+html[dir=rtl] .cVentas_steps > li span:after,
+html[dir=rtl] .cVentas_steps > li a:after {
+	left: 0;
+}
+
+.cVentas_steps > li:first-child span:before,
+.cVentas_steps > li:first-child a:before,
+.cVentas_steps > li:last-child span:after,
+.cVentas_steps > li:last-child a:after {
+	display: none;
+}
+
+html[dir=rtl] .cVentas_steps > li span:before,
+html[dir=rtl] .cVentas_steps > li a:before,
+html[dir=ltr] .cVentas_steps > li span:after,
+html[dir=ltr] .cVentas_steps > li a:after {
+	right: 0;
+}
+
+.cVentas_steps > li.cVentas_stepsDone:before {
+	background: #00ff66;
+	font-family: fontawesome;
+	content: '\f00c';
+}
+
+.cVentas_steps > li.cVentas_stepsDone span:after,
+.cVentas_steps > li.cVentas_stepsDone+li span:before,
+.cVentas_steps > li.cVentas_stepsDone a:after,
+.cVentas_steps > li.cVentas_stepsDone+li a:before {
+	background: #00ff66;
+}
+
+.cVentas_steps > li.cVentas_stepsDone span,
+.cVentas_steps > li.cVentas_stepsDone a {
+	color: #00ff66;
+}
+
+.cVentas_steps > li.cVentas_stepsActive:before {
+	background: #0066ff;
+}
+
+.cVentas_steps > li.cVentas_stepsActive span,
+.cVentas_steps > li.cVentas_stepsActive a {
+	font-weight: bold;
+}
+
+.cVentas_steps > li.cVentas_stepsActive span,
+.cVentas_steps > li.cVentas_stepsActive a {
+	color: #0066ff;
+}
+
+.selectBenefits {
+	width: 80%;
+	font-size: 14px;
+	font-family: encode sans, roboto, sans-serif;
+}
+
+.selectBenefits_text {
+	font-size: 21px;
+	font-weight: bold;
+}
+
+.listOfTips {
+	list-style: none;
+	margin: 0 auto;
+	padding: 0;
+	width: 80%;
+}
+
+.listOfTips li {
+	font-size: 16px;
+	line-height: 25px;
+	padding: 10px 0;
+}
+
+#stepThree .moneyRegionClass {
+	width: 80%;
+}
+
+#stepFour .selectServerVip,
+#stepFour .selectServerAdmin {
+	width: 80%;
+}
+
+#stepFour .paymentBenefit {
+	width: 70%;
+	font-size: 17px;
+}
+
+#stepFour .paymentBenefit strong {
+	display: block;
+	font-size: 30px;
+	font-weight: 300;
+	padding: 15px 0;
+}
+
+#stepFour .daysBenefitsClass {
+	width: 60%;
+}
+
+#daysBenefits li a strong {
+	display: block;
+	font-size: 24px;
+}
+
+#daysBenefits li a span {
+	display: block;
+	padding: 7px 0;
+}
+
+.dataConfirmClass {
+	width: 75%;
+}
+
+.totalAmount {
+	width: 30%;
+}
+
+#linkPayments a.ipsButton_primary i {
+	font-size: 17px;
+}
+
+.priceDesc {
+	display: block;
+	font-size: 9px;
+	line-height: 9px;
+}
+
+#terms {
+	width: 80%;
+	height: 500px;
+	overflow-y: scroll;
+}
+
+@media screen and (max-width: 979px) {
+	.cVentas_header {
+		text-align: center;
+	}
+
+	.cVentas_header h1 {
+		font-size: 24px;
+		font-weight: bold;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.daysBenefitsClass li {
+		width: 100%;
+		display: block;
+	}
+
+	.daysBenefitsClass a {
+		width: 100%;
+	}
+
+	#terms {
+		width: 100%;
+	}
+}]]></css>
+</theme>

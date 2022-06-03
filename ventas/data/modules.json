@@ -1,0 +1,26 @@
+{
+    "front": {
+        "main": {
+            "default_controller": "main",
+            "protected": 0,
+            "default": 0
+        },
+        "register": {
+            "default_controller": "",
+            "protected": 0,
+            "default": 0
+        },
+        "lista": {
+            "default_controller": "",
+            "protected": false,
+            "default": null
+        }
+    },
+    "admin": {
+        "settings": {
+            "default_controller": "",
+            "protected": 0,
+            "default": 0
+        }
+    }
+}

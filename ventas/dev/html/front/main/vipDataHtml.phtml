@@ -1,0 +1,128 @@
+<ips:template parameters="$data" />
+<div id='stepTwo'>
+	<h2 class='ipsType_center'>Completa los campos necesarios para reservar tu VIP</h2>
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;En el primer campo, ingresa tu Tag CS que utilices en los servidores para reservarlo en tu pedido. Debe ser un Tag que no esté utilizado por nadie.</span></li>
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;En el segundo campo, ingresa una contraseña para poder proteger el Tag. La contraseña no debe ser ni fácil (para que los demas no lo descubran) ni difícil (para poder acordártela en caso de olvidarla).</span></li>
+	</ul>
+
+	<div class='ipsGrid ipsGrid_collapsePhone ipsType_center ipsSpacer_bottom'>
+		<div class='ipsGrid_span6 ipsPad'>
+			<h3 class="ipsType_minorHeading">Nombre de tu VIP</h3>
+			<input required="required" name="tagcs" autocomplete="off" type="text">
+			<br />
+			<a href='javascript:;' id="checkTagExists" class='ipsType_small'>Verificar la existencia del Tag CS ingresado</a>
+		</div>
+		<div class='ipsGrid_span6 ipsPad'>
+			<h3 class="ipsType_minorHeading">Contraseña de tu VIP</h3>
+			<input required="required" name="setinfo" autocomplete="new-password" type="text">
+		</div>
+	</div>
+
+	<input type="hidden" name="benefit" value="VIP Full" />
+	<input type="hidden" name="region" value="0" />
+	<input type="hidden" name="days" value="30" />
+	<input type="hidden" name="server" value="0" />
+
+	<ul class="ipsPad ipsToolList ipsToolList_horizontal ipsList_reset ipsAreaBackground ipsClearfix">
+		<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+		<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+	</ul>
+</div>
+
+<div id='stepThree' class='ipsHide'>
+	<h2 class='ipsType_center'>Selecciona la región de tu moneda</h2>
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Selecciona la moneda que se caracteriza en tu región. Por ejemplo: si eres de <strong>Argentina, vas a pagar con Pesos Argentinos</strong>; entonces, selecciona Argentina.</span>
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si no posees ninguna moneda de las puestas por defecto. Contáctate con algún Director en la <a href="/staff/">sección de Staff</a> para que te ayude. Veremos si más adelante podemos adaptar más métodos de compra pero, por el momento, solo se admiten las que están ahora.</span>
+	</ul>
+
+	<div class='ipsType_center ipsSpacer_top ipsSpacer_bottom'>
+		<div class='ipsGrid ipsGrid_collapsePhone moneyRegionClass ipsPos_center'>
+			{{$per = \IPS\Settings::i()->v_region_per;}}
+			{{$arg = \IPS\Settings::i()->v_region_arg;}}
+			{{$pp = \IPS\Settings::i()->v_region_pp;}}
+			{{$cl = \IPS\Settings::i()->v_region_cl;}}
+
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$per}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large ipsButton_primary{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/QLxob69.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Sol peruano [PER]</span>
+				</a>
+			</div>
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$arg}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large {{if !$per}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/45PNKIt.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Peso Argentino [ARS]</span>
+				</a>
+			</div>
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$pp}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large {{if !$per && !$arg}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/LyndgM9.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Dólares [USD]</span>
+				</a>
+			</div>
+			<div class='ipsGrid_span3 ipsType_center'>
+				<a class="ipsButton {{if !$cl}}ipsButton_disabled ipsButton_light{{else}}ipsButton_large {{if !$per && !$arg && !$pp}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}}">
+					<strong class="ipsType_normal ipsPad"><img src="https://i.imgur.com/lr3710T.png" /></strong>
+					<br />
+					<span class="ipsType_normal">Pesos Chilenos [CLP]</span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<ul class="ipsPad ipsToolList ipsToolList_horizontal ipsList_reset ipsAreaBackground ipsClearfix">
+		<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+		<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+	</ul>
+</div>
+
+<div id='stepFour' class='ipsHide'>
+	<h2 class='ipsType_center'>Elige el servidor</h2>
+	<div class='ipsType_center ipsSpacer_bottom'>
+		<div class="ipsGrid ipsGrid_collapsePhone ipsPos_center selectServerVip">
+			{{foreach $data['servers'] as $k => $s}}
+				<div class="ipsGrid_span3 ipsType_center">
+					<a class="ipsButton {{if $k == 0}}ipsButton_primary{{else}}ipsButton_light{{endif}} ipsButton_small ipsButton_fullWidth ipsSpacer_bottom">{$s}</a>
+				</div>
+			{{endforeach}}
+		</div>
+	</div>
+
+	<div class="ipsGrid ipsPadding ipsAreaBackground ipsPos_center ipsSpacer_bottom paymentBenefit">
+		<div class="ipsGrid_span6 ipsType_center"><strong><span data-price="VIP"></span> <span class="ipsType_small ipsType_light">/ mes</span></strong> VIP en un solo Servidor</div>
+		<div class="ipsGrid_span6 ipsType_center"><strong><span data-price="VIP Full"></span> <span class="ipsType_small ipsType_light">/ mes</span></strong> VIP en todos los Servidores (FULL)</div>
+	</div>
+
+	<h2 class='ipsType_center'>Elige la duración de tu VIP</h2>
+	<div class='ipsType_center ipsSpacer_bottom'>
+		<div id='daysBenefits' class='ipsGrid ipsGrid_collapsePhone ipsPos_center daysBenefitsClass'>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="7" class="ipsButton ipsButton_light ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>7 días</strong></a>
+			</div>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="15" class="ipsButton ipsButton_light ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>15 días</strong></a>
+			</div>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="30" class="ipsButton ipsButton_primary ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>30 días</strong></a>
+			</div>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="60" class="ipsButton ipsButton_light ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>60 días</strong></a>
+			</div>
+			<div class="ipsGrid_span4 ipsType_center">
+				<a data-days="90" class="ipsButton ipsButton_light ipsButton_fullWidth ipsSpacer_bottom"><strong class='ipsPadding'>90 días</strong></a>
+			</div>
+		</div>
+	</div>
+
+	<ul class="ipsPad ipsToolList ipsToolList_horizontal ipsList_reset ipsAreaBackground ipsClearfix">
+		<li><span class="ipsButton ipsButton_primary continue">Continuar</span></li>
+		<li class="ipsPos_left"><span class="ipsButton ipsButton_alternate back">Volver</span></li>
+	</ul>
+</div>

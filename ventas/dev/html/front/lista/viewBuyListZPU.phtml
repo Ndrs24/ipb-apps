@@ -1,0 +1,50 @@
+<ips:template parameters="$row" />
+<h2 class='ipsType_pageTitle ipsType_center ipsSpacer_top'>Venta ZE #{number="$row['ID']"}</h2>
+
+<hr class='ipsHr' />
+
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<tr>
+		<td align='left'>Fecha y hora</td>
+		<td align='right'>{datetime="$row['Date']" lowercase="true"}</td>
+	</tr>
+	<tr>
+		<td align='left'>Saldo</td>
+		<td align='right'>{$row['Saldo']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Región o moneda</td>
+		<td align='right'>
+			{{if $row['Money'] == 1}}
+				Peru
+			{{elseif $row['Money'] == 2}}
+				Argentina
+			{{elseif $row['Money'] == 3}}
+				Paypal
+			{{elseif $row['Money'] == 4}}
+				Chile
+			{{endif}}
+		</td>
+	</tr>
+	<tr>
+		<td align='left'>Precio original</td>
+		<td align='right'>{$row['MoneyReal']}</td>
+	</tr>
+	<tr>
+		<td align='left'>Foto del comprobante</td>
+		<td align='right'>
+			{{if $row['URL Image'] != NULL}}
+				<a href="{$row['URL Image']}" target="_blank">Ver imagen</a>
+			{{else}}
+				-
+			{{endif}}
+		</td>
+	</tr>
+</table>
+{{if \IPS\Application::load('ventas')->canAccessLista() && $row['Deprecated'] == -1}}
+	<hr class='ipsHr' />
+
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<a href='{url="app=ventas&module=lista&controller=main&area=processBuyListZPU&id={$row['ID']}" seoTemplate="lista_zpu_view_process"}' class='ipsButton ipsButton_important ipsButton_fullWidth'><i class='fa fa-shopping-cart'></i> Activar compra</a>
+	</div>
+{{endif}}

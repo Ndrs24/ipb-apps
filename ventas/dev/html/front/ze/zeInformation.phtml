@@ -1,0 +1,38 @@
+<ips:template parameters="" />
+{{$per_ze = \IPS\Settings::i()->v_region_per_ze;}}
+{{$arg_ze = \IPS\Settings::i()->v_region_arg_ze;}}
+{{$pp_ze = \IPS\Settings::i()->v_region_pp_ze;}}
+{{$cl_ze = \IPS\Settings::i()->v_region_cl_ze;}}
+
+<div id='zeSelectRegion' class='ipsType_center'>
+	<span class='ipsType_large ipsType_bold'>Métodos de pago, precios y demás información</span>
+
+	<ul class='ipsGrid ipsGrid_collapsePhone ipsMargin_top zeMoneyRegionClass'>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$per_ze}}ipsButton_disabled ipsButton_light zeRegionDisabled0{{else}}ipsButton_primary{{endif}} ipsButton_fullWidth'>Perú</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$arg_ze}}ipsButton_disabled ipsButton_light zeRegionDisabled1{{else}}{{if !$per_ze}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Argentina</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$pp_ze}}ipsButton_disabled ipsButton_light zeRegionDisabled2{{else}}{{if !$per_ze && !$arg_ze}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Paypal</a></li>
+		<li class='ipsGrid_span3'><a class='ipsButton ipsButton_small {{if !$cl_ze}}ipsButton_disabled ipsButton_light zeRegionDisabled3{{else}}{{if !$per_ze && !$arg_ze && !$pp_ze}}ipsButton_primary{{else}}ipsButton_light{{endif}}{{endif}} ipsButton_fullWidth'>Chile</a></li>
+	</ul>
+
+	<ul class='ipsList_inline ipsMargin_bottom'>
+		<li class='ipsPadding'>
+			<span class='ipsBadge ipsBadge_large' style='background: #999900; color: #fff;'>Puntos de Legado</span>
+			<br />
+			<br />
+			<span class='ipsType_success'><span data-price="3"></span> c/u</span>
+			<br />
+			<span class='ipsType_light ipsType_small'>(Min: 1.000)</span>
+		</li>
+	</ul>
+
+	<hr class='ipsHr' />
+
+	<div id='zeMethodPayments' class="ipsPadding ipsSpacer_both ipsType_center"></div>
+
+	<hr class='ipsHr' />
+
+	<ul class="listOfTips">
+		<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si tienes alguna duda sobre los métodos de pago, habla con cualquiera de nuestros directores en la <a href="/staff/">sección de Staff</a>. Ellos te ayudarán y resolverán las dudas que tengas sobre las ventas y sus derivados.</span></li>
+		<li class='ipsType_light'><i style='color: red' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;El <strong>Staff de Drunk-Gaming</strong> se reserva el derecho de suspender o remover las cuentas de los usuarios que no cumplas el reglamento impuesto por la comunidad. Para eso, visite <a href="/reglamento/" class='ipsType_bold'>este enlace</a> donde figuran todas las reglas ilícitas.</li>
+	</ul>
+</div>

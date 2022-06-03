@@ -1,0 +1,167 @@
+<ips:template parameters="$data_forum, $data" />
+<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cVentas_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__ventas_main"}</h1>
+</div>
+
+<div class='cVentas_stepsHeader ipsPadding ipsType_center ipsMargin_bottom'>
+	<ul class="ipsList_reset cVentas_steps">
+		<li data-step="1" class="cVentas_stepsActive"><span>Confirmar datos</span></li>
+		<li data-step="2"><span>Finalizar</span></li>
+	</ul>
+</div>
+
+{{$temp_ps = 0;}}
+
+<form id='zpuDataVentas' action='/?app=ventas&module=main&controller=main&do=zpuFinishBuy' method='post' onkeypress='return event.keyCode != 13;'>
+	<div id='zpuDataConfirm' class='ipsBox ipsPad ipsSpacer_both ipsSpacer_half'>
+		<h2 class='ipsType_center'>¡Confirma que los datos sean correctos!</h2>
+		
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;{$data_forum['name']}, por favor, verifica que todo esté ingresado correctamente. Todos los datos juntados se guardarán en nuestro sistema para cuando, se procedan los siguientes pasos, se pueda llevar a cabo la activación de los recursos adquiridos.</li>
+		</ul>
+
+		<div class='ipsColumns ipsColumns_bothSpacing ipsColumns_halfSpacing ipsColumns_collapsePhone'>
+			<div class='ipsColumn ipsColumn_fixed ipsColumn_veryWide'>
+				<ul class='ipsDataList ipsAreaBackground_light ipsType_light ipsType_large ipsSpacer_bottom'>
+					<li class='ipsDataItem ipsPad'>Cuenta: <span class='ipsType_bold'>{$data['name']}</span> (ID: #{$data['acc_id']})</li>
+					{{if $data['ps']}}
+						{{if $data['ps_extra']}}
+							<li class='ipsDataItem ipsPad'>
+								<span>Saldo: <span id='ps' data-ps="{$data['ps']}" class='ipsType_bold'>{$data['ps']}</span></span>
+								<ol class='ipsSpacer_top'>
+									<dt>Extras de Saldo: <span id='plExtra' data-ps-extra="{$data['ps_extra']}" class='ipsType_bold'>{$data['ps_extra']}</span></dt>
+									{{if $data['percent_extra']}}
+										<dt>- - - -</dt>
+										{{$temp_ps = (int) (($data['percent_extra'] * $data['ps']) / 100);}}
+										<dt>Extra por el {$data['percent_extra']}%: <span class='ipsType_bold'>{$temp_ps}</span></dt>
+									{{endif}}
+									<dt>- - - -</dt>
+									<dt>Total de Saldo: <span class='ipsType_bold'>{$data['ps'] + $data['ps_extra'] + $temp_ps}</span></dt>
+								</ol>
+							</li>
+						{{else}}
+							<li class='ipsDataItem ipsPad'>Saldo: <span id='ps' data-ps="{$data['ps']}" class='ipsType_bold'>{$data['ps']}</span></li>
+						{{endif}}
+					{{endif}}
+					<li class='ipsDataItem ipsPad'>Región: <span data-region="{$data['region']}" class='ipsType_bold'></span></li>
+				</ul>
+
+				<div class='ipsPad ipsAreaBackground_light ipsType_center ipsSpacer_bottom'>
+					<span class='ipsType_large'>Total a abonar: <span data-price-total="{$data['region']}" class='ipsType_bold'></span></span>
+				</div>
+			</div>
+			<div class='ipsColumn ipsColumn_fluid ipsPad ipsAreaBackground_light ipsType_center'>
+				{template="zpuInformation" app="ventas" group="zpu" location="front"}
+			</div>
+		</div>
+
+		<input type="hidden" name="zpu_id" value="{$data['acc_id']}" />
+		<input type="hidden" name="zpu_ps" value="{$data['ps'] + $data['ps_extra'] + $temp_ps}" />
+		<input type="hidden" name="zpu_region" value="{$data['region']}" />
+		<input type="hidden" name="zpu_code" value="{$data['code']}" />
+		<input type="hidden" name="zpu_total" value="" />
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPad ipsSpacer_top">
+			<li><span class="ipsButton ipsButton_primary zpuContinue">Continuar</span></li>
+			<li class="ipsPos_left"><a href='{url="app=ventas&module=main&controller=main" seoTemplate="ventas"}' class="ipsButton ipsButton_alternate">Volver</a></li>
+		</ul>
+	</div>
+
+	<div id='zpuFinishBuy' class='ipsBox ipsPad ipsHide ipsSpacer_both ipsSpacer_half ipsClearfix'>
+		<h2 class='ipsType_center'>Finalizando compra...</h2>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<h2 class="ipsType_center">Términos y Condiciones</h2>
+			<div id="terms" class="ipsPos_center ipsBox ipsSpacer_both"></div>
+		{{endif}}
+
+		<ul class="listOfTips">
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Presiona en el botón <strong>Finalizar</strong>, una vez presionado, te saldrá un enlace (dependiento la región y tu método de pago) que deberás copiar y pegar en tu navegador para proceder al pago. Te llegará un mensaje privado con toda la información y el enlace de pago.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si deseas pagar con boleta, debes seleccionar (si la región o método de pago lo permite) que vas a pagar en efectivo, luego imprimir la boleta y llevarla a una sucursal más cercana.</li>
+			<li class='ipsType_light'><i style='color: blue' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si quieres comprarle a un amigo, debes decirle que complete los pasos de compra desde su cuenta de foro; una vez finalizado y obtenido el enlace de pago, debe pasarte dicho enlace y pagarselo. El resto lo hará automáticamente el sistema y le llegará a tu amigo como regalo tuyo.</li>
+			<li class='ipsType_light'><i style='color: orange' class='fa fa-hand-o-right'></i>&nbsp;&nbsp;Si por casualidades del sistema, hay un error de cálculo a la hora de realizar el abono, contáctate con algún Director (marcado en color rojo) y coméntale sobre el error; en este caso, no hagas nada y déjanos a nosotros el trabajo; lo arreglaremos lo antes posible.</span></li>
+		</ul>
+
+		{{if \IPS\Settings::i()->v_show_terms}}
+			<p class="ipsType_center"><span class="ipsToggle ipsToggle_off" id="zpuAcceptTerms" tabindex="0"><span data-role="status">Off</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{else}}
+			<p class="ipsType_center ipsHide"><span class="ipsToggle ipsToggle_on" id="zpuAcceptTerms" tabindex="0"><span data-role="status">On</span></span>&nbsp;Acepto los términos y condiciones</p>
+		{{endif}}
+
+		<ul class="ipsToolList ipsToolList_horizontal ipsList_reset ipsClearfix ipsAreaBackground ipsPadding ipsSpacer_top">
+			{{if \IPS\Settings::i()->v_show_terms}}
+				<li><span id='zpuFinishButton' class="ipsButton ipsButton_alternate ipsButton_disabled">Finalizar</span></li>
+			{{else}}
+				<li><span id='zpuFinishButton' class="ipsButton ipsButton_primary">Finalizar</span></li>
+			{{endif}}
+			<li><span class="ipsLoading ipsLoading_dark ipsLoading_small ipsPadding ipsHide"></span></li>
+		</ul>
+	</div>
+
+	<div id="linkPayments" class="ipsPad ipsType_center ipsHide">
+		<h3>¡Presta atención!</h3>
+
+		<p>Ya casi has finalizado de hacer los pasos para comprar tus puntos. Ahora solo debes hacer un último paso que es, proceder el pago para tener los puntos en tu cuenta. En breve, se te enviará un mensaje privado indicando datos de tu pedido, código de recuperación, entre otros; mientras que abajo, te dejamos los datos resumidamente para poder pagar. Si pierdes este modal, tienes el mensaje privado donde podrás volver a ver los datos mencionados. También puedes pagar en el momento que desees, pero recuerda que tienes poco tiempo porque la mayoría de las ventas, <strong>expira de 7 a 30 días</strong>.</p>
+
+		{{if $data['region'] == 0}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Interbank</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta</p>
+				<input type="text" onclick="this.select();" value="" />
+				<p>Dicho número está a nombre de <strong>Jairo Ponte R</strong>.</p>
+			</div>
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>BCP</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta</p>
+				<input type="text" onclick="this.select();" value="" />
+				<p>Dicho número está a nombre de <strong>Jairo Ponte R</strong>.</p>
+			</div>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-zpu/">Registros de ventas del ZPU</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{elseif $data['region'] == 1}}
+			<div class="ipsSpacer_both">
+				<a href="" target="_blank" class="ipsButton ipsButton_fullWidth ipsButton_primary"><i class="fa fa-usd ipsPos_left"></i> <strong>Boleta de CuentaDigital (efectivo), tarjeta Ualá</strong><span class="priceDesc">Se abona en PagoFácil, RapiPago, etc. o usando Ualá (transferencia instantánea).</span></a>
+			</div>
+
+			<div class="ipsSpacer_both">
+				<a href="" target="_blank" class="ipsButton ipsButton_fullWidth ipsButton_primary"><i class="fa fa-credit-card ipsPos_left"></i> <strong>Dinero en MercadoPago, tarjeta de crédito o débito</strong><span class="priceDesc">Pagos procesados por MercadoPago</span></a>
+			</div>
+
+			<hr class="ipsHr" />
+
+			<p>Si querés que un amigo pague por vos o querés abonar más tarde, usá los siguientes links. También, este es un método para realizar un "regalo" a un amigo. Si quieres regalarle recursos a un amigo, debes decirle que haga el pedido mediante la <a href="/ventas/">sección de ventas</a> y una vez finalizado la misma, debe darte el enlace generado para proceder el pago y que lo demás lo haga el sistema:</p>
+			
+			<div class="ipsSpacer_both ipsSpacer_bottom">
+				<h3 class="ipsType_minorHeading">Abonar con boleta de CuentaDigital</h3>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+			<div class="ipsSpacer_both ipsSpacer_bottom">
+				<h3 class="ipsType_minorHeading">Abonar con tarjeta</h3>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+		{{elseif $data['region'] == 2}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Pagar a Jairito Mapper</h2>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Pagar a Atsel.</h2>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+
+			<p>Puedes pagar a cualquiera de los dos. La idea es que, una vez pagado, puedas tener ya tus recursos con los pasos a seguir una vez depositado el dinero.</p>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-zpu/">Registros de ventas del ZPU</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{elseif $data['region'] == 3}}
+			<div class="ipsAreaBackground ipsPad ipsSpacer_both ipsSpacer_bottom">
+				<h2>Bancoestado</h2>
+				<p>Puedes pagar a través de este banco, para ello, debes depositar el dinero en el siguiente número de cuenta RUT</p>
+				<input type="text" onclick="this.select();" value="" />
+			</div>
+
+			<p>Una vez que hayas pagado, ve a la sección de <a href="/ventas/registrar-zpu/">Registros de ventas del ZPU</a> para realizar el registro de que has realizado el pedido y compra de los recursos. Los Directores a cargo te activarán el pedido una vez que haya llegado el pago como corresponde.</p>
+		{{endif}}
+
+		<a href="/" class="ipsButton ipsButton_alternate"><i class="fa fa-home"></i>&nbsp;Ir al inicio del foro</a>
+	</div>
+</form>

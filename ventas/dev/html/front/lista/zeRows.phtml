@@ -1,0 +1,61 @@
+<ips:template parameters="$table, $headers, $rows" />
+<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>Fecha y hora</th>
+			<th>Miembro</th>
+			<th></th>
+			{{if \IPS\Application::load('ventas')->canAccessLista()}}
+				<th></th>
+			{{endif}}
+			{{if \IPS\Application::load('ventas')->canAccessLista()}}
+				<th></th>
+			{{endif}}
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class='ipsClearfix'>
+				<td>{datetime="$row['timestamp']" lowercase="true"}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['member_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$member->name}
+				</td>
+				<td>
+					{{if $row['ok'] == -6}}
+						<span data-ipsTooltip title='{lang="__boughtokr6"}' style='background: #690069; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-clock-o"></i></span>
+					{{elseif $row['ok'] == -5}}
+						<span data-ipsTooltip title='{lang="__boughtokr5"}' style='background: #ff0000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -4}}
+						<span data-ipsTooltip title='{lang="__boughtokr4"}' style='background: #ff0000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -3}}
+						<span data-ipsTooltip title='{lang="__boughtokr3"}' style='background: #550000; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-times"></i></span>
+					{{elseif $row['ok'] == -2}}
+						<span data-ipsTooltip title='{lang="__boughtokr2"}' style='background: #bb5500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-clock-o"></i></span>
+					{{elseif $row['ok'] == -1}}
+						<span data-ipsTooltip title='{lang="__boughtokr1"}' style='background: #555500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-info"></i></span>
+					{{elseif $row['ok'] == 0}}
+						<span data-ipsTooltip title='{lang="__boughtok0"}' style='background: #005500; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-check"></i></span>
+					{{elseif $row['ok'] == 1}}
+						<span data-ipsTooltip title='{lang="__boughtok1"}' style='background: #00ff00; color: #fff;' class="ipsBadge ipsBadge_icon"><i class="fa fa-check"></i></span>
+					{{endif}}
+				</td>
+				{{if \IPS\Application::load('ventas')->canAccessLista()}}
+					<td>
+						<span class="ipsBadge ipsBadge_neutral ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=ventas&module=lista&controller=main&area=viewBuyListZE&id={$row['buy_id']}" seoTemplate="lista_ze_view"}' data-ipsTooltip title='Ver información' data-ipsDialog data-ipsDialog-title="Viendo información de la venta" data-ipsDialog-size='narrow'><i class="fa fa-search"></i></a>
+						</span>
+					</td>
+				{{endif}}
+				{{if \IPS\Application::load('ventas')->canAccessLista() && $row['ok'] == -1}}
+					<td>
+						<span class="ipsBadge ipsBadge_negative ipsBadge_icon">
+							<a style='color: inherit;' href='{url="app=ventas&module=lista&controller=main&area=cancelBuyListZE&id={$row['buy_id']}" seoTemplate="lista_ze_view_cancel"}' data-ipsTooltip title='Cancelar compra'><i class="fa fa-times"></i></a>
+						</span>
+					</td>
+				{{endif}}
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>

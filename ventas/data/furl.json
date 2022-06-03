@@ -1,0 +1,113 @@
+{
+	"topLevel": "",
+	"pages": {
+		"ventas": {
+			"friendly": "ventas",
+			"real": "app=ventas&module=main&controller=main"
+		},
+		"ventas_ze": {
+			"friendly": "ventas/ze",
+			"real": "app=ventas&module=main&controller=main&do=ze"
+		},
+		"ventas_ze_post": {
+			"friendly": "ventas/ze/confirmacion",
+			"real": "app=ventas&module=main&controller=main&do=zePost"
+		},
+		"ventas_zpu": {
+			"friendly": "ventas/zpu",
+			"real": "app=ventas&module=main&controller=main&do=zpu"
+		},
+		"ventas_zpu_post": {
+			"friendly": "ventas/zpu/confirmacion",
+			"real": "app=ventas&module=main&controller=main&do=zpuPost"
+		},
+		"ventas_zpa": {
+			"friendly": "ventas/zpa",
+			"real": "app=ventas&module=main&controller=main&do=zpa"
+		},
+		"ventas_zpa_post": {
+			"friendly": "ventas/zpa/confirmacion",
+			"real": "app=ventas&module=main&controller=main&do=zpaPost"
+		},
+		"register": {
+			"friendly": "ventas/registrar",
+			"real": "app=ventas&module=register&controller=main"
+		},
+		"register_ze": {
+			"friendly": "ventas/registrar-ze",
+			"real": "app=ventas&module=register&controller=ze"
+		},
+		"register_zpu": {
+			"friendly": "ventas/registrar-zpu",
+			"real": "app=ventas&module=register&controller=zpu"
+		},
+		"register_zpa": {
+			"friendly": "ventas/registrar-zpa",
+			"real": "app=ventas&module=register&controller=zpa"
+		},
+		"lista": {
+			"friendly": "lista-de-ventas",
+			"real": "app=ventas&module=lista&controller=main"
+		},
+		"lista_view": {
+			"friendly": "lista-de-ventas/venta-{#id}",
+			"real": "app=ventas&module=lista&controller=main&area=viewBuyList"
+		},
+		"lista_view_cancel": {
+			"friendly": "lista-de-ventas/venta-{#id}/cancelar",
+			"real": "app=ventas&module=lista&controller=main&area=cancelBuyList"
+		},
+		"lista_view_process": {
+			"friendly": "lista-de-ventas/venta-{#id}/procesar",
+			"real": "app=ventas&module=lista&controller=main&area=processBuyList"
+		},
+		"lista_ze": {
+			"friendly": "lista-de-ventas/ze",
+			"real": "app=ventas&module=lista&controller=main&area=buyListZE"
+		},
+		"lista_ze_view": {
+			"friendly": "lista-de-ventas/ze/venta-{#id}",
+			"real": "app=ventas&module=lista&controller=main&area=viewBuyListZE"
+		},
+		"lista_ze_view_cancel": {
+			"friendly": "lista-de-ventas/ze/venta-{#id}/cancelar",
+			"real": "app=ventas&module=lista&controller=main&area=cancelBuyListZE"
+		},
+		"lista_ze_view_process": {
+			"friendly": "lista-de-ventas/ze/venta-{#id}/procesar",
+			"real": "app=ventas&module=lista&controller=main&area=processBuyListZE"
+		},
+		"lista_zpu": {
+			"friendly": "lista-de-ventas/zpu",
+			"real": "app=ventas&module=lista&controller=main&area=buyListZPU"
+		},
+		"lista_zpu_view": {
+			"friendly": "lista-de-ventas/zpu/venta-{#id}",
+			"real": "app=ventas&module=lista&controller=main&area=viewBuyListZPU"
+		},
+		"lista_zpu_view_cancel": {
+			"friendly": "lista-de-ventas/zpu/venta-{#id}/cancelar",
+			"real": "app=ventas&module=lista&controller=main&area=cancelBuyListZPU"
+		},
+		"lista_zpu_view_process": {
+			"friendly": "lista-de-ventas/zpu/venta-{#id}/procesar",
+			"real": "app=ventas&module=lista&controller=main&area=processBuyListZPU"
+		},
+		"lista_zpa": {
+			"friendly": "lista-de-ventas/zpa",
+			"real": "app=ventas&module=lista&controller=main&area=buyListZPA"
+		},
+		"lista_zpa_view": {
+			"friendly": "lista-de-ventas/zpa/venta-{#id}",
+			"real": "app=ventas&module=lista&controller=main&area=viewBuyListZPA"
+		},
+		"lista_zpa_view_cancel": {
+			"friendly": "lista-de-ventas/zpa/venta-{#id}/cancelar",
+			"real": "app=ventas&module=lista&controller=main&area=cancelBuyListZPA"
+		},
+		"lista_zpa_view_process": {
+			"friendly": "lista-de-ventas/zpa/venta-{#id}/procesar",
+			"real": "app=ventas&module=lista&controller=main&area=processBuyListZPA"
+		}
+	}
+}
