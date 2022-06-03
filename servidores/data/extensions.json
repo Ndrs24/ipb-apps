@@ -1,0 +1,18 @@
+{
+    "core": {
+        "EditorLocations": {
+            "editorFields": "IPS\\servidores\\extensions\\core\\EditorLocations\\editorFields",
+            "editorServers": "IPS\\servidores\\extensions\\core\\EditorLocations\\editorServers"
+        },
+        "FileStorage": {
+            "fileGame2": "IPS\\servidores\\extensions\\core\\FileStorage\\fileGame2",
+            "fileServer": "IPS\\servidores\\extensions\\core\\FileStorage\\fileServer"
+        },
+        "FrontNavigation": {
+            "itemBarServidores": "IPS\\servidores\\extensions\\core\\FrontNavigation\\itemBarServidores"
+        },
+        "LiveSearch": {
+            "searchServidores": "IPS\\servidores\\extensions\\core\\LiveSearch\\searchServidores"
+        }
+    }
+}

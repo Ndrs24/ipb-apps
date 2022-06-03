@@ -1,0 +1,21 @@
+{
+    "normal": {
+        "added": [
+            "google_text",
+            "s_chart_stats_title",
+            "s_chart_stats_map",
+            "s_chart_stats_percent",
+            "s_chart_players_title",
+            "s_chart_players_sub_title",
+            "s_chart_players_time",
+            "s_chart_players_amount"
+        ],
+        "edited": [],
+        "removed": []
+    },
+    "js": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

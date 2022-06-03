@@ -1,0 +1,32 @@
+{
+    "html": {
+        "added": [
+            "front\/charts\/maps",
+            "front\/charts\/players",
+            "front\/shareLinks\/shareLinks",
+            "front\/widgets\/serversCarousel"
+        ],
+        "edited": [
+            "front\/main\/banList",
+            "front\/main\/banListRow",
+            "front\/main\/displayServer",
+            "front\/main\/editGuides",
+            "front\/main\/editRules",
+            "front\/main\/main",
+            "front\/top15\/ze"
+        ],
+        "removed": []
+    },
+    "css": {
+        "added": [],
+        "edited": [
+            "front\/main.css"
+        ],
+        "removed": []
+    },
+    "resources": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

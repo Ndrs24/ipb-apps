@@ -1,0 +1,17 @@
+{
+    "added": [
+        "s_players_max_record",
+        "s_players_num_record",
+        "s_sql_charset",
+        "s_sql_database",
+        "s_sql_host",
+        "s_sql_password",
+        "s_sql_port",
+        "s_sql_prefix",
+        "s_sql_user",
+        "s_time_record",
+        "s_time_refreshed"
+    ],
+    "edited": [],
+    "removed": []
+}

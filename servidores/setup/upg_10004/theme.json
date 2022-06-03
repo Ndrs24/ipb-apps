@@ -1,0 +1,27 @@
+{
+    "html": {
+        "added": [],
+        "edited": [
+            "front\/main\/banList",
+            "front\/main\/banListRow",
+            "front\/main\/displayServer",
+            "front\/main\/editServer",
+            "front\/main\/main"
+        ],
+        "removed": [
+            "front\/main\/playersChart"
+        ]
+    },
+    "css": {
+        "added": [],
+        "edited": [
+            "front\/main.css"
+        ],
+        "removed": []
+    },
+    "resources": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

@@ -1,0 +1,90 @@
+{
+    "1": {
+        "method": "dropColumn",
+        "params": [
+            "servidores_servers",
+            "server_guide"
+        ]
+    },
+    "2": {
+        "method": "dropColumn",
+        "params": [
+            "servidores_servers",
+            "server_access_guide"
+        ]
+    },
+    "3": {
+        "method": "changeColumn",
+        "params": [
+            "servidores_servers",
+            "server_guides",
+            {
+                "name": "server_guides",
+                "type": "TEXT",
+                "length": 0,
+                "decimals": null,
+                "values": [],
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "auto_increment": false
+            }
+        ]
+    },
+    "4": {
+        "method": "addColumn",
+        "params": [
+            "servidores_servers",
+            {
+                "name": "server_vinc",
+                "type": "VARCHAR",
+                "length": 16,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "auto_increment": false
+            }
+        ]
+    },
+    "5": {
+        "method": "addColumn",
+        "params": [
+            "servidores_servers",
+            {
+                "name": "server_enable",
+                "type": "TINYINT",
+                "length": null,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "1",
+                "comment": "",
+                "unsigned": true,
+                "auto_increment": false
+            }
+        ]
+    },
+    "6": {
+        "method": "changeColumn",
+        "params": [
+            "servidores_servers",
+            "server_enable",
+            {
+                "name": "server_enabled",
+                "type": "TINYINT",
+                "length": null,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "1",
+                "comment": "",
+                "unsigned": true,
+                "auto_increment": false
+            }
+        ]
+    }
+}

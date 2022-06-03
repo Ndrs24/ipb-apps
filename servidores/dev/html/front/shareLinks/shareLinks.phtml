@@ -1,0 +1,21 @@
+<ips:template parameters="$url, $in_box=TRUE" />
+{{if $in_box}}
+	{{$id = mt_rand();}}
+	<a href='#elShareItem_{$id}_menu' id='elShareItem_{$id}' data-ipsMenu class='ipsShareButton ipsButton ipsButton_link ipsButton_link--light'><span><i class='fa fa-share-alt'></i></span>&nbsp;&nbsp;{lang="share"}</a>
+
+	<div class='ipsPadding ipsMenu ipsMenu_auto ipsHide' id='elShareItem_{$id}_menu' data-controller="core.front.core.sharelink">
+		<ul class='ipsList_inline'>
+			<li><a href="https://www.facebook.com/sharer/sharer.php?u={$url}" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='{lang="facebook_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-facebook"></i></a></li>
+			<li><a href="http://twitter.com/share?url={$url}" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='{lang="twitter_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-twitter"></i></a></li>
+			<li><a href="https://plus.google.com/share?url={$url}" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='{lang="google_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-google-plus"></i></a></li>
+			<li><a href="http://www.reddit.com/submit?url={$url}&amp;title={lang='module__servidores_main'}" class="cShareLink cShareLink_reddit" target="_blank" title='{lang="reddit_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-reddit"></i></a></li>
+		</ul>
+	</div>
+{{else}}
+	<ul class='ipsList_inline'>
+		<li><a href="https://www.facebook.com/sharer/sharer.php?u={$url}" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='{lang="facebook_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-facebook"></i></a></li>
+		<li><a href="http://twitter.com/share?url={$url}" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='{lang="twitter_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-twitter"></i></a></li>
+		<li><a href="https://plus.google.com/share?url={$url}" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='{lang="google_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-google-plus"></i></a></li>
+		<li><a href="http://www.reddit.com/submit?url={$url}&amp;title={lang='module__servidores_main'}" class="cShareLink cShareLink_reddit" target="_blank" title='{lang="reddit_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-reddit"></i></a></li>
+	</ul>
+{{endif}}

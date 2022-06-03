@@ -1,0 +1,14 @@
+<ips:template parameters="$server, $url, $url_seo, $table" />
+<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cServers_header'>
+	<h1 class='ipsType_pageTitle'>Baneos del {$server->shortname}</h1>
+</div>
+
+<div class="ipsLayout_container ipsPager">
+	<div class="ipsPager_prev">
+		<a href='{url="{$url}" seoTemplate="{$url_seo}"}' title="Volver a la Información del servidor" rel="parent">
+			<span class="ipsPager_type">Volver a la Información del servidor<br><strong>#{{if $server->position < 10}}0{$server->position}{{else}}{$server->position}{{endif}} {$server->shortname}</strong></span>
+		</a>
+	</div>
+</div>
+
+<div class='ipsBox ipsBox--child'>{$table|raw}</div>

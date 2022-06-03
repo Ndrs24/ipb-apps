@@ -1,0 +1,20 @@
+{
+    "1": {
+        "method": "addColumn",
+        "params": [
+            "servidores_servers",
+            {
+                "name": "server_top15",
+                "type": "VARCHAR",
+                "length": 16,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "auto_increment": false
+            }
+        ]
+    }
+}

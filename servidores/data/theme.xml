@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme name="Default" author_name="Invision Power Services, Inc" author_url="https://www.invisioncommunity.com">
+ <template template_group="charts" template_name="maps" template_data="$maps" template_location="front" template_app="servidores"><![CDATA[<h3 class="ipsType_minorHeading">{lang="s_chart_stats_title"}</h3>
+{$maps|raw}]]></template>
+ <template template_group="charts" template_name="players" template_data="$players" template_location="front" template_app="servidores"><![CDATA[<h3 class="ipsType_minorHeading">{lang="s_chart_players_title"}</h3>
+{$players|raw}]]></template>
+ <template template_group="main" template_name="banList" template_data="$server, $url, $url_seo, $table" template_location="front" template_app="servidores"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cServers_header'>
+	<h1 class='ipsType_pageTitle'>Baneos del {$server->shortname}</h1>
+</div>
+
+<div class="ipsLayout_container ipsPager">
+	<div class="ipsPager_prev">
+		<a href='{url="{$url}" seoTemplate="{$url_seo}"}' title="Volver a la Información del servidor" rel="parent">
+			<span class="ipsPager_type">Volver a la Información del servidor<br><strong>#{{if $server->position < 10}}0{$server->position}{{else}}{$server->position}{{endif}} {$server->shortname}</strong></span>
+		</a>
+	</div>
+</div>
+
+<div class='ipsBox ipsBox--child'>{$table|raw}</div>]]></template>
+ <template template_group="main" template_name="banListRow" template_data="$table, $headers, $rows" template_location="front" template_app="servidores"><![CDATA[<table class="ipsTable ipsTable_responsive ipsTable_zebra">
+	<thead>
+		<tr class="ipsAreaBackground">
+			<th>Fecha y hora</th>
+			<th>Tag CS</th>
+			<th>Admin</th>
+			<th>Duración</th>
+			<th class='ipsResponsive_hideTablet'>Razón</th>
+			<th>Estado</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class="ipsClearfix">
+				<td>{datetime="$row['start']" lowercase="true"}</td>
+				<td>{$row['user_name']}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['forum_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$row['admin_name']}
+				</td>
+				<td>
+					{{if $row['minutes'] == 0}}
+						Permanente
+					{{else}}
+						{$row['minutes']} min
+					{{endif}}
+				</td>
+				<td class='ipsResponsive_hideTablet'>
+					{{if $row['reason'] != NULL}}
+						{$row['reason']}
+					{{else}}
+						no-especificado
+					{{endif}}
+				</td>
+				<td>
+					{{if $row['active']}}
+						<span class="ipsBadge ipsBadge_positive ipsBadge_large">Ban finalizado</span>
+					{{else}}
+						<span class="ipsBadge ipsBadge_negative ipsBadge_large">Ban activo</span>
+					{{endif}}
+					<span class='ipsResponsive_showTablet' data-ipsTooltip title='Ver razón del Ban'>&nbsp;&nbsp;<a href='javascript:;' id='reasonInfoDialog' data-ipsDialog data-ipsDialog-content='#reasonInfo'><i class='fa fa-info-circle'></i></a></span>
+					<div class='ipsHide ipsPadding ipsClearfix' id='reasonInfo'><strong>Razón del ban</strong>: {$row['reason']}&nbsp;&nbsp;&nbsp;<strong class='ipsType_light'>({$row['admin_name']})</strong></div>
+				</td>
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="main" template_name="displayServer" template_data="$server, $seo, $server_next, $game, $sid_url_internal, $players_info, $chart_maps, $players_chart" template_location="front" template_app="servidores"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix cServers_header'>
+	<h1 class='ipsType_pageTitle'><img alt='{$game->type}' src='{expression="\IPS\File::get('servidores_fileGame2', $game->icon)->url"}' style='vertical-align: 3px;' data-ipsTooltip title='{lang="s_games_{$game->id}"}' />&nbsp;{$server->longname}</h1>
+	<p class='ipsType_reset ipsType_blendLinks ipsResponsive_hidePhone ipsResponsive_hideTablet'><a href='{url="app=servidores&module=main&controller=main" seoTemplate="servidores"}'><i class='fa fa-caret-left'></i>&nbsp;Volver a la lista de servidores</a></p>
+
+	<hr class='ipsHr ipsResponsive_hidePhone ipsResponsive_hideTablet' />
+
+	<div class='ipsFlex ipsFlex-jc:between ipsFlex-ai:center ipsFlex-fw:wrap ipsGap:3'>
+		<div class='ipsFlex-flex:11'>
+			<a class='ipsButton ipsButton_important ipsResponsive_hidePhone ipsResponsive_hideTablet' href='{$server->connect}'><i class='fa fa-gamepad'></i>&nbsp;Jugar al servidor</a>
+		</div>
+		<div class='ipsFlex-flex:01 ipsResponsive_hideTablet ipsResponsive_hidePhone'>
+			<div class='ipsFlex ipsFlex-ai:center ipsFlex-jc:center ipsGap:3 ipsGap_row:0'>
+				{template="shareLinks" app="servidores" group="shareLinks" location="front" params="$sid_url_internal"}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="ipsLayout_container ipsPager">
+	<div class="ipsPager_prev">
+		<a href='{url="app=servidores&module=main&controller=main" seoTemplate="servidores"}' title="Ir al listado de servidores de {lang='s_games_{$game->id}'}" rel="parent">
+			<span class="ipsPager_type">Ir al listado de servidores<br><strong>{lang="s_games_{$game->id}"}</strong></span>
+		</a>
+	</div>
+	{{if $server_next !== NULL}}
+		<div class="ipsPager_next">
+			<a href='{url="app=servidores&module=main&controller=main&do=toServer&id={$server_next[0]}&seo={$server_next[1]}" seoTemplate="servidores_id"}' title="Ir al servidor #{$server_next[0]} {$server_next[2]}" rel="parent">
+				<span class="ipsPager_type">Siguiente servidor<br><strong>#{$server_next[0]} {$server_next[2]}</strong></span>
+			</a>
+		</div>
+	{{endif}}
+</div>
+
+<div class='ipsGrid ipsGrid_collapseTablet ipsGrid_collapsePhone'>
+	<div class='ipsGrid_span6 ipsSpacer_bottom'>
+		{{if $server->logo}}
+			<img alt='{$server->longname}' title='{$server->shortname}' data-src="{expression="\IPS\File::get('servidores_fileServer', $server->logo)->url"}" style="max-width: 100%; height: auto;" src="{expression="\IPS\File::get('servidores_fileServer', $server->logo)->url"}" data-loaded="true">
+		{{else}}
+			<span><img data-src='{resource="pattern.png" app="core" location="global"}' style="max-width: 100%; height: auto;" /></span>
+		{{endif}}
+	</div>
+	<div class='ipsGrid_span6 ipsSpacer_bottom'>
+		<div class='ipsPadding ipsBox ipsBox--child ipsMargin_bottom'>
+			<div class='cServers_infomod'>
+				{$server->infomod}
+			</div>
+
+			<hr class='ipsHr' />
+
+			<div class='ipsType_center'>
+				<div class="ipsType_large ipsType_minorHeading ipsMargin_bottom">
+					<h3 class="ipsType_neutral"><img alt='{$game->type}' src='{expression="\IPS\File::get('servidores_fileGame2', $game->icon)->url"}' style='vertical-align: 0;' data-ipsTooltip title='{lang="s_games_{$game->id}"}' />&nbsp;Dirección IP: <u><a href='javascript:;' onclick="setClipboard('{$server->ip}')" data-ipsTooltip title='Copiar IP al portapapeles'>{$server->ip}</a></u></h3>
+
+					<span>Estado del Servidor: {{if $server->online}}<strong class='ipsType_positive'>Online</strong>{{else}}<strong class='ipsType_negative'>Offline</strong>{{endif}}</span>
+				</div>
+
+				<span class='ipsType_large'>Si quieres contactarte con los encargados de los servidores. Visita la <a class='ipsType_neutral ipsType_bold' href="/staff/">sección de Staff</a> y ubica al Manager o Capitán del Servidor</span>
+
+				<div class='ipsMargin_top ipsResponsive_hideDesktop'>
+					{template="shareLinks" app="servidores" group="shareLinks" location="front" params="$sid_url_internal, FALSE"}
+				</div>
+			</div>
+		</div>
+
+		<div class='ipsGrid ipsGrid_collapsePhone'>
+			<div class='ipsGrid_span6 ipsSpacer_bottom'><a href="/ventas/" class='ipsButton ipsButton_important ipsButton_medium ipsButton_fullWidth'><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Comprar VIP/Admin</a></div>
+			<div class='ipsGrid_span6'><a href='{url="app=servidores&module=main&controller=main&do=banList&id={$server->position}&seo={$seo}" seoTemplate="servidores_id_banList"}' class='ipsButton ipsButton_negative ipsButton_medium ipsButton_fullWidth'><i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;Lista de Baneos</a></div>
+			{{if $server->vinc}}<div class='ipsGrid_span12'><a href="/vinc/{$server->vinc}" class='ipsButton ipsButton_primary ipsButton_medium ipsButton_fullWidth'><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Panel de vinculación</a></div>{{endif}}
+		</div>
+	</div>
+</div>
+
+{{if $server->online}}
+	<div class="ipsPadding ipsBox ipsType_center ipsSpacer_bottom">
+		<div class="ipsFlex ipsFlex-jc:center ipsFlex-fw:wrap ipsGap:3">
+			<span class="ipsMargin_right sm:ipsMargin_right:half md:ipsMargin_right:half"><strong class="ipsType_veryLarge">{$server->players_num}</strong><br><span class="ipsType_minorHeading">jugadores online</span></span>
+			<span class="ipsMargin_right sm:ipsMargin_right:half md:ipsMargin_right:half"><strong class="ipsType_veryLarge">{$server->players_max}</strong><br><span class="ipsType_minorHeading">slots máximos</span></span>
+			<span class="ipsMargin_right sm:ipsMargin_right:half md:ipsMargin_right:half"><strong class="ipsType_veryLarge">{$server->players_most}&nbsp;&nbsp;<span class='ipsType_small ipsType_light ipsType_unbold'>({datetime="$server->players_most_time" lowercase="true"})</span></strong><br><span class="ipsType_minorHeading">Récord de Jugadores</span></span>
+			<span><strong class="ipsType_veryLarge">{$server->map}</strong><br><span class="ipsType_minorHeading">mapa actual</span></span>
+			<span><strong class="ipsType_veryLarge">{{if $server->nextmap != NULL}}{$server->nextmap}{{else}}n/a{{endif}}</strong><br><span class="ipsType_minorHeading">mapa siguiente</span></span>
+		</div>
+	</div>
+{{else}}
+	<div class="ipsPadding ipsBox ipsType_center ipsSpacer_bottom">
+		<span class='ipsType_light ipsType_large'>No se ha podido proporcionar información del servidor ya que está caído</span>
+	</div>
+{{endif}}
+
+<div class='ipsBox ipsResponsive_pull ipsMargin_bottom'>
+	<div class='ipsAreaBackground_light ipsPadding ipsBorder_bottom'>
+		<h2 class="ipsType_pageTitle">Información del servidor</h2>
+	</div>
+
+	<div class='ipsPadding'>
+		<div class="ipsPageHeader ipsPadding_left sm:ipsPadding:half ipsClearfix">
+			<h1>Guía del modo</h1>
+		</div>
+
+		<div class="ipsType_normal ipsType_richText ipsPadding_left ipsPadding_right ipsMargin_bottom ipsResponsive_pull">
+			{{if $server->guides == NULL}}
+				<p class='ipsType_center ipsType_light ipsType_large'>No hay guía del modo disponible</p>
+			{{else}}
+				{$server->guides|raw}
+			{{endif}}
+		</div>
+
+		<div class="ipsPageHeader ipsPadding_left sm:ipsPadding:half ipsClearfix">
+			<h1>Reglamento del Servidor</h1>
+		</div>
+
+		<div class="ipsType_normal ipsType_richText ipsPadding_left ipsPadding_right ipsMargin_bottom ipsResponsive_pull">
+			{{if $server->rules == NULL}}
+				<p class='ipsType_center ipsType_light ipsType_large'>No hay reglamento del servidor disponible</p>
+			{{else}}
+				{$server->rules|raw}
+			{{endif}}
+		</div>
+
+		{{if $server->canEditGuides() || $server->canEditRules()}}
+			<hr class='ipsHr' />
+
+			{{if $server->canEditGuides()}}
+				<a class='ipsType_blendLinks' href='{url="app=servidores&module=main&controller=main&do=editGuides&id={$server->position}&seo={$seo}" seoTemplate="servidores_id_editGuides"}'>Editar guía del modo</a>
+			{{endif}}
+			&nbsp;&nbsp;&nbsp;
+			{{if $server->canEditRules()}}
+				<a class='ipsType_blendLinks' href='{url="app=servidores&module=main&controller=main&do=editRules&id={$server->position}&seo={$seo}" seoTemplate="servidores_id_editRules"}'>Editar reglamento del servidor</a>
+			{{endif}}
+		{{endif}}
+	</div>
+</div>
+
+<div class='ipsBox ipsResponsive_pull ipsMargin_bottom'>
+	<div class='ipsAreaBackground_light ipsPadding ipsBorder_bottom'>
+		<h2 class="ipsType_pageTitle">Estadísticas&nbsp;<a href='javascript:;' data-ipsDialog data-ipsDialog-title='Jugadores online' data-ipsDialog-content='#playersOnline' data-ipsTooltip title='Ver jugadores online' class='ipsPos_right'><i class='fa fa-table'></i></a></h2>
+	</div>
+
+	<div id='playersOnline' class='ipsHide'>
+		{{if !empty($players_info)}}
+			<table class='ipsTable ipsTable_zebra ipsTable_responsive'>
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Nombre</th>
+						<th data-score-type='{$game->type}'>Puntuación</th>
+						<th data-time-type='{$game->type}'>Tiempo jugado</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{foreach $players_info as $player}}
+						<tr>
+							<td class='ipsResponsive_hidePhone ipsType_center'><span class='ipsBadge ipsBadge_positive ipsBadge_icon'><i class='fa fa-user'></i></span></td>
+							<td><strong>{$player['gq_name']}</strong></td>
+							<td data-score-type='{$game->type}'>{$player['gq_score']} frags</td>
+							<td data-time-type='{$game->type}'>{expression="date('H:i:s', mktime(0, 0, $player['gq_time']))" raw="true"}</td>
+						</tr>
+					{{endforeach}}
+				</tbody>
+			</table>
+		{{else}}
+			<p class="ipsPadding ipsType_light ipsType_large ipsType_center">No hay jugadores a mostrar</p>
+		{{endif}}
+	</div>
+
+	<div class='ipsPadding'>
+		<div class='ipsGrid ipsGrid_collapseTablet ipsGrid_collapsePhone'>
+			<div class="ipsGrid_span1 ipsResponsive_hidePhone"></div>
+			<div class='ipsGrid_span5 ipsType_normal ipsType_richText ipsPadding ipsAreaBackground ipsResponsive_pull ipsMargin_bottom:half'>{$chart_maps|raw}</div>
+			<div class='ipsGrid_span5 ipsType_normal ipsType_richText ipsPadding ipsAreaBackground ipsResponsive_pull'>{$players_chart|raw}</div>
+			<div class="ipsGrid_span1 ipsResponsive_hidePhone"></div>
+		</div>
+	</div>
+</div>
+
+<div class='ipsBox ipsResponsive_pull'>
+	<div class='ipsAreaBackground_light ipsPadding ipsBorder_bottom'>
+		<h2 class="ipsType_pageTitle">Top 15</h2>
+	</div>
+
+	<div class='ipsPadding'>
+		{{if $server->top15}}
+			{template="$server->top15" app="top15" group="main" location="front" params=""}
+		{{else}}
+			<p class="ipsType_light ipsType_large ipsType_center">No se ha podido mostrar el Top 15 del servidor</p>
+		{{endif}}
+	</div>
+</div>]]></template>
+ <template template_group="main" template_name="editGuides" template_data="$server, $form" template_location="front" template_app="servidores"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsSpacer_bottom cServers_header'>
+	<h1 class='ipsType_pageTitle'>Editando guía del servidor: {$server->shortname}</h1>
+</div>
+
+<div class='ipsBox ipsBox--child'>{$form|raw}</div>]]></template>
+ <template template_group="main" template_name="editRules" template_data="$server, $form" template_location="front" template_app="servidores"><![CDATA[<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsSpacer_bottom cServers_header'>
+	<h1 class='ipsType_pageTitle'>Editando reglamento del servidor: {$server->shortname}</h1>
+</div>
+
+<div class='ipsBox ipsBox--child'>{$form|raw}</div>]]></template>
+ <template template_group="main" template_name="main" template_data="$url, $servers, $stats" template_location="front" template_app="servidores"><![CDATA[{{$st = \count($servers);}}
+
+<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cServers_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__servidores_main"}</h1>
+	{{if $st}}<div class='ipsPageHeader_info ipsType_light'>{lang="s_header_info" sprintf="$st"}</div>{{endif}}
+
+	<hr class='ipsHr' />
+
+	<div class='ipsFlex ipsFlex-jc:between ipsFlex-ai:center ipsFlex-fw:wrap ipsGap:3'>
+		<div class='ipsFlex-flex:11'>
+			<a href='/reglamento/' class='ipsButton ipsButton_light'>Reglamento</a>
+		</div>
+		<div class='ipsFlex-flex:01 ipsResponsive_hideTablet ipsResponsive_hidePhone'>
+			<div class='ipsFlex ipsFlex-ai:center ipsFlex-jc:center ipsGap:3 ipsGap_row:0'>
+				{template="shareLinks" app="servidores" group="shareLinks" location="front" params="$url"}
+			</div>
+		</div>
+	</div>
+</div>
+
+{{if $st}}
+	<div class='ipsPadding ipsType_center ipsPos_center ipsMargin_bottom' style='max-width: 75%;'>
+		<span class='ipsType_large'>{lang="s_players_current_desc" sprintf="$stats['players_num_t'], $stats['players_max_t'], $st"}</span>
+		<br />
+		<br />
+		<div class='ipsProgressBar ipsProgressBar_animated ipsProgressBar_large cServers_progressBar'>
+			<div class="ipsProgressBar_progress cServers_progressBar_show" style="width: {$stats['percent']}%;"></div>
+			<div class="ipsProgressBar_progress cServers_progressBar_record" style="background-color: rgba(255, 0, 0, 1.0); opacity: 0.2; width: {$stats['record_percent']}%;"></div>
+		</div>
+		{{if $stats['record_players_num'] != 0}}
+			<br />
+			<span class='ipsType_large'>El récord de jugadores en línea en la comunidad fue de <strong>{$stats['record_players_num']}/{$stats['record_players_max']}</strong> jugadores [<strong>{datetime="$stats['record_time']" lowercase="TRUE"}</strong>]</span>
+			<br />
+		{{endif}}
+	</div>
+
+	<div class='cServers_container'>
+		{{foreach $servers as $k => $server}}
+			{{$seo = \IPS\Http\Url::seoTitle($server["server_shortname"]);}}
+
+			<div class="ipsGrid ipsGrid_collapsePhone ipsPadding ipsBox ipsMargin_bottom" data-serverid="{$k}">
+				<div class="ipsGrid_span5">
+					{{if $server['server_logo']}}
+						<a title='{$server["server_shortname"]}' href='{url="app=servidores&module=main&controller=main&do=toServer&id={$server['server_position']}&seo={$seo}" seoTemplate="servidores_id"}'><img width='100%' data-src='{expression="\IPS\File::get('servidores_fileServer', $server['server_logo'])->url"}' /></a>
+					{{else}}
+						<span><img width='100%' data-src='{resource="pattern.png" app="core" location="global"}' /></span>
+					{{endif}}
+
+					<div class="ipsFlex ipsFlex-jc:center ipsFlex-fw:wrap ipsGap:3 ipsType_center ipsPadding_top ipsResponsive_hidePhone">
+						<span class="ipsMargin_right sm:ipsMargin_right:half md:ipsMargin_right:half"><strong class="ipsType_large">{{if $server['server_players_max'] != 0}}{$server['server_players_num']}{{else}}n/a{{endif}}</strong><br><span class="ipsType_minorHeading">jugadores online</span></span>
+						<span><strong class="ipsType_large">{{if $server['server_map'] != NULL}}{$server['server_map']}{{else}}n/a{{endif}}</strong><br><span class="ipsType_minorHeading">mapa actual</span></span>
+					</div>
+
+					<div class='ipsMargin_top ipsResponsive_hidePhone ipsResponsive_hideDesktop'>
+						<a href='{url="app=servidores&module=main&controller=main&do=banList&id={$server['server_id']}&seo={$seo}" seoTemplate="servidores_id_banList"}' class='ipsButton ipsButton_negative ipsButton_medium ipsButton_fullWidth'><i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;Lista de Baneos</a>
+					</div>
+				</div>
+
+				<div class="ipsGrid_span7">
+					<h2 class="ipsTruncate ipsTruncate_line ipsType_reset">
+						<div class='ipsResponsive_showPhone ipsPadding_bottom'></div>
+
+						<a href='{url="app=servidores&module=main&controller=main&do=toServer&id={$server['server_position']}&seo={$seo}" seoTemplate="servidores_id"}'>#{{if $server['server_position'] < 10}}0{$server['server_position']}{{else}}{$server['server_position']}{{endif}}&nbsp;{$server['server_shortname']}</a>&nbsp;{{if $server['server_online']}}<strong class='ipsOnlineStatus ipsOnlineStatus_online ipsType_small' data-ipsTooltip title='Online'><i class='fa fa-circle'></i></strong>{{else}}<strong class='ipsOnlineStatus ipsOnlineStatus_offline ipsType_small' data-ipsTooltip title='Offline'><i class='fa fa-circle'></i></strong>{{endif}}
+					</h2>
+
+					<div class='cServers_infomod'>
+						<p class='ipsType_light'>{$server['server_infomod']}</p>
+					</div>
+
+					<hr class='ipsHr' />
+
+					<div class='ipsType_center'>
+						<div class='ipsType_center ipsType_large ipsType_minorHeading'>
+							<h3 class="ipsType_neutral"><img alt='{$server["game_type"]}' src='{expression="\IPS\File::get('servidores_fileGame2', $server['game_icon'])->url"}' data-ipsTooltip title='{lang="s_games_{$server['game_id']}"}' style='vertical-align: 0;' />&nbsp;Dirección IP: <a href='javascript:;' class='{{if $server["server_online"]}}ipsType_success{{else}}ipsType_negative{{endif}}' onclick="setClipboard('{$server['server_ip']}')" data-ipsTooltip title='Copiar IP al portapapeles'>{$server['server_ip']}</a></h3>
+						</div>
+
+						<div class="ipsFlex ipsFlex-jc:center ipsFlex-fw:wrap ipsGap:3 ipsType_center ipsResponsive_showPhone">
+							<span class="ipsMargin_right sm:ipsMargin_right:half md:ipsMargin_right:half"><strong class="ipsType_large">{{if $server['server_players_max'] != 0}}{$server['server_players_num']}{{else}}n/a{{endif}}</strong><br><span class="ipsType_minorHeading">jugadores online</span></span>
+							<span><strong class="ipsType_large">{{if $server['server_map'] != NULL}}{$server['server_map']}{{else}}n/a{{endif}}</strong><br><span class="ipsType_minorHeading">mapa actual</span></span>
+						</div>
+					</div>
+
+					<div class='ipsType_center ipsResponsive_hidePhone ipsResponsive_hideTablet'>
+						<div class='ipsFlex ipsFlex-jc:center ipsFlex-fw:wrap ipsGap:3'>
+							{{if $server['server_online']}}
+								<a href='{$server["server_connect"]}' class='ipsButton ipsButton_important ipsButton_medium'><i class="fa fa-steam" aria-hidden="true"></i>&nbsp;Entrar a Jugar</a>
+							{{else}}
+								<span class='ipsButton ipsButton_important ipsButton_medium ipsButton_disabled' data-ipsTooltip title='Servidor offline'><i class="fa fa-steam" aria-hidden="true"></i>&nbsp;Entrar a Jugar</span>
+							{{endif}}
+							<a href='{url="app=servidores&module=main&controller=main&do=banList&id={$server['server_id']}&seo={$seo}" seoTemplate="servidores_id_banList"}' class='ipsButton ipsButton_negative ipsButton_medium'><i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;Lista de Baneos</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{endforeach}}
+	</div>
+
+	<div class="ipsBox ipsMargin_top">
+		<h2 class='ipsType_sectionTitle ipsType_reset'>Estadísticas de los Servidores</h2>
+		<div class="ipsGrid ipsGrid_collapsePhone ipsType_center">
+			<div class="ipsGrid_span1 ipsResponsive_hidePhone"></div>
+			<div class="ipsGrid_span2 ipsPadding">
+				<span class="ipsType_large ipsWidget_statsCount">{$st}</span><br>
+				<span class="ipsType_light ipsType_medium">Total de servidores</span>
+			</div>
+			<div class="ipsGrid_span2 ipsPadding">
+				<span class="ipsType_large ipsWidget_statsCount">{$stats['servers_online']}</span><br>
+				<span class="ipsType_light ipsType_medium">Servidores online</span>
+			</div>
+			<div class="ipsGrid_span2 ipsPadding">
+				<span class="ipsType_large ipsWidget_statsCount">{$stats['players_num_t']}</span><br>
+				<span class="ipsType_light ipsType_medium">Jugadores online</span>
+			</div>
+			<div class="ipsGrid_span2 ipsPadding">
+				<span class="ipsType_large ipsWidget_statsCount">{$stats['players_max_t']}</span><br>
+				<span class="ipsType_light ipsType_medium">Slots máximos</span>
+			</div>
+			<div class="ipsGrid_span2 ipsPadding">
+				<span class="ipsType_large ipsWidget_statsCount">{datetime="\IPS\Settings::i()->s_time_refreshed" lowercase="true"}</span><br>
+				<span class="ipsType_light ipsType_medium">Última comprobación</span>
+			</div>
+			<div class="ipsGrid_span1 ipsResponsive_hidePhone"></div>
+		</div>
+	</div>
+{{else}}
+	<div class='ipsPadding ipsBox'>
+		<p class='ipsType_center ipsType_light ipsType_large'>{lang="s_servers_not_found"}</p>
+	</div>
+{{endif}}]]></template>
+ <template template_group="shareLinks" template_name="shareLinks" template_data="$url, $in_box=TRUE" template_location="front" template_app="servidores"><![CDATA[{{if $in_box}}
+	{{$id = mt_rand();}}
+	<a href='#elShareItem_{$id}_menu' id='elShareItem_{$id}' data-ipsMenu class='ipsShareButton ipsButton ipsButton_link ipsButton_link--light'><span><i class='fa fa-share-alt'></i></span>&nbsp;&nbsp;{lang="share"}</a>
+
+	<div class='ipsPadding ipsMenu ipsMenu_auto ipsHide' id='elShareItem_{$id}_menu' data-controller="core.front.core.sharelink">
+		<ul class='ipsList_inline'>
+			<li><a href="https://www.facebook.com/sharer/sharer.php?u={$url}" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='{lang="facebook_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-facebook"></i></a></li>
+			<li><a href="http://twitter.com/share?url={$url}" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='{lang="twitter_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-twitter"></i></a></li>
+			<li><a href="https://plus.google.com/share?url={$url}" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='{lang="google_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-google-plus"></i></a></li>
+			<li><a href="http://www.reddit.com/submit?url={$url}&amp;title={lang='module__servidores_main'}" class="cShareLink cShareLink_reddit" target="_blank" title='{lang="reddit_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-reddit"></i></a></li>
+		</ul>
+	</div>
+{{else}}
+	<ul class='ipsList_inline'>
+		<li><a href="https://www.facebook.com/sharer/sharer.php?u={$url}" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='{lang="facebook_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-facebook"></i></a></li>
+		<li><a href="http://twitter.com/share?url={$url}" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='{lang="twitter_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-twitter"></i></a></li>
+		<li><a href="https://plus.google.com/share?url={$url}" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='{lang="google_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-google-plus"></i></a></li>
+		<li><a href="http://www.reddit.com/submit?url={$url}&amp;title={lang='module__servidores_main'}" class="cShareLink cShareLink_reddit" target="_blank" title='{lang="reddit_text"}' data-ipsTooltip rel='noopener'><i class="fa fa-reddit"></i></a></li>
+	</ul>
+{{endif}}]]></template>
+ <template template_group="top15" template_name="ze" template_data="$ze" template_location="front" template_app="servidores"><![CDATA[<table class='ipsTable ipsTable_responsive ipsTable_zebra'>
+	<thead>
+		<tr class='ipsAreaBackground'>
+			<th>#</th>
+			<th>Nombre</th>
+			<th>Miembro</th>
+			<th>Nivel</th>
+			<th>Experiencia</th>
+			<th>Tiempo jugado</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{$position = 0;}}
+		{{foreach $ze as $pj}}
+			{{++$position;}}
+			<tr class='ipsClearfix'>
+				<td class='ipsTable_icon' width='5%'><span class='ipsBadge ipsBadge_icon ipsBadge_reverse {{if $position == 1}}ipsBadge_intermediary{{elseif $position == 2}}ipsBadge_neutral{{elseif $position == 3}}ipsBadge_negative{{else}}ipsBadge_positive{{endif}}'>{$position}</span></td>
+				<td width='20%'>{$pj['name']}</td>
+				<td width='20%'>
+					{{if $pj['vinc']}}
+						{{$member = \IPS\Member::load($pj['vinc']);}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'><img src='{$member->photo}' alt='{$member->name}'></span>
+						{$member->link()|raw}
+					{{else}}
+						<span class='ipsUserPhoto ipsUserPhoto_tiny'><img src='{resource="default_photo.png" app="core" location="global"}'></span>
+						Usuario
+					{{endif}}
+				</td>
+				<td width='15%'>{number="$pj['level']"}</td>
+				<td width='15%'>{number="$pj['exp']"}</td>
+				<td width='25%'>
+					{{$datetime = new \IPS\DateTime(); $today = clone $datetime;}}
+					{{$time_played = \IPS\DateTime::formatInterval($datetime->diff($today->modify('+'.round($pj['time_played']).' seconds')), 3);}}
+					{$time_played}
+				</td>
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>]]></template>
+ <template template_group="widgets" template_name="serversCarousel" template_data="$servers, $players_total, $url" template_location="front" template_app="servidores"><![CDATA[{{$st = \count($servers);}}
+
+<div class="serverList">
+	<div class="ipsCarousel ipsClearfix" data-ipsCarousel data-ipsCarousel-slideshow data-ipsCarousel-showdots style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+		<div class="ipsCarousel_inner" style="height: 200px;">
+			<ul class="ipsClearfix" data-role="carouselItems" style="width: 9405px; left: -4403.18px;">
+				{{foreach $servers as $k => $s}}
+					{{$seo = \IPS\Http\Url::seoTitle($s["server_shortname"]);}}
+
+					<li class="cServersGridHero ipsCarousel_item">
+						<a title='{$s["server_shortname"]}' href='{url="app=servidores&module=main&controller=main&do=toServer&id={$s['server_position']}&seo={$seo}" seoTemplate="servidores_id"}' class="cServersGridHero-link" aria-hidden="true">
+							<span class="cServersGridHero-image" role="img" style="background-image:url('{expression="\IPS\File::get('servidores_fileServer', $s['server_logo'])->url"}')" aria-label="{$s['server_shortname']}"></span>
+							<span class="cServersGridHero-image-overlay"></span>
+						</a>
+
+						<div class="cServerGridInfo ipsFlex ipsFlex-ai:end">
+							<div class="ipsFlex-flex:11">
+								<h3 class="cServerGridTitle ipsType_reset ipsTruncate ipsTruncate_line"><a href='{url="app=servidores&module=main&controller=main&do=toServer&id={$s['server_position']}&seo={$seo}" seoTemplate="servidores_id"}'>{$s['server_shortname']}</a></h3>
+								<ul class="cServerGridTitle-stats ipsType_reset ipsType_light">
+									<li>IP: {$s['server_ip']}</li>
+								</ul>
+							</div>
+							<span class="cServerGridIcon-wrap ipsFlex-flex:00">
+								<span class="cServerGridIcon">
+									<img src='{expression="\IPS\File::get('servidores_fileGame2', $s['game_icon'])->url"}' />
+								</span>
+							</span>
+						</div>
+					</li>
+				{{endforeach}}
+			</ul>
+		</div>
+		<span class="ipsCarousel_shadow ipsCarousel_shadowLeft" animating="false" style=""></span>
+		<span class="ipsCarousel_shadow ipsCarousel_shadowRight" animating="false" style=""></span>
+		<a href="#" class="ipsCarousel_nav" data-action="prev" style=""><i class="fa fa-chevron-left"></i></a>
+		<a href="#" class="ipsCarousel_nav" data-action="next" style=""><i class="fa fa-chevron-right"></i></a>
+	</div>
+</div>
+<div class="ipsFlex ipsPadding:half ipsType_center ipsFlex-jc:center ipsGap:5 sm:ipsFlex-fw:wrap">
+	<div class="ipsFlex-flex:11">
+		<i class="fa fa-server"></i>&nbsp;Total de servidores:&nbsp;<strong>{$st}</strong>
+	</div>
+	<div class="ipsFlex-flex:11">
+		<i class="fa fa-users"></i>&nbsp;Jugadores online:&nbsp;<strong>{$players_total}</strong>
+	</div>
+	<div class="ipsFlex-flex:11">
+		<i class="fa fa-refresh"></i>&nbsp;Última comprobación:&nbsp;<strong>{datetime="\IPS\Settings::i()->s_time_refreshed" lowercase="true"}</strong>
+	</div>
+	<div class="ipsFlex-flex:11">
+		<a href="{$url}"><i class="fa fa-info-circle"></i>&nbsp;Ver todos los servidores&nbsp;<i class="fa fa-angle-right"></i></a>
+	</div>
+</div>]]></template>
+ <css css_location="front" css_app="servidores" css_attributes="" css_path="." css_name="main.css"><![CDATA[.cServers_progressBar {
+	position: relative;
+	width: 100%;
+}
+
+.cServers_progressBar_show {
+	position: absolute;
+	z-index: 1;
+}
+
+.cServers_progressBar_record {
+	position: absolute;
+}
+
+.cServers_container > img {
+	vertical-align: middle;
+}
+
+.cShareLink_google {
+	background: #4285F4;
+}
+
+.cServerGridInfo {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.cServerGridInfo a {
+	color: inherit:;
+}
+
+.cServerGridInfo,
+.cServerGridInfo > * {
+	padding: 8px;
+}
+
+.cServerGridTitle {
+	font-size: 13px;
+	line-height: 1.1;
+	font-weight: 700;
+}
+
+.cServerGridTitle-stats {
+	margin: .5em 0 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	text-transform: uppercase;
+	font-size: .95em;
+	font-weight: 700;
+}
+
+.cServerGridTitle-stats li:not(:first-child)::before {
+	content: '/';
+	margin: 0 .8em;
+	opacity: .6;
+}
+
+.cServersGridHero {
+	color: #fff;
+	text-shadow: rgba(0, 0, 0, .5) 0 1px 1px;
+	position: relative;
+	margin: -1px;
+	margin-bottom: 0;
+	border-top-left-radius: inherit;
+	border-top-right-radius: inherit;
+	background-color: rgb(var(--theme-area_background_dark));
+	width: 300px;
+	height: 200px;
+}
+
+.cServersGridHero-link {
+	max-height: 240px;
+	display: block;
+	border-top-left-radius: inherit;
+	border-top-right-radius: inherit;
+	overflow: hidden;
+}
+
+.cServersGridHero-link::before {
+	padding-bottom: calc(9 / 16 * 100%);
+	content: '';
+	display: block;
+	border-top-left-radius: inherit;
+	border-top-right-radius: inherit;
+	position: relative;
+	z-index: 1;
+}
+
+.cServersGridHero-image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-size: cover;
+	background-position: 50% 50%;
+	border-top-left-radius: inherit;
+	border-top-right-radius: inherit;
+}
+
+.cServersGridHero-image-overlay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 70%;
+	opacity: .7;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), 70%, rgba(0, 0, 0, 1));
+	transition: opacity .3s ease-in-out;
+}
+
+.cServersGridHero-link:hover .cServersGridHero-image-overlay {
+	opacity: .4;
+}
+
+@media screen and (max-width: 979px) {
+	.cServers_header {
+		text-align: center;
+	}
+
+	.cServers_header h1 {
+		font-size: 24px;
+		font-weight: bold;
+	}
+
+	.cServers_container h2 {
+		text-align: center;
+	}
+}]]></css>
+</theme>

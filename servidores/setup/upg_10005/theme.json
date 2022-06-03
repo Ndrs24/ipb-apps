@@ -1,0 +1,35 @@
+{
+    "html": {
+        "added": [
+            "front\/main\/editGuides",
+            "front\/main\/editRules",
+            "front\/top15\/ze"
+        ],
+        "edited": [
+            "front\/main\/banList",
+            "front\/main\/banListRow",
+            "front\/main\/displayServer",
+            "front\/main\/main",
+            "front\/main\/banList",
+            "front\/main\/banListRow",
+            "front\/main\/displayServer",
+            "front\/main\/main"
+        ],
+        "removed": [
+            "front\/main\/editServer"
+        ]
+    },
+    "css": {
+        "added": [],
+        "edited": [
+            "front\/main.css",
+            "front\/main.css"
+        ],
+        "removed": []
+    },
+    "resources": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

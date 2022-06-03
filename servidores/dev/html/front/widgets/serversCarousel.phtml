@@ -1,0 +1,53 @@
+<ips:template parameters="$servers, $players_total, $url" />
+{{$st = \count($servers);}}
+
+<div class="serverList">
+	<div class="ipsCarousel ipsClearfix" data-ipsCarousel data-ipsCarousel-slideshow data-ipsCarousel-showdots style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+		<div class="ipsCarousel_inner" style="height: 200px;">
+			<ul class="ipsClearfix" data-role="carouselItems" style="width: 9405px; left: -4403.18px;">
+				{{foreach $servers as $k => $s}}
+					{{$seo = \IPS\Http\Url::seoTitle($s["server_shortname"]);}}
+
+					<li class="cServersGridHero ipsCarousel_item">
+						<a title='{$s["server_shortname"]}' href='{url="app=servidores&module=main&controller=main&do=toServer&id={$s['server_position']}&seo={$seo}" seoTemplate="servidores_id"}' class="cServersGridHero-link" aria-hidden="true">
+							<span class="cServersGridHero-image" role="img" style="background-image:url('{expression="\IPS\File::get('servidores_fileServer', $s['server_logo'])->url"}')" aria-label="{$s['server_shortname']}"></span>
+							<span class="cServersGridHero-image-overlay"></span>
+						</a>
+
+						<div class="cServerGridInfo ipsFlex ipsFlex-ai:end">
+							<div class="ipsFlex-flex:11">
+								<h3 class="cServerGridTitle ipsType_reset ipsTruncate ipsTruncate_line"><a href='{url="app=servidores&module=main&controller=main&do=toServer&id={$s['server_position']}&seo={$seo}" seoTemplate="servidores_id"}'>{$s['server_shortname']}</a></h3>
+								<ul class="cServerGridTitle-stats ipsType_reset ipsType_light">
+									<li>IP: {$s['server_ip']}</li>
+								</ul>
+							</div>
+							<span class="cServerGridIcon-wrap ipsFlex-flex:00">
+								<span class="cServerGridIcon">
+									<img src='{expression="\IPS\File::get('servidores_fileGame2', $s['game_icon'])->url"}' />
+								</span>
+							</span>
+						</div>
+					</li>
+				{{endforeach}}
+			</ul>
+		</div>
+		<span class="ipsCarousel_shadow ipsCarousel_shadowLeft" animating="false" style=""></span>
+		<span class="ipsCarousel_shadow ipsCarousel_shadowRight" animating="false" style=""></span>
+		<a href="#" class="ipsCarousel_nav" data-action="prev" style=""><i class="fa fa-chevron-left"></i></a>
+		<a href="#" class="ipsCarousel_nav" data-action="next" style=""><i class="fa fa-chevron-right"></i></a>
+	</div>
+</div>
+<div class="ipsFlex ipsPadding:half ipsType_center ipsFlex-jc:center ipsGap:5 sm:ipsFlex-fw:wrap">
+	<div class="ipsFlex-flex:11">
+		<i class="fa fa-server"></i>&nbsp;Total de servidores:&nbsp;<strong>{$st}</strong>
+	</div>
+	<div class="ipsFlex-flex:11">
+		<i class="fa fa-users"></i>&nbsp;Jugadores online:&nbsp;<strong>{$players_total}</strong>
+	</div>
+	<div class="ipsFlex-flex:11">
+		<i class="fa fa-refresh"></i>&nbsp;Última comprobación:&nbsp;<strong>{datetime="\IPS\Settings::i()->s_time_refreshed" lowercase="true"}</strong>
+	</div>
+	<div class="ipsFlex-flex:11">
+		<a href="{$url}"><i class="fa fa-info-circle"></i>&nbsp;Ver todos los servidores&nbsp;<i class="fa fa-angle-right"></i></a>
+	</div>
+</div>

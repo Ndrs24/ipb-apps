@@ -1,0 +1,25 @@
+{
+    "settings": {
+        "settings": {
+            "tab": "servidores",
+            "controller": "settings",
+            "do": "",
+            "restriction": "settings_manage",
+            "subcontrollers": ""
+        },
+        "servers": {
+            "tab": "servidores",
+            "controller": "servers",
+            "do": "",
+            "restriction": "servers_manage",
+            "subcontrollers": ""
+        },
+        "games": {
+            "tab": "servidores",
+            "controller": "games",
+            "do": "",
+            "restriction": "games_manage",
+            "subcontrollers": ""
+        }
+    }
+}

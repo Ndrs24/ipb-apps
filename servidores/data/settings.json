@@ -1,0 +1,46 @@
+[
+    {
+        "key": "s_players_max_record",
+        "default": "0"
+    },
+    {
+        "key": "s_players_num_record",
+        "default": "0"
+    },
+    {
+        "key": "s_sql_charset",
+        "default": ""
+    },
+    {
+        "key": "s_sql_database",
+        "default": ""
+    },
+    {
+        "key": "s_sql_host",
+        "default": "127.0.0.1"
+    },
+    {
+        "key": "s_sql_password",
+        "default": ""
+    },
+    {
+        "key": "s_sql_port",
+        "default": "3306"
+    },
+    {
+        "key": "s_sql_prefix",
+        "default": ""
+    },
+    {
+        "key": "s_sql_user",
+        "default": "root"
+    },
+    {
+        "key": "s_time_record",
+        "default": "0"
+    },
+    {
+        "key": "s_time_refreshed",
+        "default": "0"
+    }
+]

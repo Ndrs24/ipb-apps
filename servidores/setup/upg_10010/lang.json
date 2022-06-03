@@ -1,0 +1,16 @@
+{
+    "normal": {
+        "added": [
+            "block_serversCarousel",
+            "block_serversCarousel_desc",
+            "s_editguides_top15"
+        ],
+        "edited": [],
+        "removed": []
+    },
+    "js": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

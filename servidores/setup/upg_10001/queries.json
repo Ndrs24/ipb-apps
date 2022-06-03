@@ -1,0 +1,132 @@
+{
+    "1": {
+        "method": "createTable",
+        "params": [
+            {
+                "name": "servidores_games",
+                "columns": {
+                    "game_id": {
+                        "name": "game_id",
+                        "type": "INT",
+                        "length": "20",
+                        "decimals": null,
+                        "values": null,
+                        "allow_null": false,
+                        "default": null,
+                        "comment": "",
+                        "unsigned": true,
+                        "auto_increment": true
+                    },
+                    "game_position": {
+                        "name": "game_position",
+                        "type": "INT",
+                        "length": null,
+                        "decimals": null,
+                        "values": null,
+                        "allow_null": false,
+                        "default": "0",
+                        "comment": "",
+                        "unsigned": true,
+                        "auto_increment": false
+                    },
+                    "game_type": {
+                        "name": "game_type",
+                        "type": "VARCHAR",
+                        "length": 24,
+                        "decimals": null,
+                        "values": null,
+                        "allow_null": true,
+                        "default": null,
+                        "comment": "",
+                        "unsigned": false,
+                        "auto_increment": false
+                    },
+                    "game_icon": {
+                        "name": "game_icon",
+                        "type": "TEXT",
+                        "length": null,
+                        "decimals": null,
+                        "values": null,
+                        "allow_null": true,
+                        "default": null,
+                        "comment": "",
+                        "unsigned": false,
+                        "auto_increment": false
+                    },
+                    "game_players_num": {
+                        "name": "game_players_num",
+                        "type": "TINYINT",
+                        "length": null,
+                        "decimals": null,
+                        "values": null,
+                        "allow_null": false,
+                        "default": "0",
+                        "comment": "",
+                        "unsigned": true,
+                        "auto_increment": false
+                    },
+                    "game_players_max": {
+                        "name": "game_players_max",
+                        "type": "TINYINT",
+                        "length": null,
+                        "decimals": null,
+                        "values": null,
+                        "allow_null": false,
+                        "default": "0",
+                        "comment": "",
+                        "unsigned": true,
+                        "auto_increment": false
+                    },
+                    "game_players_most": {
+                        "name": "game_players_most",
+                        "type": "TINYINT",
+                        "length": null,
+                        "decimals": null,
+                        "values": null,
+                        "allow_null": false,
+                        "default": "0",
+                        "comment": "",
+                        "unsigned": true,
+                        "auto_increment": false
+                    },
+                    "game_players_most_time": {
+                        "name": "game_players_most_time",
+                        "type": "INT",
+                        "length": null,
+                        "decimals": null,
+                        "values": null,
+                        "allow_null": false,
+                        "default": "0",
+                        "comment": "",
+                        "unsigned": true,
+                        "auto_increment": false
+                    },
+                    "game_protocol": {
+                        "name": "game_protocol",
+                        "type": "VARCHAR",
+                        "length": 24,
+                        "decimals": null,
+                        "values": null,
+                        "allow_null": false,
+                        "default": "gameq",
+                        "comment": "",
+                        "unsigned": false,
+                        "auto_increment": false
+                    }
+                },
+                "indexes": {
+                    "PRIMARY": {
+                        "type": "primary",
+                        "name": "PRIMARY",
+                        "columns": [
+                            "game_id"
+                        ],
+                        "length": [
+                            null
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

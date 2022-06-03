@@ -1,0 +1,18 @@
+{
+    "normal": {
+        "added": [
+            "r__games",
+            "r__games_manage",
+            "server_position"
+        ],
+        "edited": [
+            "game_shortname"
+        ],
+        "removed": []
+    },
+    "js": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

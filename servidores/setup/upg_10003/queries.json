@@ -1,0 +1,21 @@
+{
+    "1": {
+        "method": "changeColumn",
+        "params": [
+            "servidores_servers",
+            "server_game_type",
+            {
+                "name": "server_game_id",
+                "type": "INT",
+                "length": 24,
+                "decimals": null,
+                "values": null,
+                "allow_null": false,
+                "default": "0",
+                "comment": "",
+                "unsigned": true,
+                "auto_increment": false
+            }
+        ]
+    }
+}

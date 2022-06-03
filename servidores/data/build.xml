@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build>
+ <module key="admin/settings"><![CDATA[{"default_controller":"","protected":0,"default":0}]]></module>
+ <module key="front/main"><![CDATA[{"default_controller":"","protected":false,"default":null}]]></module>
+ <task frequency="P0Y1M0DT0H0M0S">pruneStats</task>
+ <task frequency="P0Y0M0DT0H5M0S">queryServers</task>
+ <setting key="s_players_max_record"><![CDATA[{"key":"s_players_max_record","default":"0"}]]></setting>
+ <setting key="s_players_num_record"><![CDATA[{"key":"s_players_num_record","default":"0"}]]></setting>
+ <setting key="s_sql_charset"><![CDATA[{"key":"s_sql_charset","default":""}]]></setting>
+ <setting key="s_sql_database"><![CDATA[{"key":"s_sql_database","default":""}]]></setting>
+ <setting key="s_sql_host"><![CDATA[{"key":"s_sql_host","default":"127.0.0.1"}]]></setting>
+ <setting key="s_sql_password"><![CDATA[{"key":"s_sql_password","default":""}]]></setting>
+ <setting key="s_sql_port"><![CDATA[{"key":"s_sql_port","default":"3306"}]]></setting>
+ <setting key="s_sql_prefix"><![CDATA[{"key":"s_sql_prefix","default":""}]]></setting>
+ <setting key="s_sql_user"><![CDATA[{"key":"s_sql_user","default":"root"}]]></setting>
+ <setting key="s_time_record"><![CDATA[{"key":"s_time_record","default":"0"}]]></setting>
+ <setting key="s_time_refreshed"><![CDATA[{"key":"s_time_refreshed","default":"0"}]]></setting>
+ <widget key="serversCarousel"><![CDATA[{"class":"\\IPS\\Widget","restrict":["sidebar","cms"],"default_area":"sidebar","allow_reuse":false,"menu_style":"menu","embeddable":false}]]></widget>
+</build>

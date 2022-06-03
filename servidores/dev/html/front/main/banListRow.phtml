@@ -1,0 +1,49 @@
+<ips:template parameters="$table, $headers, $rows" />
+<table class="ipsTable ipsTable_responsive ipsTable_zebra">
+	<thead>
+		<tr class="ipsAreaBackground">
+			<th>Fecha y hora</th>
+			<th>Tag CS</th>
+			<th>Admin</th>
+			<th>Duración</th>
+			<th class='ipsResponsive_hideTablet'>Razón</th>
+			<th>Estado</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $rows as $row}}
+			<tr class="ipsClearfix">
+				<td>{datetime="$row['start']" lowercase="true"}</td>
+				<td>{$row['user_name']}</td>
+				<td>
+					{{$member = \IPS\Member::load($row['forum_id']);}}
+					{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+					{$row['admin_name']}
+				</td>
+				<td>
+					{{if $row['minutes'] == 0}}
+						Permanente
+					{{else}}
+						{$row['minutes']} min
+					{{endif}}
+				</td>
+				<td class='ipsResponsive_hideTablet'>
+					{{if $row['reason'] != NULL}}
+						{$row['reason']}
+					{{else}}
+						no-especificado
+					{{endif}}
+				</td>
+				<td>
+					{{if $row['active']}}
+						<span class="ipsBadge ipsBadge_negative ipsBadge_large">Ban activo</span>
+					{{else}}
+						<span class="ipsBadge ipsBadge_positive ipsBadge_large">Ban finalizado</span>
+					{{endif}}
+					<span class='ipsResponsive_showTablet' data-ipsTooltip title='Ver razón del Ban'>&nbsp;&nbsp;<a href='javascript:;' id='reasonInfoDialog' data-ipsDialog data-ipsDialog-content='#reasonInfo'><i class='fa fa-info-circle'></i></a></span>
+					<div class='ipsHide ipsPadding ipsClearfix' id='reasonInfo'><strong>Razón del ban</strong>: {$row['reason']}&nbsp;&nbsp;&nbsp;<strong class='ipsType_light'>({$row['admin_name']})</strong></div>
+				</td>
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>

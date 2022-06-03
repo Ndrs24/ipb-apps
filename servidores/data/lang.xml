@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+ <app key="servidores" version="10014">
+  <word key="__app_servidores" js="0">Servidores</word>
+  <word key="google_text" js="0">Compartir en Google</word>
+  <word key="menutab__servidores" js="0">Servidores</word>
+  <word key="menutab__servidores_icon" js="0">gamepad</word>
+  <word key="menu__servidores_settings" js="0">Servidores</word>
+  <word key="menu__servidores_settings_settings" js="0">Ajustes generales</word>
+  <word key="menu__servidores_settings_games" js="0">Juegos</word>
+  <word key="menu__servidores_settings_servers" js="0">Servidores</word>
+  <word key="r__games" js="0">Juegos</word>
+  <word key="r__games_manage" js="0">¿Quien puede controlar estos ajustes?</word>
+  <word key="block_serversCarousel" js="0">Bloque de Servidores</word>
+  <word key="block_serversCarousel_desc" js="0">Muestra en forma de carrusel todos los servidores de la comunidad.</word>
+  <word key="s_settings_sql" js="0">Base de datos (SQL)</word>
+  <word key="s_sql_host" js="0">Host o IP de conexión</word>
+  <word key="s_sql_port" js="0">Puerto</word>
+  <word key="s_sql_port_desc" js="0"><![CDATA[Por defecto, el puerto para coenxiones a base de datos es <b>3306</b>.]]></word>
+  <word key="s_sql_user" js="0">Usuario</word>
+  <word key="s_sql_password" js="0">Contraseña</word>
+  <word key="s_sql_database" js="0">Base de datos</word>
+  <word key="s_sql_prefix" js="0">Prefijo de las tablas</word>
+  <word key="s_sql_prefix_desc" js="0"><![CDATA[El prefijo de las tabla es o son caracteres con los que empiezan todas las tablas de la base de datos.<br>Un ejemplo muy claro es: <b>table_</b><br>Por lo que, todas las tablas, empezarán con <b>table_</b>.]]></word>
+  <word key="s_sql_charset" js="0">Conjunto de caracteres de base de datos</word>
+  <word key="s_sql_charset_error" js="0">El conjunto de caracteres de la base de datos que proporcionó no es un conjunto de caracteres válido de la base de datos.</word>
+  <word key="s_sql_error" js="0">La información proporcionada es incorrecta o la base de datos no está disponible.</word>
+  <word key="s_settings_games" js="0">Juegos</word>
+  <word key="game_position" js="0">Posición (o identificador) del juego</word>
+  <word key="game_shortname" js="0">Nombre del Juego</word>
+  <word key="game_type" js="0">Protocolo del Juego</word>
+  <word key="game_type_desc" js="0">Protocolo que se debe utilizar al consultar las estadísticas del juego. Si no encuentra su juego, intente usar CSGO.</word>
+  <word key="game_icon" js="0">Icono del Juego</word>
+  <word key="s_settings_servers" js="0">Servidores</word>
+  <word key="server_position" js="0">Posición (o identificador) del servidor</word>
+  <word key="server_game_id" js="0">Juego</word>
+  <word key="server_shortname" js="0">Nombre del Servidor</word>
+  <word key="server_ip" js="0">IP del Servidor</word>
+  <word key="server_logo" js="0">Imagen que representa el Servidor</word>
+  <word key="server_infomod" js="0">Descripción del Servidor</word>
+  <word key="server_access_guides" js="0">Acceso a editar la guía del mod</word>
+  <word key="server_access_guides_desc" js="0">Otorga accesos a aquellos rangos para que puedan editar la guía del mod.</word>
+  <word key="server_access_rules" js="0">Acceso a editar las reglas</word>
+  <word key="server_access_rules_desc" js="0">Otorga accesos a aquellos rangos para que puedan editar el reglamento del servidor.</word>
+  <word key="server_enabled" js="0">¿Mostrar servidor?</word>
+  <word key="s_refresh" js="0">Actualizar servidores</word>
+  <word key="s_refreshed" js="0">Todos los servidores han sido actualizados</word>
+  <word key="s_reset_stats" js="0">Reiniciar estadísticas</word>
+  <word key="s_reseted_stats" js="0">Las estadísticas del servidor han sido reiniciadas</word>
+  <word key="s_task_unsucess" js="0">Consulta del servidor inválida</word>
+  <word key="s_viewing" js="0">Viendo la lista de Servidores</word>
+  <word key="module__servidores_main" js="0">Servidores de la Comunidad</word>
+  <word key="module__servidores_games" js="0">Juegos</word>
+  <word key="module__servidores_servers" js="0">Servidores</word>
+  <word key="s_header_info" js="0"><![CDATA[Contamos con <strong>%s</strong> en total en la comundad. Busca tu servidor de preferencia, agrégala a favoritos y a jugar<br />Si no sabes cómo agregarlo a favoritos, visita la <a href='/soporte/'>sección de Soporte</a> de la comunidad.]]></word>
+  <word key="s_players_current_desc" js="0"><![CDATA[¡Actualmente hay <span style='font-weight: bold;'>%s</span>/<span style='font-weight: bold;'>%s</span> jugadores online de nuestros <span style='font-weight: bold;'>%s</span> servidores!]]></word>
+  <word key="s_servers_not_found" js="0">No se han encontrado servidores disponibles :(</word>
+  <word key="s_editguides_description" js="0">Descripción de la guía</word>
+  <word key="s_editguides_description_desc" js="0">Por favor, llene en este campo con la guía del servidor lo más descriptible posible.</word>
+  <word key="s_editguides_top15" js="0">Enlace del Top15</word>
+  <word key="s_editguides_vinc" js="0">Enlace del Panel de Vinculación</word>
+  <word key="s_editrules_description" js="0">Descripción del reglamento</word>
+  <word key="s_editrules_description_desc" js="0">Por favor, llene en este campo las reglas de forma legible y ordenada del servidor del que estás editando.</word>
+  <word key="s_chart_stats_title" js="0">Mapas más jugado del Servidor</word>
+  <word key="s_chart_stats_map" js="0">Mapa</word>
+  <word key="s_chart_stats_percent" js="0">Porcentaje</word>
+  <word key="s_chart_players_title" js="0">Jugadores conectados en las últimas horas</word>
+  <word key="s_chart_players_sub_title" js="0">Horario sobre cantidad de jugadores conectados en las últimas horas</word>
+  <word key="s_chart_players_time" js="0"></word>
+  <word key="s_chart_players_amount" js="0">Cantidad</word>
+  <word key="__save_now" js="0">Guardar ahora</word>
+  <word key="__saved" js="0">Guardado</word>
+  <word key="__add_server" js="0">Agregar servidor</word>
+  <word key="__edit_server" js="0">Editar servidor</word>
+ </app>
+</language>

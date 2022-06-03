@@ -1,0 +1,130 @@
+<ips:template parameters="$url, $servers, $stats" />
+{{$st = \count($servers);}}
+
+<div class='ipsPageHeader ipsPadding ipsBox ipsClearfix ipsMargin_bottom cServers_header'>
+	<h1 class='ipsType_pageTitle'>{lang="module__servidores_main"}</h1>
+	{{if $st}}<div class='ipsPageHeader_info ipsType_light'>{lang="s_header_info" sprintf="$st"}</div>{{endif}}
+
+	<hr class='ipsHr' />
+
+	<div class='ipsFlex ipsFlex-jc:between ipsFlex-ai:center ipsFlex-fw:wrap ipsGap:3'>
+		<div class='ipsFlex-flex:11'>
+			<a href='/reglamento/' class='ipsButton ipsButton_light'>Reglamento</a>
+		</div>
+		<div class='ipsFlex-flex:01 ipsResponsive_hideTablet ipsResponsive_hidePhone'>
+			<div class='ipsFlex ipsFlex-ai:center ipsFlex-jc:center ipsGap:3 ipsGap_row:0'>
+				{template="shareLinks" app="servidores" group="shareLinks" location="front" params="$url"}
+			</div>
+		</div>
+	</div>
+</div>
+
+{{if $st}}
+	<div class='ipsPadding ipsType_center ipsPos_center ipsMargin_bottom' style='max-width: 75%;'>
+		<span class='ipsType_large'>{lang="s_players_current_desc" sprintf="$stats['players_num_t'], $stats['players_max_t'], $st"}</span>
+		<br />
+		<br />
+		<div class='ipsProgressBar ipsProgressBar_animated ipsProgressBar_large cServers_progressBar'>
+			<div class="ipsProgressBar_progress cServers_progressBar_show" style="width: {$stats['percent']}%;"></div>
+			<div class="ipsProgressBar_progress cServers_progressBar_record" style="background-color: rgba(255, 0, 0, 1.0); opacity: 0.2; width: {$stats['record_percent']}%;"></div>
+		</div>
+		{{if $stats['record_players_num'] != 0}}
+			<br />
+			<span class='ipsType_large'>El récord de jugadores en línea en la comunidad fue de <strong>{$stats['record_players_num']}/{$stats['record_players_max']}</strong> jugadores [<strong>{datetime="$stats['record_time']" lowercase="TRUE"}</strong>]</span>
+			<br />
+		{{endif}}
+	</div>
+
+	<div class='cServers_container'>
+		{{foreach $servers as $k => $server}}
+			{{$seo = \IPS\Http\Url::seoTitle($server["server_shortname"]);}}
+
+			<div class="ipsGrid ipsGrid_collapsePhone ipsPadding ipsBox ipsMargin_bottom" data-serverid="{$k}">
+				<div class="ipsGrid_span5">
+					{{if $server['server_logo']}}
+						<a title='{$server["server_shortname"]}' href='{url="app=servidores&module=main&controller=main&do=toServer&id={$server['server_position']}&seo={$seo}" seoTemplate="servidores_id"}'><img width='100%' data-src='{expression="\IPS\File::get('servidores_fileServer', $server['server_logo'])->url"}' /></a>
+					{{else}}
+						<span><img width='100%' data-src='{resource="pattern.png" app="core" location="global"}' /></span>
+					{{endif}}
+
+					<div class="ipsFlex ipsFlex-jc:center ipsFlex-fw:wrap ipsGap:3 ipsType_center ipsPadding_top ipsResponsive_hidePhone">
+						<span class="ipsMargin_right sm:ipsMargin_right:half md:ipsMargin_right:half"><strong class="ipsType_large">{{if $server['server_players_max'] != 0}}{$server['server_players_num']}{{else}}n/a{{endif}}</strong><br><span class="ipsType_minorHeading">jugadores online</span></span>
+						<span><strong class="ipsType_large">{{if $server['server_map'] != NULL}}{$server['server_map']}{{else}}n/a{{endif}}</strong><br><span class="ipsType_minorHeading">mapa actual</span></span>
+					</div>
+
+					<div class='ipsMargin_top ipsResponsive_hidePhone ipsResponsive_hideDesktop'>
+						<a href='{url="app=servidores&module=main&controller=main&do=banList&id={$server['server_id']}&seo={$seo}" seoTemplate="servidores_id_banList"}' class='ipsButton ipsButton_negative ipsButton_medium ipsButton_fullWidth'><i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;Lista de Baneos</a>
+					</div>
+				</div>
+
+				<div class="ipsGrid_span7">
+					<h2 class="ipsTruncate ipsTruncate_line ipsType_reset">
+						<div class='ipsResponsive_showPhone ipsPadding_bottom'></div>
+
+						<a href='{url="app=servidores&module=main&controller=main&do=toServer&id={$server['server_position']}&seo={$seo}" seoTemplate="servidores_id"}'>#{{if $server['server_position'] < 10}}0{$server['server_position']}{{else}}{$server['server_position']}{{endif}}&nbsp;{$server['server_shortname']}</a>&nbsp;{{if $server['server_online']}}<strong class='ipsOnlineStatus ipsOnlineStatus_online ipsType_small' data-ipsTooltip title='Online'><i class='fa fa-circle'></i></strong>{{else}}<strong class='ipsOnlineStatus ipsOnlineStatus_offline ipsType_small' data-ipsTooltip title='Offline'><i class='fa fa-circle'></i></strong>{{endif}}
+					</h2>
+
+					<div class='cServers_infomod'>
+						<p class='ipsType_light'>{$server['server_infomod']}</p>
+					</div>
+
+					<hr class='ipsHr' />
+
+					<div class='ipsType_center'>
+						<div class='ipsType_center ipsType_large ipsType_minorHeading'>
+							<h3 class="ipsType_neutral"><img alt='{$server["game_type"]}' src='{expression="\IPS\File::get('servidores_fileGame2', $server['game_icon'])->url"}' data-ipsTooltip title='{lang="s_games_{$server['game_id']}"}' style='vertical-align: 0;' />&nbsp;Dirección IP: <a href='javascript:;' class='{{if $server["server_online"]}}ipsType_success{{else}}ipsType_negative{{endif}}' onclick="setClipboard('{$server['server_ip']}')" data-ipsTooltip title='Copiar IP al portapapeles'>{$server['server_ip']}</a></h3>
+						</div>
+
+						<div class="ipsFlex ipsFlex-jc:center ipsFlex-fw:wrap ipsGap:3 ipsType_center ipsResponsive_showPhone">
+							<span class="ipsMargin_right sm:ipsMargin_right:half md:ipsMargin_right:half"><strong class="ipsType_large">{{if $server['server_players_max'] != 0}}{$server['server_players_num']}{{else}}n/a{{endif}}</strong><br><span class="ipsType_minorHeading">jugadores online</span></span>
+							<span><strong class="ipsType_large">{{if $server['server_map'] != NULL}}{$server['server_map']}{{else}}n/a{{endif}}</strong><br><span class="ipsType_minorHeading">mapa actual</span></span>
+						</div>
+					</div>
+
+					<div class='ipsType_center ipsResponsive_hidePhone ipsResponsive_hideTablet'>
+						<div class='ipsFlex ipsFlex-jc:center ipsFlex-fw:wrap ipsGap:3'>
+							{{if $server['server_online']}}
+								<a href='{$server["server_connect"]}' class='ipsButton ipsButton_important ipsButton_medium'><i class="fa fa-steam" aria-hidden="true"></i>&nbsp;Entrar a Jugar</a>
+							{{else}}
+								<span class='ipsButton ipsButton_important ipsButton_medium ipsButton_disabled' data-ipsTooltip title='Servidor offline'><i class="fa fa-steam" aria-hidden="true"></i>&nbsp;Entrar a Jugar</span>
+							{{endif}}
+							<a href='{url="app=servidores&module=main&controller=main&do=banList&id={$server['server_id']}&seo={$seo}" seoTemplate="servidores_id_banList"}' class='ipsButton ipsButton_negative ipsButton_medium'><i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;Lista de Baneos</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{endforeach}}
+	</div>
+
+	<div class="ipsBox ipsMargin_top">
+		<h2 class='ipsType_sectionTitle ipsType_reset'>Estadísticas de los Servidores</h2>
+		<div class="ipsGrid ipsGrid_collapsePhone ipsType_center">
+			<div class="ipsGrid_span1 ipsResponsive_hidePhone"></div>
+			<div class="ipsGrid_span2 ipsPadding">
+				<span class="ipsType_large ipsWidget_statsCount">{$st}</span><br>
+				<span class="ipsType_light ipsType_medium">Total de servidores</span>
+			</div>
+			<div class="ipsGrid_span2 ipsPadding">
+				<span class="ipsType_large ipsWidget_statsCount">{$stats['servers_online']}</span><br>
+				<span class="ipsType_light ipsType_medium">Servidores online</span>
+			</div>
+			<div class="ipsGrid_span2 ipsPadding">
+				<span class="ipsType_large ipsWidget_statsCount">{$stats['players_num_t']}</span><br>
+				<span class="ipsType_light ipsType_medium">Jugadores online</span>
+			</div>
+			<div class="ipsGrid_span2 ipsPadding">
+				<span class="ipsType_large ipsWidget_statsCount">{$stats['players_max_t']}</span><br>
+				<span class="ipsType_light ipsType_medium">Slots máximos</span>
+			</div>
+			<div class="ipsGrid_span2 ipsPadding">
+				<span class="ipsType_large ipsWidget_statsCount">{datetime="\IPS\Settings::i()->s_time_refreshed" lowercase="true"}</span><br>
+				<span class="ipsType_light ipsType_medium">Última comprobación</span>
+			</div>
+			<div class="ipsGrid_span1 ipsResponsive_hidePhone"></div>
+		</div>
+	</div>
+{{else}}
+	<div class='ipsPadding ipsBox'>
+		<p class='ipsType_center ipsType_light ipsType_large'>{lang="s_servers_not_found"}</p>
+	</div>
+{{endif}}

@@ -1,0 +1,24 @@
+{
+    "normal": {
+        "added": [
+            "server_enabled",
+            "s_header_info",
+            "s_servers_not_found",
+            "s_editguides_description",
+            "s_editguides_description_desc",
+            "s_editguides_vinc",
+            "s_editrules_description",
+            "s_editrules_description_desc"
+        ],
+        "edited": [],
+        "removed": [
+            "s_editserver_description",
+            "s_editserver_description_desc"
+        ]
+    },
+    "js": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

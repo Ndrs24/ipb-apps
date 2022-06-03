@@ -1,0 +1,25 @@
+{
+	"topLevel": "",
+	"pages": {
+		"servidores": {
+			"friendly": "servidores",
+			"real": "app=servidores&module=main&controller=main"
+		},
+		"servidores_id": {
+			"friendly": "servidores/{#id}-{@seo}",
+			"real": "app=servidores&module=main&controller=main&do=toServer"
+		},
+		"servidores_id_editGuides": {
+			"friendly": "servidores/editando-guia-{#id}-{@seo}",
+			"real": "app=servidores&module=main&controller=main&do=editGuides"
+		},
+		"servidores_id_editRules": {
+			"friendly": "servidores/editando-reglamento-{#id}-{@seo}",
+			"real": "app=servidores&module=main&controller=main&do=editRules"
+		},
+		"servidores_id_banList": {
+			"friendly": "servidores/baneos-{#id}-{@seo}",
+			"real": "app=servidores&module=main&controller=main&do=banList"
+		}
+	}
+}
